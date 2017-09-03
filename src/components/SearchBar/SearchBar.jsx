@@ -1,34 +1,33 @@
 import React from 'react';
-import './SearchBar.css'
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            search:''
-        }
-    }
-    componentDidMount() {
-        this.setState({search:null})
-    }
-    search = (event) => {
-        console.log(event.target.value)
-        this.setState({search:event.target.value})
-    }
+import './SearchBar.css';
+import {
+    Row,
+    Col,
+    Input,
+} from 'react-materialize';
 
-    findStock = (query) => {
-        fetch('/api/crypto/')
-    }
 
-    render() {
-        return (
-            <div>
-                <h5>Search for stocks</h5>
-                <input type="text" placeholder ="search a stock"onChange={this.search} />
-                <button className='btn' onClick={this.findStock}>Search</button>
-            </div>
 
-        )
-    }
+const SearchBar = (props) => {
+    return (
+        <div>
+            <h5>Search for stocks</h5>
+            <Row>
+                <Input s={10} type="text" placeholder ="search a stock"onChange={props.searchParams} />
+                <Input s={2} type='select' label="Convert To" defaultValue='2' onChange={props.currencyParams}>
+                    <option value='USD'>USD</option>
+                    <option value='EU'>EU</option>
+                    <option value='BTC'>BTC</option>
+                </Input>
+
+            </Row>
+            <button className='btn waves-effect waves-light' onClick={props.searchStocks}>Search</button>
+        </div>
+    )
 }
+
+
+
+
 
 export default SearchBar;

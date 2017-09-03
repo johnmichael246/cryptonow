@@ -1,6 +1,6 @@
 import React from 'react';
 import './StockShow.css'
-import Stock from '../Stock/Stock';
+import Stocks from '../Stocks/Stocks';
 class StockShow extends React.Component {
     constructor(props) {
         super(props)
@@ -8,18 +8,17 @@ class StockShow extends React.Component {
     render() {
         let stocklist = this.props.user.stocks ?
         <div>
-            some favorite stocks
-            <Stock />
+            show favorite stocks
+            <Stocks />
         </div> :
         <div>
-            default stocks
-            <Stock />
+            show basic stocks
+            <Stocks />
         </div>
         return (
             <div>
                 {stocklist}
             </div>
-
         )
     }
 }

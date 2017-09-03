@@ -12,7 +12,7 @@ const NavBar = (props) => {
                 <span style={{textAlign:'left'}} >WELCOME {props.user.name} </span>
                 <NavItem href ='/'>Home</NavItem>
                 <NavItem href="/articles" >Articles</NavItem>
-                <NavItem href="/stocks" >Stocks</NavItem>
+                <NavItem href="/stocks" >Watchlist</NavItem>
                 <NavItem href="/" onClick={props.handleLogout}>Logout</NavItem>
             </Navbar>
         </div> :
