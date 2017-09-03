@@ -1,0 +1,28 @@
+{
+  "name": "cryptonow",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.11.9",
+    "morgan": "^1.8.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-materialize": "^1.0.10",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.12",
+    "serve-favicon": "^2.4.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001"
+}
