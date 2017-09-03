@@ -16,6 +16,12 @@ class News extends React.Component {
         }
 
     }
+    componentDidMount() {
+        fetch('/news')
+        .then( response => response.json())
+        .then( data => JSON.stringify(data))
+        .then(data => console.log(data))
+    }
     render() {
         return (
             <div>
