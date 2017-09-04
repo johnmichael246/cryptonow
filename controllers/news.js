@@ -1,5 +1,5 @@
 var Article = require('../models/article');
-let newsURL = 'https://newsapi.org/v1/articles?source=techcrunch&language=en'
+let newsURL = 'https://newsapi.org/v1/articles?category=technology&source=techcrunch&language=en'
 var request = require('request');
 
 function getArticles(req, res) {

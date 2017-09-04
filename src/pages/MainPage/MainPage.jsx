@@ -16,30 +16,15 @@ class MainPage extends React.Component {
         this.state={
             search:'',
             currencyCompare:'',
-            // stocks:null
+            stocks:null
         } 
     }
     searchStocks = () => {
-        let stockURL ='';
-        if(this.state.search) {
-             stockURL = 'https://min-api.cryptocompare.com/data/pricehistorical'
-        } else {
-             stockURL = 'https://www.cryptocompare.com/api/data/coinlist/'
-        }
-        let currency = this.state.currencyCompare;
-
-        fetch(`${stockURL}&fysm=USD&tsyms${currency}`, {
-            method:'GET',
-            headers: {
-                'Content-Type':'application/json'
-            }
-        }).then( response => response.json())
-        // .then( data => this.setState({stocks}))
-        .then( data => console.log(data))
+        fetch('/stocks/stocks').then( response => response.json())
+        .then( data => this.setState({stocks:data.Data}))
     }
     
     searchParams = (e) => {
-        console.log(e.target.value)
         this.setState({search:e.target.value})
         console.log(this.state.search)
     }
@@ -47,6 +32,10 @@ class MainPage extends React.Component {
         console.log(e.target.value)
         this.setState({currencyCompare:e.target.value})
         console.log(this.state.currencyCompare)
+    }
+
+    componentDidMount() {
+        this.searchStocks();
     }
 
     render() {
@@ -60,14 +49,16 @@ class MainPage extends React.Component {
                     
                 <Col s={8}>
                     <SearchBar
-                    searchStocks ={this.searchStocks}
+                    stocks={this.state.stocks}
                     search={this.state.search}
+                    searchStocks ={this.searchStocks}
                     searchParams={this.searchParams}
                     currencyParams={this.currencyParams} />
                     <Favs
                     user={this.props.user} />
                     <StockShow
-                    user={this.props.user} />
+                    user={this.props.user}
+                    stocks={this.state.stocks} />
                 </Col>
             </Row>
         </div> :

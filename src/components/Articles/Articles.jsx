@@ -1,23 +1,23 @@
 import React from 'react';
 import './Articles.css';
-
-const Articles = ({articles}) => {
+import {
+    Icon
+} from 'react-materialize';
+import {
+    Link
+} from 'react-router-dom'
+import Article from '../Article/Article'
+const Articles = (props) => {
     return (
         <div>
-            {articles.map( (article, index) => {
+            {props.articles.map( (article, index) => {
                 return (
-                    <div key={article.title}>
-                        <p className='news-font'>{article.title}</p>
-                        <a href={article.url}>
-                            <img className="size-image"src={article.urlToImage} alt=""/>
-                        </a>
-                        <p>{article.publishedAt}</p>
-                        
-                    </div>
+                    <Article key={article.title}
+                    title={article.title}
+                    urlToImage={article.urlToImage}
+                    publishedAt={article.publishedAt} />
                 )
-            }
-            )}
-
+            })}
         </div>
     )
 }

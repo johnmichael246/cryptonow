@@ -55,7 +55,7 @@ class App extends Component {
               user={this.state.user}
               />
             }/>
-            <Route exact path='/Articles' render={() =>
+            <Route exact path='/Articles/:title' render={(props) =>
               <ArticlesPage
               user={this.state.user}
               />

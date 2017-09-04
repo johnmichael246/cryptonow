@@ -9,11 +9,13 @@ class StockShow extends React.Component {
         let stocklist = this.props.user.stocks ?
         <div>
             show favorite stocks
-            <Stocks />
+            <Stocks
+            stocks={this.props.stocks} />
         </div> :
         <div>
             show basic stocks
-            <Stocks />
+            <Stocks
+            stocks={this.props.stocks} />
         </div>
         return (
             <div>

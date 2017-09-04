@@ -7,8 +7,8 @@ var userSchema = new mongoose.Schema({
   name: String,
   email: {type: String, required: true, lowercase: true, unique: true},
   password: String,
-  stocks: [{type:ObjectId, ref:'Stock'}],
-  articles: [{type:ObjectId, ref:'Article'}]
+  favStocks: [{type:ObjectId, ref:'Stock'}],
+  favArticles: [{type:ObjectId, ref:'Article'}]
 }, {
   timestamps: true
 });

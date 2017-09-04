@@ -17,7 +17,7 @@ class News extends React.Component {
     componentDidMount() {
         fetch('/news')
         .then( response => response.json())
-        .then( data => this.setState({articles:data}))
+        .then( data => this.setState({articles:data.articles}))
     }
     render() {
         return (
@@ -29,7 +29,7 @@ class News extends React.Component {
                     ? <p>Loading Articles</p>
                     :
                     <Articles
-                    articles={this.state.articles.articles} />}
+                    articles={this.state.articles} />}
 
                 </Row>
             </div>

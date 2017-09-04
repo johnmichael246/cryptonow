@@ -12,7 +12,7 @@ class FavArticles extends React.Component {
         super(props); 
     }
     render() {
-        let favArticles = this.props.user.articles ?
+        let favArticles = this.props.user.favArticles ?
         <div>
             <Row>
                 <Article />
