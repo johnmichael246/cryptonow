@@ -1,30 +1,37 @@
 import React from 'react';
+import './News.css';
 import Articles from '../Articles/Articles';
 import {
     Row
 } from 'react-materialize';
-import './News.css';
 
 
 class News extends React.Component {
     constructor(props) {
         super(props);
+        this.state= {
+            articles:null
+        }
 
     }
-
+    componentDidMount() {
+        fetch('/news')
+        .then( response => response.json())
+        .then( data => this.setState({articles:data.articles}))
+    }
     render() {
         return (
-            <div>
-                <Row>
-                    <h5 className='main-font'>Related News</h5>
+            <div className='background-color main-font'>
+                {/*<Row>*/}
+                    <h5 className='no-margin'>Related News</h5>
                     <hr width='70%'/>
-                    {!this.props.articles
+                    {!this.state.articles
                     ? <p>Loading Articles</p>
                     :
                     <Articles
-                    articles={this.props.articles} />}
+                    articles={this.state.articles} />}
 
-                </Row>
+                {/*</Row>*/}
             </div>
         )
     }

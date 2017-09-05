@@ -49,13 +49,13 @@ class MainPage extends React.Component {
                 <NavBar
                 user={this.props.user}
                 handleLogout={this.props.handleLogout} />
-                <Col s={4}>
+                <Col s={12}m={4}>
                     <News
                     articles={this.props.articles}
                     user={this.props.user} />
                 </Col>
                     
-                <Col s={8}>
+                <Col s={12}m={8}>
                     <SearchBar
                     stocks={this.state.stocks}
                     search={this.state.search}

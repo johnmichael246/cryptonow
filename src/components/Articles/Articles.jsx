@@ -1,7 +1,8 @@
 import React from 'react';
 import './Articles.css';
 import {
-    Icon
+    Icon,
+    Col
 } from 'react-materialize';
 import {
     Link
@@ -12,7 +13,7 @@ const Articles = (props) => {
         <div>
             {props.articles.map( (article, index) => {
                 return (
-                    <Article 
+                    <Article
                     key={article.title}
                     title={article.title}
                     urlToImage={article.urlToImage}

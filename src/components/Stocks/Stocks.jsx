@@ -24,12 +24,9 @@ import {
         //     }
         // }
 
-        componentDidMount() {
-            // changePercent=()=> {
-            //     stockVolChange[i++]
-            // }
-        }
+
         render() {
+            let stockVolChange;
             let stockChart =(this.props.stocks) ?
             <div>
                 <Table
@@ -47,9 +44,8 @@ import {
                     </thead>
                     <tbody>
                         {this.props.stocks.map( (stock, index) => {
-                            let stockVolChange = [];
+                            stockVolChange = [];
                             stockVolChange.push(stock.percent_change_1h, stock.percent_change_24h, stock.percent_change_7d)
-                            console.log(stockVolChange)
                             return (
                                 <tr>
                                     <td key={stock.id}>{stock.name}</td>
@@ -57,7 +53,7 @@ import {
                                     <td>{stock.market_cap_usd}</td>
                                     <td>{stock.total_supply}</td>
                                     <td>{stock.h_volume_usd}</td>
-                                    <td>{stockVolChange[0]}</td>
+                                    <td className='center'style={ stockVolChange[0] > 0 ? {color:'green'} : {color:'red'} }>{stockVolChange[0]}</td>
                                 </tr>
                             )
                         })};
