@@ -24,10 +24,8 @@ app.use(require('./config/auth'));
 
 // Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
-app.use('/news', require('./routes/news'));
-app.use('/stocks/stocks', require('./routes/stocks/stocks'));
-
-
+app.use('/api/news', require('./routes/api/news'));
+app.use('/api/stocks', require('./routes/api/stocks'));
 
 
 

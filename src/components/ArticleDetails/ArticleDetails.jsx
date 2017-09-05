@@ -1,5 +1,5 @@
 import React from 'react';
-import './showArticle.css';
+import './ArticleDetails.css';
 import {
     Row,
     Col,
@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 
-const showArticle = (props) => {
+const ArticleDetails = (props) => {
         return (
             <div key={props.title}>
                 <p className='news-font'>{props.title}</p>
@@ -23,4 +23,4 @@ const showArticle = (props) => {
 }
 
 
-export default showArticle;
+export default ArticleDetails;

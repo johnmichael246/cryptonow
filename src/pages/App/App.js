@@ -38,7 +38,7 @@ class App extends Component {
   componentDidMount() {
     let user = userService.getUser();
     this.setState({user});
-    fetch('/news')
+    fetch('api/news')
       .then( response => response.json())
       .then( data => this.setState({articles:data.articles}))
   }

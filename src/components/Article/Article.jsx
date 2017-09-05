@@ -1,8 +1,6 @@
 import React from 'react';
 import './Article.css';
 import {
-    Row,
-    Col,
     Icon
 } from 'react-materialize';
 import {
@@ -14,10 +12,7 @@ const Article = (props) => {
         return (
             <div key={props.title}>
                 <p className='news-font'>{props.title}</p>
-                <Link to={`articles/${props.title}`}
-                params={
-                    {title:props.title, urlToImage:props.urlToImage,publishedAt:props.publishedAt,description:props.description, url:props.url}
-                }>
+                <Link to={`articles/${props.title}`}>
                     <img className="size-image image-border"src={props.urlToImage} alt=""/>
                 </Link><br/>
                 <span id={props.index}

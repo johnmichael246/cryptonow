@@ -13,7 +13,7 @@ class News extends React.Component {
 
     }
     componentDidMount() {
-        fetch('/news')
+        fetch('api/news')
         .then( response => response.json())
         .then( data => this.setState({articles:data.articles}))
     }
@@ -25,17 +25,14 @@ class News extends React.Component {
     render() {
         return (
             <div className='background-color main-font'>
-                {/*<Row>*/}
-                    <h5 className='no-margin'>Related News</h5>
-                    <hr width='70%'/>
-                    {!this.state.articles
-                    ? <p>Loading Articles</p>
-                    :
-                    <Articles
-                    articles={this.state.articles}
-                    favoriteArticle={this.favoriteArticle} />}
-
-                {/*</Row>*/}
+                <h5 className='no-margin'>Related News</h5>
+                <hr width='70%'/>
+                {!this.state.articles
+                ? <p>Loading Articles</p>
+                :
+                <Articles
+                articles={this.state.articles}
+                favoriteArticle={this.favoriteArticle} />}
             </div>
         )
     }

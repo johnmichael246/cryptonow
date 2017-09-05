@@ -1,5 +1,5 @@
 var Stock = require('../models/stock');
-var baseStockURL = 'https://api.coinmarketcap.com/v1/ticker/?limit=15'
+var baseStockURL = 'https://api.coinmarketcap.com/v1/ticker/?limit=10'
 var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
 var request = require('request');
 
@@ -18,8 +18,7 @@ function getOneStock(req, res) {
         url: `${stockURL}${req.params.id}`
     }
     request(options.url, (err, response, body) => {
-        console.log(req.params)
-
+        // console.log(req.params)
         let stock = JSON.parse(body)
         res.send(stock)
     })

@@ -19,9 +19,7 @@ import {
         changePercent=() => {
             alert('the stock index is now', )
         }
-        // componentDidMount() {
-        //     this.setState({stocks:stockVolChange})
-        // }
+
 
         render() {
             let stockVolChange=[];
@@ -48,12 +46,12 @@ import {
                                 <tr>
                                 <Link to={`stocks/${stock.id}`} style={ {color:'black'} }
                                 >
-                                    <td key={stock.id}>{stock.name.toUpperCase()}</td>
+                                    <td>{stock.name.toUpperCase()}</td>
                                 </Link>
                                     <td><b>{stock.symbol}</b></td>
-                                    <td>{stock.market_cap_usd.split('.')[0]}</td>
-                                    <td>{stock.total_supply.split('.')[0]}</td>
-                                    <td>{stock.h_volume_usd}</td>
+                                    <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td>{stock.total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td>{stock['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td className='center'style={ stockVolChange[0] > 0 ? {color:'green'} : {color:'red'} }>{stockVolChange[0]}&nbsp;%</td>
                                 </tr>
                             )
