@@ -46,7 +46,8 @@ import {
                             stockVolChange.push(stock.percent_change_1h, stock.percent_change_24h, stock.percent_change_7d)
                             return (
                                 <tr>
-                                <Link to={`/stocks/${stock.id}`} style={ {color:'black'} }>
+                                <Link to={`stocks/${stock.id}`} style={ {color:'black'} }
+                                >
                                     <td key={stock.id}>{stock.name.toUpperCase()}</td>
                                 </Link>
                                     <td><b>{stock.symbol}</b></td>

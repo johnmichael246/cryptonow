@@ -14,7 +14,7 @@ const Article = (props) => {
         return (
             <div key={props.title}>
                 <p className='news-font'>{props.title}</p>
-                <Link to={`articles/:${props.title}`}
+                <Link to={`articles/${props.title}`}
                 params={
                     {title:props.title, urlToImage:props.urlToImage,publishedAt:props.publishedAt,description:props.description, url:props.url}
                 }>

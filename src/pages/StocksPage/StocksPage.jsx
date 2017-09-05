@@ -16,18 +16,19 @@ import Stock from '../../components/Stock/Stock';
 import Article from '../../components/Article/Article';
 
 
-class MainPage extends React.Component {
+class StocksPage extends React.Component {
     constructor(props) {
         super(props);
         this.state={
             search:'',
             currencyCompare:'',
-            stocks:null
+            stock:null
         } 
     }
     searchStocks = () => {
-        fetch('/stocks/stocks').then( response => response.json())
-        .then( data => this.setState({stocks:data}))
+        fetch('/stocks/stocks/:id').then( response => response.json())
+        .then( response => console.log(response))
+        .then( data => this.setState({stock:data}))
     }
     
     searchParams = (e) => {
@@ -47,6 +48,8 @@ class MainPage extends React.Component {
     render() {
         return (
             <div>
+                <NavBar
+                user={this.props.user} />
                 <Row>
                     <Col s={6}>
                         <FavArticles
@@ -75,4 +78,4 @@ class MainPage extends React.Component {
 }
 
 
-export default MainPage;
+export default StocksPage;

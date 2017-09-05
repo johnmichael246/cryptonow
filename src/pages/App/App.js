@@ -57,6 +57,7 @@ class App extends Component {
             }/>
             <Route exact path='/stocks/:id' render={(props) =>
               <StocksPage
+              {...props}
               user={this.state.user}
               handleLogout={this.handleLogout}
               />
