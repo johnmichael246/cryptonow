@@ -1,9 +1,7 @@
 import React from 'react';
 import './News.css';
 import Articles from '../Articles/Articles';
-import {
-    Row
-} from 'react-materialize';
+
 
 
 class News extends React.Component {
@@ -19,6 +17,11 @@ class News extends React.Component {
         .then( response => response.json())
         .then( data => this.setState({articles:data.articles}))
     }
+
+    favoriteArticle =(e) => {
+        alert(e.target.id)
+    }
+
     render() {
         return (
             <div className='background-color main-font'>
@@ -29,7 +32,8 @@ class News extends React.Component {
                     ? <p>Loading Articles</p>
                     :
                     <Articles
-                    articles={this.state.articles} />}
+                    articles={this.state.articles}
+                    favoriteArticle={this.favoriteArticle} />}
 
                 {/*</Row>*/}
             </div>

@@ -2,31 +2,29 @@ import React from 'react';
 import './Stocks.css'
 import {
     Table,
-    Row,
     Col,
     Preloader
 } from 'react-materialize';
 import {
     Link
 } from 'react-router-dom';
-// const Stocks = (props) => {
     class Stocks extends React.Component {
         constructor(props) {
             super(props);
+        this.state= {
+            stocks:[]
         }
-        // changePercent = () => {
-        //     if(stockVolChange[0]) {
-        //         return stockVolChange[1]
-        //     } else if (stockVolChange[1]) {
-        //         return stockVolChange[2]
-        //     } else {
-        //         return stockVolChange[0]
-        //     }
+        }
+
+        changePercent=() => {
+            alert('the stock index is now', )
+        }
+        // componentDidMount() {
+        //     this.setState({stocks:stockVolChange})
         // }
 
-
         render() {
-            let stockVolChange;
+            let stockVolChange=[];
             let stockChart =(this.props.stocks) ?
             <div>
                 <Table
@@ -34,7 +32,7 @@ import {
                 hoverable={true}>
                     <thead>
                         <tr>
-                            <th data-field="name">Name</th>
+                            <th  className='center'data-field="name">Name</th>
                             <th data-field="sym">Symbol</th>
                             <th data-field="mc">Market Cap</th>
                             <th data-field="supply">Circulating Supply</th>
@@ -48,15 +46,17 @@ import {
                             stockVolChange.push(stock.percent_change_1h, stock.percent_change_24h, stock.percent_change_7d)
                             return (
                                 <tr>
-                                    <td key={stock.id}>{stock.name}</td>
+                                <Link to={`/stocks/${stock.id}`} style={ {color:'black'} }>
+                                    <td key={stock.id}>{stock.name.toUpperCase()}</td>
+                                </Link>
                                     <td><b>{stock.symbol}</b></td>
-                                    <td>{stock.market_cap_usd}</td>
-                                    <td>{stock.total_supply}</td>
+                                    <td>{stock.market_cap_usd.split('.')[0]}</td>
+                                    <td>{stock.total_supply.split('.')[0]}</td>
                                     <td>{stock.h_volume_usd}</td>
-                                    <td className='center'style={ stockVolChange[0] > 0 ? {color:'green'} : {color:'red'} }>{stockVolChange[0]}</td>
+                                    <td className='center'style={ stockVolChange[0] > 0 ? {color:'green'} : {color:'red'} }>{stockVolChange[0]}&nbsp;%</td>
                                 </tr>
                             )
-                        })};
+                        })}
                     </tbody>
                 </Table>
             </div> :
@@ -83,7 +83,6 @@ import {
                     {stockChart}
                 </div>
             )
-// }
         }
     }
 

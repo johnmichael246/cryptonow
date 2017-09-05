@@ -9,6 +9,7 @@ import Article from '../../components/Article/Article';
 import showArticle from '../../components/showArticle/showArticle';
 import FavArticles from '../../components/FavArticles/FavArticles';
 import Watchlist from '../../components/Watchlist/Watchlist';
+import NavBar from '../../components/NavBar/NavBar';
 
 
 class ArticlesPage extends React.Component {
@@ -18,6 +19,8 @@ class ArticlesPage extends React.Component {
     render() { 
         return (
             <div>
+                <NavBar
+                user={this.props.user} />
                 <Row>
                     <Col s={6}>
                         <FavArticles

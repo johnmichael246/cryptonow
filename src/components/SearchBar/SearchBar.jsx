@@ -2,8 +2,7 @@ import React from 'react';
 import './SearchBar.css';
 import {
     Row,
-    Col,
-    Input,
+    Input
 } from 'react-materialize';
 
 

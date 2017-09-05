@@ -6,9 +6,9 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import NavBar from '../../components/NavBar/NavBar';
 import MainPage from '../MainPage/MainPage';
 import ArticlesPage from '../ArticlesPage/ArticlesPage';
+import StocksPage from '../StocksPage/StocksPage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utilities/userService';
@@ -46,17 +46,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/*<div className="App-header color">
-          CryptoNow
-        </div>*/}
-        {/*<NavBar
-        user={this.state.user}
-        handleLogout={this.handleLogout}/>*/}
         <Router>
           <Switch>
             <Route exact path='/' render={(props) =>
               <MainPage
               articles={this.state.articles}
+              user={this.state.user}
+              handleLogout={this.handleLogout}
+              />
+            }/>
+            <Route exact path='/stocks/:id' render={(props) =>
+              <StocksPage
               user={this.state.user}
               handleLogout={this.handleLogout}
               />

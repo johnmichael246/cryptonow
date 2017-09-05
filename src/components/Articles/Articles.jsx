@@ -19,7 +19,9 @@ const Articles = (props) => {
                     urlToImage={article.urlToImage}
                     publishedAt={article.publishedAt}
                     description={article.description}
-                    url={props.url} />
+                    url={props.url}
+                    favoriteArticle={props.favoriteArticle}
+                    index={index} />
                 )
             })}
         </div>

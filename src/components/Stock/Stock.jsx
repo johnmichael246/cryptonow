@@ -1,9 +1,9 @@
 import React from 'react';
 import './Stock.css';
-import {
-    Row,
-    Col
-} from 'react-materialize';
+// import {
+//     Row,
+//     Col
+// } from 'react-materialize';
 
 
 const Stock = (props) => {
