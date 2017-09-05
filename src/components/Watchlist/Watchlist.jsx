@@ -12,7 +12,7 @@ class Watchlist extends React.Component {
         super(props); 
     }
     render() {
-        let stocklist = this.props.user.favStocks ?
+        let stocklist = this.props.user.favStocks >= 1 ?
         <div>
             <Row>
                 <Stock />

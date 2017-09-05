@@ -1,0 +1,12 @@
+.background {
+    background-color: rgb(167,178,201);
+    height:100vh;
+    min-height:100vh;
+}
+.sign-up-title {
+  font-size:4rem;
+  padding-top:15px;
+  padding-bottom:0px;
+  margin-bottom:0px;
+  font-family: 'Space Mono', monospace;
+}

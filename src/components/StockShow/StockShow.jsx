@@ -5,15 +5,17 @@ class StockShow extends React.Component {
     constructor(props) {
         super(props)
     }
+
+
     render() {
-        let stocklist = this.props.user.stocks ?
+        let stocklist = this.props.user.favStocks ?
         <div>
-            show favorite stocks
+            <p>show favorite stocks</p>
             <Stocks
             stocks={this.props.stocks} />
         </div> :
         <div>
-            show basic stocks
+            <p>show basic stocks</p>
             <Stocks
             stocks={this.props.stocks} />
         </div>

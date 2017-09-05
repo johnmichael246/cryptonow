@@ -35,9 +35,9 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className='background'>
         <Row>
-          <header className="header-footer">Log In</header>
+          <header className="sign-up-title">Log In</header>
           <form className="form-horizontal" onSubmit={this.handleSubmit} >
             <Col s={12} offset='s3'>
               <Input s={6} type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
@@ -46,8 +46,8 @@ class LoginForm extends Component {
               <Input s={6}type="password" className="form-control" placeholder="Password" value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
             </Col>
             <Col s={12} >
-              <button className="btn btn-default">Log In</button>&nbsp;&nbsp;&nbsp;
-              <Link to='/'>Cancel</Link>
+              <button className="btn btn-default"style={ {color:'black',fontFamily:'Space Mono, Monospace'} }>Log In</button>&nbsp;&nbsp;&nbsp;
+              <Link to='/'style={ {color:'black',fontFamily:'Space Mono, Monospace'} }>CANCEL</Link>
             </Col>
           </form>
         </Row>

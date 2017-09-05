@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      articles:null
     }
   }
 
@@ -38,25 +38,33 @@ class App extends Component {
   componentDidMount() {
     let user = userService.getUser();
     this.setState({user});
+    fetch('/news')
+      .then( response => response.json())
+      .then( data => this.setState({articles:data.articles}))
   }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header color">
+        {/*<div className="App-header color">
           CryptoNow
-        </div>
-        <NavBar
+        </div>*/}
+        {/*<NavBar
         user={this.state.user}
-        handleLogout={this.handleLogout}/>
+        handleLogout={this.handleLogout}/>*/}
         <Router>
           <Switch>
-            <Route exact path='/' render={() =>
+            <Route exact path='/' render={(props) =>
               <MainPage
+              articles={this.state.articles}
               user={this.state.user}
+              handleLogout={this.handleLogout}
               />
             }/>
-            <Route exact path='/Articles/:title' render={(props) =>
+            <Route path='/articles/:title' render={(props) =>
               <ArticlesPage
+              {...props}
+              articles={this.state.articles}
               user={this.state.user}
               />
             }/>

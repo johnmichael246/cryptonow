@@ -3,71 +3,93 @@ import './Stocks.css'
 import {
     Table,
     Row,
-    Col
-} from 'react-materialize'
-const Stocks = (props) => {
+    Col,
+    Preloader
+} from 'react-materialize';
+import {
+    Link
+} from 'react-router-dom';
+// const Stocks = (props) => {
+    class Stocks extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        // changePercent = () => {
+        //     if(stockVolChange[0]) {
+        //         return stockVolChange[1]
+        //     } else if (stockVolChange[1]) {
+        //         return stockVolChange[2]
+        //     } else {
+        //         return stockVolChange[0]
+        //     }
+        // }
 
-    let stockChart =(props.stocks) ?
-
-    <div>
-        <Table
-        responsive={true}
-        hoverable={true}>
-            <thead>
-                <tr>
-                    <th data-field="id">Name</th>
-                    <th data-field="name">Symbol</th>
-                    <th data-field="price">Market Cap</th>
-                    <th data-field="price">Circulating Supply</th>
-                    <th data-field="price">Volume(24hr)</th>
-                    <th data-field="price">Percent Change</th>
-                </tr>
-            </thead>
-            <tbody>
-                {Object.keys(props.stocks).map(function(stock, index) {
-                    return (
-                <tr>
-                    <td value={index}> {stock.Id} </td>
-                    <td value={index}> {stock.CoinName} </td>
-                    <td value={index}> {stock.TotlCoinSupply} </td>
-                    <td value={index}> {stock.Alogrithim} </td>
-                    <td value={index}> {stock.Name} </td>
-                    <td value={index}> {stock.Name} </td>
-                </tr>
-
-                    )
-                })};
-
-            </tbody>
-        </Table>
-         {console.log(props.stocks)}
-
-    </div> :
-    <div>
-        <Table>
-            <thead>
-                <tr>
-                    <th data-field="id">Name</th>
-                    <th data-field="name">Symbol</th>
-                    <th data-field="price">Market Cap</th>
-                    <th data-field="price">Circulating Supply</th>
-                    <th data-field="price">Volume(24hr)</th>
-                    <th data-field="price">Percent Change</th>
-                </tr>
-            </thead>
-            <tbody>
-                Loading...
-            </tbody>
-        </Table>
-    </div>
-    return (
-        <div>
-            {stockChart}
-        </div>
-    )
-
-
-}
+        componentDidMount() {
+            // changePercent=()=> {
+            //     stockVolChange[i++]
+            // }
+        }
+        render() {
+            let stockChart =(this.props.stocks) ?
+            <div>
+                <Table
+                responsive={true}
+                hoverable={true}>
+                    <thead>
+                        <tr>
+                            <th data-field="name">Name</th>
+                            <th data-field="sym">Symbol</th>
+                            <th data-field="mc">Market Cap</th>
+                            <th data-field="supply">Circulating Supply</th>
+                            <th data-field="volume24">Volume(24hr)</th>
+                            <th data-field="prctChange"><button onClick={this.changePercent}>Percent Change</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.stocks.map( (stock, index) => {
+                            let stockVolChange = [];
+                            stockVolChange.push(stock.percent_change_1h, stock.percent_change_24h, stock.percent_change_7d)
+                            console.log(stockVolChange)
+                            return (
+                                <tr>
+                                    <td key={stock.id}>{stock.name}</td>
+                                    <td><b>{stock.symbol}</b></td>
+                                    <td>{stock.market_cap_usd}</td>
+                                    <td>{stock.total_supply}</td>
+                                    <td>{stock.h_volume_usd}</td>
+                                    <td>{stockVolChange[0]}</td>
+                                </tr>
+                            )
+                        })};
+                    </tbody>
+                </Table>
+            </div> :
+            <div>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th data-field="name">Name</th>
+                            <th data-field="sym">Symbol</th>
+                            <th data-field="mc">Market Cap</th>
+                            <th data-field="supply">Circulating Supply</th>
+                            <th data-field="volume24">Volume(24hr)</th>
+                            <th data-field="prctChange">Percent Change</th>
+                        </tr>
+                    </thead>
+                </Table>
+                <br/><br/>
+                <Col s={12}>
+                    <Preloader size='big'/>
+                </Col>
+            </div>
+            return (
+                <div>
+                    {stockChart}
+                </div>
+            )
+// }
+        }
+    }
 
 
 export default Stocks;

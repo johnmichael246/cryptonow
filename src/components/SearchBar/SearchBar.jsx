@@ -11,7 +11,7 @@ import {
 const SearchBar = (props) => {
     return (
         <div>
-            <h5>Search for stocks</h5>
+            <h5 className='main-font'>Search Stocks</h5>
             <Row>
                 <Input s={10} type="text" placeholder ="search a stock"onChange={props.searchParams} name='seachParams'/>
                 <Input s={2} type='select' label="Convert To" defaultValue='2' onChange={props.currencyParams} name='currencyParams'>

@@ -4,11 +4,15 @@ import {
     Row,
     Col
 } from 'react-materialize';
+import {
+    Link,
+} from 'react-router-dom';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Favs from '../../components/Favs/Favs';
 import News from '../../components/News/News';
 import StockShow from '../../components/StockShow/StockShow';
-import FavArticles from '../../components/FavArticles/FavArticles';
+import NavBar from '../../components/NavBar/NavBar';
+
 
 class MainPage extends React.Component {
     constructor(props) {
@@ -21,7 +25,7 @@ class MainPage extends React.Component {
     }
     searchStocks = () => {
         fetch('/stocks/stocks').then( response => response.json())
-        .then( data => this.setState({stocks:data.Data}))
+        .then( data => this.setState({stocks:data}))
     }
     
     searchParams = (e) => {
@@ -40,10 +44,14 @@ class MainPage extends React.Component {
 
     render() {
         let mainPage = this.props.user ?
-        <div>
+        <div className='background-main'>
             <Row>
+                <NavBar
+                user={this.props.user}
+                handleLogout={this.props.handleLogout} />
                 <Col s={4}>
                     <News
+                    articles={this.props.articles}
                     user={this.props.user} />
                 </Col>
                     
@@ -62,8 +70,18 @@ class MainPage extends React.Component {
                 </Col>
             </Row>
         </div> :
-        <div>
-            MainPage:User is logged out
+        <div className='background'>
+            <Row>
+                <div className='title'>CryptoNow</div>
+                <br/><br/>
+                <img src="https://i.imgur.com/mVoVb7e.png" alt=""/>
+            </Row>
+                <br/><br/>
+                <nav className='welcome-nav'>
+                    <Link to='/signup'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
+                    <Link to='/login'>LOG IN</Link>
+                </nav>
+
         </div>
         return (
 

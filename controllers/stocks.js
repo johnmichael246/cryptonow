@@ -1,9 +1,8 @@
 var Stock = require('../models/stock');
-var stockURL = 'https://www.cryptocompare.com/api/data/coinlist/'
+var stockURL = 'https://api.coinmarketcap.com/v1/ticker/?limit=10'
 var request = require('request');
 
 function getStocks(req, res) {
-    console.log('hitting stocks here')
     var options = {
         url: `${stockURL}`
     }

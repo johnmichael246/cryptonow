@@ -13,9 +13,12 @@ import {
 const Article = (props) => {
         return (
             <div key={props.title}>
-                <p className='news-font'>{props.title}</p>
-                <Link to={`articles/:${props.title}`}>
-                    <img className="size-image"src={props.urlToImage} alt=""/>
+                <p className='news-font'>{props.title.toUpperCase()}</p>
+                <Link to={`articles/:${props.title}`}
+                params={
+                    {title:props.title, urlToImage:props.urlToImage,publishedAt:props.publishedAt,description:props.description, url:props.url}
+                }>
+                    <img className="size-image image-border"src={props.urlToImage} alt=""/>
                 </Link>
                 <p>{props.publishedAt}</p>
                 <Icon>favorite_border</Icon> &nbsp;&nbsp;

@@ -12,10 +12,13 @@ const Articles = (props) => {
         <div>
             {props.articles.map( (article, index) => {
                 return (
-                    <Article key={article.title}
+                    <Article 
+                    key={article.title}
                     title={article.title}
                     urlToImage={article.urlToImage}
-                    publishedAt={article.publishedAt} />
+                    publishedAt={article.publishedAt}
+                    description={article.description}
+                    url={props.url} />
                 )
             })}
         </div>
