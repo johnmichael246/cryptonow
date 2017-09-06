@@ -1,5 +1,4 @@
 import React from 'react';
-import './StocksPage.css';
 import {
     Row,
     Col,
@@ -15,7 +14,8 @@ import Watchlist from '../../components/Watchlist/Watchlist';
 import FavArticles from '../../components/FavArticles/FavArticles';
 import Stock from '../../components/Stock/Stock';
 import Article from '../../components/Article/Article';
-
+import tokenService from '../../utilities/tokenService';
+import './StocksPage.css';
 
 class StocksPage extends React.Component {
     constructor(props) {
@@ -44,6 +44,13 @@ class StocksPage extends React.Component {
         console.log(this.state.currencyCompare)
     }
 
+    getAuthRequestOptions=(method)=> {
+        return {
+            method: method,
+            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()})
+        };
+    }
+
     getBitcoin = () => {
         fetch('/api/stocks/bitcoin')
         .then( response => response.json())
@@ -53,6 +60,19 @@ class StocksPage extends React.Component {
     componentDidMount() {
         this.getOneStock();
         this.getBitcoin();
+    }
+
+
+
+    addToWatchlist = (stockId) => {
+        // if (stockId) {
+            console.log(stockId)
+            let header = this.getAuthRequestOptions('POST');
+            header.headers.append('Content-Type','application/json')
+            header.body=stockId
+            fetch(`/api/stocks/${stockId}`, header)
+            .then(response => console.log(response))
+        // }
     }
 
     render() {
@@ -74,15 +94,12 @@ class StocksPage extends React.Component {
                 </Row>
                 <Row>   
                     <Col s={12}>
-                        <Article
-                        user={this.props.user} />
-                    </Col>
-                    <Col s={12}>
                     {this.state.stock && this.state.bitcoin ?
                         <Stock
                         user={this.props.user}
                         stock={this.state.stock}
-                        bitcoin={this.state.bitcoin} /> :
+                        bitcoin={this.state.bitcoin}
+                        addToWatchlist={this.addToWatchlist} /> :
                         <div>
                             <Preloader size='big'/>
                             <p>Loading...</p>

@@ -1,3 +1,4 @@
+import tokenService from './tokenService';
 const BASE_URL = '/api/users/';
 
 function signup(user) {
@@ -12,6 +13,14 @@ function signup(user) {
   })
   .then(({token}) => token);
 }
+
+function getAuthRequestOptions(method) {
+  return {
+    method: method,
+    headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()})
+  };
+}
+
 
 function login(creds) {
   return fetch(BASE_URL + 'login', {

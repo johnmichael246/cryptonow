@@ -4,6 +4,7 @@ var stocksCtrl = require('../../controllers/stocks');
 
 router.get('/', stocksCtrl.getStocks)
 router.get('/:id', stocksCtrl.getOneStock)
+router.post('/:id', stocksCtrl.addStock)
 
 
 module.exports = router

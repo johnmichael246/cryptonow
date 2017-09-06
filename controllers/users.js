@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var Stock = require('../models/stock');
 var jwt = require('jsonwebtoken');
 var SECRET = process.env.SECRET;
 
@@ -33,6 +34,7 @@ function login(req, res) {
     });
   }).catch(err => res.status(401).json(err));
 }
+
 
 module.exports = {
     signup,

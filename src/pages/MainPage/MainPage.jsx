@@ -42,7 +42,7 @@ class MainPage extends React.Component {
         this.searchStocks();
         setInterval( () => {
             this.searchStocks()
-        }, 60000)
+        }, 1200000)
     }
 
     render() {
@@ -86,12 +86,7 @@ class MainPage extends React.Component {
                 </nav>
 
         </div>
-        return (
-
-            <div>
-                {mainPage}
-            </div>
-        )
+        return mainPage;
     }
 }
 

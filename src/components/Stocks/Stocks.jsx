@@ -11,9 +11,6 @@ import {
     class Stocks extends React.Component {
         constructor(props) {
             super(props);
-        this.state= {
-            stocks:[]
-        }
         }
 
         changePercent=() => {
@@ -22,7 +19,6 @@ import {
 
 
         render() {
-            let stockVolChange=[];
             let stockChart =(this.props.stocks) ?
             <div>
                 <Table
@@ -30,7 +26,7 @@ import {
                 hoverable={true}>
                     <thead>
                         <tr>
-                            <th  className='center'data-field="name">Name</th>
+                            <th className='center'data-field="name">Name</th>
                             <th data-field="sym">Symbol</th>
                             <th data-field="mc">Market Cap</th>
                             <th data-field="supply">Circulating Supply</th>
@@ -40,8 +36,6 @@ import {
                     </thead>
                     <tbody>
                         {this.props.stocks.map( (stock, index) => {
-                            stockVolChange = [];
-                            stockVolChange.push(stock.percent_change_1h, stock.percent_change_24h, stock.percent_change_7d)
                             return (
                                 <tr>
                                 <Link to={`stocks/${stock.id}`} style={ {color:'black'} }
@@ -52,7 +46,7 @@ import {
                                     <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock.total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className='center'style={ stockVolChange[0] > 0 ? {color:'green'} : {color:'red'} }>{stockVolChange[0]}&nbsp;%</td>
+                                    <td className='center'style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
                                 </tr>
                             )
                         })}
@@ -77,11 +71,7 @@ import {
                     <Preloader size='big'/>
                 </Col>
             </div>
-            return (
-                <div>
-                    {stockChart}
-                </div>
-            )
+            return stockChart;
         }
     }
 
