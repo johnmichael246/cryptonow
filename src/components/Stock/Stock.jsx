@@ -51,7 +51,7 @@ const Stock = (props) => {
                         </table>
                         {props.user.favStocks.includes(props.stock[0].id) ?
                             <button className='btn' type='submit' onClick={()=>props.removeFromWatchlist(props.stock[0].id)}> Remove From Watchlist</button>:
-                            <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id)}> Add to Watchlist</button>
+                            <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Add to Watchlist</button>
                         }
                     </Col>
                 </Row>

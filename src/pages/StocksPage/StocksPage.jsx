@@ -63,15 +63,15 @@ class StocksPage extends React.Component {
     }
 
 
-    addToWatchlist = (stockId) => {
+    addToWatchlist = (stockId,stockSymbol,name) => {
         let id = stockId
         let header = this.getAuthRequestOptions('POST');
-        console.log(id)
         header.headers.append('Content-Type','application/json')
-        header.body= JSON.stringify({id})
+        header.body= JSON.stringify({id, stockSymbol, name})
+        console.log(header.body)
         fetch(`/api/stocks/${stockId}`, header)
         .then(response => response.json())
-        .then(data => alert('you succesfully saved', data,'!'))
+        .then(data => console.log(data))
     }
 
     render() {

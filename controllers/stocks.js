@@ -25,26 +25,50 @@ function getOneStock(req, res) {
 }
 
 function addStock(req, res) {
-  console.log('hitting here')
-  User.populate(req.user._id, 'favStocks', (err,user) => {
-      console.log(req.user.favStocks)
-      console.log(req.user)
-      if (!req.user.favStocks.includes(req.body.id) ) {
-          console.log('the stocks not here')
-          Stock.create({id:req.body.id}, (err,coin) => {   
-              if(err)console.log(err)
-                  req.user.favStocks.push(coin);
-                  console.log(req.user);
-                  user.save(err => {
-                  if(err) console.log(err)
-                  console.log('the coins value is: ',coin.id)
-                  res.send('ok')
-                  })
-            })
-        } else {
-            console.log('that stock is here already')
-            res.send('boo')
-        }
+    console.log('hitting here')
+    console.log(req.body)
+    User.findById(req.user._id, (err,user) => {
+        Stock.findOne({apiId:req.body.id}, (err, stock) => {
+            if(stock) {
+                console.log('the stock exists')
+                if(err)console.log(err);
+                let idChecker = user.favStocks.findIndex(id => id.equals(stock._id))
+                if(idChecker > -1) {
+                    console.log('removing stock from user array')
+                        user.favStocks.splice(idChecker);
+                        user.save(err => {
+                            if(err)console.log(err)
+                            User.populate(req.user._id, 'favStocks', (err, user)=> {
+                                console.log(user)
+                                res.json(user)
+                            })
+                        })
+                } else {
+                    console.log('adding stock to user array')
+                    user.favStocks.push(stock._id);
+                    user.save();
+                    User.populate(req.user._id, 'favStocks', (err, user) => {
+                        console.log(user)
+                        res.json(user)
+                    })
+                }
+            } else {
+                console.log('the stock is not here')
+                let coin =new Stock({
+                    name:req.body.name,
+                    symbol:req.body.stockSymbol,
+                    apiId:req.body.id
+                })
+                coin.save( (err, coin) => {
+                    user.favStocks.push(coin);
+                    user.save(err => {
+                        User.populate(req.user._id, 'favStocks', (err, user)=> {
+                            res.json(user)
+                        })
+                    })
+                })
+            }
+        })
     })
 }
 
@@ -56,3 +80,28 @@ module.exports = {
     getOneStock,
     addStock
 }
+
+
+
+   // // find stock by it's api id
+    //     // if stock exists
+    //         // toggle if already in user.stocks
+    //         if (user.favStocks.id(stock._id)) {
+    //             user.favStocks.id(stock._id).remove();
+    //             //save user
+    //             // populate user
+    //             res.json(user);
+    //         } else {
+    //             user.favStocks.push(stock._id);
+    //             //save user
+    //             // populate user
+    //             res.json(user);
+    //         }
+    //     // else, stock doesn't exist
+    //         // create stock
+    //             user.favStocks.push(stock._id);
+    //             //save user
+    //             // populate user
+    //             res.json(user);
+
+
