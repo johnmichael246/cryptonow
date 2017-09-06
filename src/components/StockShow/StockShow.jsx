@@ -1,28 +1,21 @@
 import React from 'react';
 import './StockShow.css'
 import Stocks from '../Stocks/Stocks';
+import tokenService from '../../utilities/tokenService'
 class StockShow extends React.Component {
     constructor(props) {
         super(props)
     }
 
 
+
     render() {
-        let stocklist = this.props.user.favStocks ?
-        <div>
-            <p>show favorite stocks</p>
-            <Stocks
-            stocks={this.props.stocks} />
-        </div> :
-        <div>
-            <p>show basic stocks</p>
-            <Stocks
-            stocks={this.props.stocks} />
-        </div>
         return (
             <div>
-                {stocklist}
+                <Stocks
+                stocks={this.props.stocks} />
             </div>
+
         )
     }
 }

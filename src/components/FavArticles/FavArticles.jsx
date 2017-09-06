@@ -12,8 +12,8 @@ class FavArticles extends React.Component {
         super(props); 
     }
     render() {
-        console.log('this.props =', this.props)
-        let favArticles = this.props.user.favArticles >= 1 ?
+        // console.log('this.props =', this.props)
+        let favArticles = this.props.user.favArticles > 1 ?
         <div>
             <Row>
                 <Article />

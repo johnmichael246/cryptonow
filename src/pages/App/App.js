@@ -12,7 +12,7 @@ import StocksPage from '../StocksPage/StocksPage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utilities/userService';
-
+import tokenService from '../../utilities/tokenService';
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class App extends Component {
 
 
   handleSignup = () => {
-    this.setState({user: userService.getUser()});
+    this.setState({user: tokenService.getUser()});
   }
 
   handleLogin = () => {
@@ -35,9 +35,28 @@ class App extends Component {
     this.setState({user: null});
   }
 
+
+  getAuthRequestOptions=(method)=> {
+      return {
+          method: method,
+          headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
+      }
+  }
+
+
+
+
+  populateUser = () => {
+    let header=this.getAuthRequestOptions('GET');
+    fetch('api/users/populate', header)
+    .then( response => response.json())
+    .then( data => this.setState({user:data}))
+  }
+  
   componentDidMount() {
     let user = userService.getUser();
     this.setState({user});
+    this.populateUser();
     fetch('api/news')
       .then( response => response.json())
       .then( data => this.setState({articles:data.articles}))
@@ -63,6 +82,7 @@ class App extends Component {
             }/>
             <Route exact path='/stocks/:id' render={(props) =>
               <StocksPage
+               favstocks={this.state.user.favstocks}
               {...props}
               user={this.state.user}
               handleLogout={this.handleLogout}

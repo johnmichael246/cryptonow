@@ -4,7 +4,7 @@ import {
     Row,
     Col
 } from 'react-materialize';
-
+import {Link} from 'react-router-dom'
 import Stock from '../../components/Stock/Stock';
 
 class Watchlist extends React.Component {
@@ -12,20 +12,27 @@ class Watchlist extends React.Component {
         super(props); 
     }
     render() {
-        let stocklist = this.props.user.favStocks >= 1 ?
+        let stocklist = this.props.user && this.props.user.favStocks.length > 1 ?
         <div>
             <Row>
-                <Stock />
+                {this.props.user.favStocks.map( (stock, index)=> {
+                    return (
+
+                    <Col s={2}>
+                        <Link to={`/stocks/${stock.id}`}>
+                            <div className='watchlist'>
+                                <span>{stock.symbol}</span>
+                            </div>
+                        </Link>  
+                    </Col>
+                    )
+                })}
             </Row>
         </div> :
         <div>
             No favorites yet, start your watchlist by searching for stocks!
-        </div>
-        return (
-            <div>
-                {stocklist}
-            </div>
-        )
+        </div>;
+        return stocklist;
     }
 }
 

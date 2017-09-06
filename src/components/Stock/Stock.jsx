@@ -12,7 +12,21 @@ const Stock = (props) => {
     let marketValue = props.stock[0].market_cap_usd.split('.')[0]
     let bitcoinMV= (marketValue/props.bitcoin[0].price_usd)
     let bitcoinVol24 = Math.round(props.stock[0]['24h_volume_usd'].split('.')[0] / props.bitcoin[0].price_usd)
+    let button 
 
+    if (props.currentStocks.favStocks === undefined) {
+        button =  <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Get Info</button>
+    } else {
+        console.log('currentStocks', props.currentStocks)
+        button = props.currentStocks.favStocks.filter( stock => stock.apiId === props.stock[0].id) ?
+            <div>
+                <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Remove From Watchlist</button>
+            </div> :
+            <div>
+                <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Add to Watchlist</button>
+            </div>
+    }
+                        
         return (
             <div>
                 <Row>
@@ -49,10 +63,7 @@ const Stock = (props) => {
                                 </tr>
                             </tbody>
                         </table>
-                        {props.user.favStocks.includes(props.stock[0].id) ?
-                            <button className='btn' type='submit' onClick={()=>props.removeFromWatchlist(props.stock[0].id)}> Remove From Watchlist</button>:
-                            <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Add to Watchlist</button>
-                        }
+                        {button}
                     </Col>
                 </Row>
             </div>

@@ -35,8 +35,19 @@ function login(req, res) {
   }).catch(err => res.status(401).json(err));
 }
 
+function populateUser(req,res) {
+  console.log('hitting populate user path')
+  User.findById(req.user._id, (err, user) => {
+    User.populate(user, 'favStocks', (err, user) => {
+      console.log(user)
+      res.json(user);
+    })
+  })
+}
+
 
 module.exports = {
     signup,
-    login
+    login,
+    populateUser
 }

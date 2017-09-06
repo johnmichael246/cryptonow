@@ -20,12 +20,13 @@ import './StocksPage.css';
 class StocksPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             search:'',
             currencyCompare:'',
             stock:null,
             bitcoin:null,
-            bitcoinValue:null
+            bitcoinValue:null,
+            currentStocks:[]
         } 
     }
     getOneStock = () => {
@@ -44,10 +45,17 @@ class StocksPage extends React.Component {
         console.log(this.state.currencyCompare)
     }
 
+        populateUser = () => {
+        let header=this.getAuthRequestOptions('GET');
+        fetch('api/users/populate', header)
+        .then( response => response.json())
+        .then( data => this.setState({user:data}))
+    }
+
     getAuthRequestOptions=(method)=> {
-        return {
-            method: method,
-            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
+    return {
+        method: method,
+        headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
         }
     }
 
@@ -60,18 +68,17 @@ class StocksPage extends React.Component {
     componentDidMount() {
         this.getOneStock();
         this.getBitcoin();
+        this.populateUser();
     }
-
 
     addToWatchlist = (stockId,stockSymbol,name) => {
         let id = stockId
         let header = this.getAuthRequestOptions('POST');
         header.headers.append('Content-Type','application/json')
         header.body= JSON.stringify({id, stockSymbol, name})
-        console.log(header.body)
         fetch(`/api/stocks/${stockId}`, header)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => this.setState({ currentStocks: data }))
     }
 
     render() {
@@ -98,7 +105,8 @@ class StocksPage extends React.Component {
                         user={this.props.user}
                         stock={this.state.stock}
                         bitcoin={this.state.bitcoin}
-                        addToWatchlist={this.addToWatchlist} /> :
+                        addToWatchlist={this.addToWatchlist}
+                        currentStocks={this.state.currentStocks} /> :
                         <div>
                             <Preloader size='big'/>
                             <p>Loading...</p>

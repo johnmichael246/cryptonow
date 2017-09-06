@@ -26,7 +26,6 @@ function getOneStock(req, res) {
 
 function addStock(req, res) {
     console.log('hitting here')
-    console.log(req.body)
     User.findById(req.user._id, (err,user) => {
         Stock.findOne({apiId:req.body.id}, (err, stock) => {
             if(stock) {
@@ -35,19 +34,19 @@ function addStock(req, res) {
                 let idChecker = user.favStocks.findIndex(id => id.equals(stock._id))
                 if(idChecker > -1) {
                     console.log('removing stock from user array')
-                        user.favStocks.splice(idChecker);
+                        user.favStocks.splice(idChecker, 1);
                         user.save(err => {
                             if(err)console.log(err)
-                            User.populate(req.user._id, 'favStocks', (err, user)=> {
+                            User.populate(user, 'favStocks', (err, user)=> {
                                 console.log(user)
                                 res.json(user)
                             })
                         })
                 } else {
                     console.log('adding stock to user array')
-                    user.favStocks.push(stock._id);
+                    user.favStocks.push(stock);
                     user.save();
-                    User.populate(req.user._id, 'favStocks', (err, user) => {
+                    User.populate(user, 'favStocks', (err, user) => {
                         console.log(user)
                         res.json(user)
                     })
@@ -62,7 +61,7 @@ function addStock(req, res) {
                 coin.save( (err, coin) => {
                     user.favStocks.push(coin);
                     user.save(err => {
-                        User.populate(req.user._id, 'favStocks', (err, user)=> {
+                        User.populate(user, 'favStocks', (err, user)=> {
                             res.json(user)
                         })
                     })

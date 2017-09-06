@@ -18,6 +18,12 @@ function login(creds) {
 function logout() {
   tokenService.removeToken();
 }
+
+function refreshToken(creds) {
+  return userAPI.login(creds)    
+  .then(token => tokenService.setToken(token))
+}
+
 export default {
     signup,
     getUser,
