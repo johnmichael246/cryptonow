@@ -44,6 +44,12 @@ class App extends Component {
   }
 
   render() {
+      console.log('this.state.user =', this.state.user)
+    if (!this.state.user) {
+      return (
+        <div>Loading</div>
+      )
+    }
     return (
       <div className="App">
         <Router>

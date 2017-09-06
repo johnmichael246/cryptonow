@@ -31,24 +31,27 @@ import {
                             <th data-field="mc">Market Cap</th>
                             <th data-field="supply">Circulating Supply</th>
                             <th data-field="volume24">Volume(24hr)</th>
-                            <th data-field="prctChange"><button onClick={this.changePercent}>Percent Change</button></th>
+                            <th data-field="prctChange">Percent Change</th>
+                            <th data-field="prctChange">Percent Change 24h</th>
+                            <th data-field="prctChange">Percent Change 7d</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.props.stocks.map( (stock, index) => {
                             return (
                                 <tr>
-                                <Link to={`stocks/${stock.id}`} style={ {color:'black'} }
-                                >
-                                    <td>{stock.name.toUpperCase()}</td>
-                                </Link>
+                                    <Link to={`stocks/${stock.id}`} style={ {color:'black'} }>
+                                        <td>{stock.name.toUpperCase()}</td>
+                                    </Link>
                                     <td><b>{stock.symbol}</b></td>
                                     <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock.total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td className='center'style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                </tr>
-                            )
+                                    <td className='center'style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_24h}&nbsp;%</td>
+                                    <td className='center'style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_7d}&nbsp;%</td>
+                                </tr>   
+                            ) 
                         })}
                     </tbody>
                 </Table>

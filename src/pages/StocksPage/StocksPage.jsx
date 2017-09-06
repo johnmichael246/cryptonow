@@ -47,8 +47,8 @@ class StocksPage extends React.Component {
     getAuthRequestOptions=(method)=> {
         return {
             method: method,
-            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()})
-        };
+            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
+        }
     }
 
     getBitcoin = () => {
@@ -63,23 +63,22 @@ class StocksPage extends React.Component {
     }
 
 
-
     addToWatchlist = (stockId) => {
-        // if (stockId) {
-            console.log(stockId)
-            let header = this.getAuthRequestOptions('POST');
-            header.headers.append('Content-Type','application/json')
-            header.body=stockId
-            fetch(`/api/stocks/${stockId}`, header)
-            .then(response => console.log(response))
-        // }
+        let id = stockId
+        let header = this.getAuthRequestOptions('POST');
+        console.log(id)
+        header.headers.append('Content-Type','application/json')
+        header.body= JSON.stringify({id})
+        fetch(`/api/stocks/${stockId}`, header)
+        .then(response => response.json())
+        .then(data => alert('you succesfully saved', data,'!'))
     }
 
     render() {
         return (
-            <div>
+            <div className='stockpage-font'>
                 <NavBar
-                user={this.props.user} />
+                user={this.props.user}/>
                 <Row>
                     <Col s={6}>
                         <FavArticles

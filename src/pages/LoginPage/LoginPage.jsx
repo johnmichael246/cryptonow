@@ -2,13 +2,27 @@ import React from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm'
 import './LoginPage.css'
 
-const LoginPage = (props) => {
-    return (
-        <div>
-            <LoginForm
-            {...props} />
-        </div>
-    )
+class LoginPage extends React.Component  {
+    constructor() {
+        super();
+        this.state = {
+            message:''
+        }
+    }
+      updateMessage = (msg) => {
+    this.setState({message: msg});
+  }
+
+    render() {
+        return (
+            <div>
+                <LoginForm
+                 />
+                updateMessage={this.updateMessage}
+                <p>{this.state.message}</p>
+            </div>
+        )
+    }
 }
 
 export default LoginPage;

@@ -26,15 +26,26 @@ function getOneStock(req, res) {
 
 function addStock(req, res) {
   console.log('hitting here')
-  console.log(req.body)
-//   User.populate(req.user._id, 'favstocks', (err,user) => {
-//       user.favstocks.indexOf()
-//   })
-  User.findById(req.user._id, (err, user) => {
-  console.log(req.body)
-    if(err) console.log(err);
-    res.json(user)
-  })
+  User.populate(req.user._id, 'favStocks', (err,user) => {
+      console.log(req.user.favStocks)
+      console.log(req.user)
+      if (!req.user.favStocks.includes(req.body.id) ) {
+          console.log('the stocks not here')
+          Stock.create({id:req.body.id}, (err,coin) => {   
+              if(err)console.log(err)
+                  req.user.favStocks.push(coin);
+                  console.log(req.user);
+                  user.save(err => {
+                  if(err) console.log(err)
+                  console.log('the coins value is: ',coin.id)
+                  res.send('ok')
+                  })
+            })
+        } else {
+            console.log('that stock is here already')
+            res.send('boo')
+        }
+    })
 }
 
 

@@ -22,6 +22,8 @@ class LoginForm extends Component {
     });
   }
 
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     userService.login(this.state)
@@ -29,7 +31,7 @@ class LoginForm extends Component {
         this.props.handleLogin();
         this.props.history.push('/');
       })
-      .catch(err => alert('Invalid Credentials!'));
+      .catch(err => this.props.updateMessage(err.message));
   }
 
   render() {

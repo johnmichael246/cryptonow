@@ -24,7 +24,8 @@ class MainPage extends React.Component {
         } 
     }
     searchStocks = () => {
-        fetch('/api/stocks').then( response => response.json())
+        fetch('/api/stocks')
+        .then( response => response.json())
         .then( data => this.setState({stocks:data}))
     }
     
@@ -40,9 +41,9 @@ class MainPage extends React.Component {
 
     componentDidMount() {
         this.searchStocks();
-        setInterval( () => {
-            this.searchStocks()
-        }, 1200000)
+        // setInterval( () => {
+        //     this.searchStocks()
+        // }, 1200000)
     }
 
     render() {

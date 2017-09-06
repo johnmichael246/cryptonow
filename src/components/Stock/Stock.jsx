@@ -11,6 +11,8 @@ const Stock = (props) => {
     let value = parseFloat(bitcoinValue.toFixed(5))
     let marketValue = props.stock[0].market_cap_usd.split('.')[0]
     let bitcoinMV= (marketValue/props.bitcoin[0].price_usd)
+    let bitcoinVol24 = Math.round(props.stock[0]['24h_volume_usd'].split('.')[0] / props.bitcoin[0].price_usd)
+
         return (
             <div>
                 <Row>
@@ -27,19 +29,30 @@ const Stock = (props) => {
                     <Col>
                         <table>
                             <thead>
-                                <th>Market Cap</th>
-                                <th>Volume(24hr)</th>
-                                <th>Supply Circulating</th>
-                                <th>Maximum Supply</th>
+                                <tr>
+                                    <th>Market Cap</th>
+                                    <th>Volume(24hr)</th>
+                                    <th>Supply Circulating</th>
+                                    <th>Maximum Supply</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <td>{marketValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} <br/>{ Math.round(bitcoinMV) } </td>
-                                <td>{props.stock[0]['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                <td>{props.stock[0].available_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                <td key={0}>{props.stock[0].total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                <tr>
+                                    <td className ='remove-lower-padding '>{marketValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td className ='remove-lower-padding '>{props.stock[0]['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td className='centered'>{props.stock[0].available_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td key={0}className='centered'>{props.stock[0].total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    </tr>
+                                <tr>
+                                    <td className='remove-margin centered' style ={{color:'grey'}} >{ Math.round(bitcoinMV)} <b>BTC</b></td>
+                                    <td className='remove-margin centered' style ={{color:'grey'}} >{bitcoinVol24} <b>BTC</b></td>
+                                </tr>
                             </tbody>
                         </table>
+                        {props.user.favStocks.includes(props.stock[0].id) ?
+                            <button className='btn' type='submit' onClick={()=>props.removeFromWatchlist(props.stock[0].id)}> Remove From Watchlist</button>:
                             <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id)}> Add to Watchlist</button>
+                        }
                     </Col>
                 </Row>
             </div>
