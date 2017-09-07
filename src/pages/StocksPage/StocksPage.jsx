@@ -11,7 +11,6 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import Favs from '../../components/Favs/Favs';
 import NavBar from '../../components/NavBar/NavBar';
 import Watchlist from '../../components/Watchlist/Watchlist';
-import FavArticles from '../../components/FavArticles/FavArticles';
 import Stock from '../../components/Stock/Stock';
 import Article from '../../components/Article/Article';
 import tokenService from '../../utilities/tokenService';
@@ -23,17 +22,9 @@ class StocksPage extends React.Component {
         this.state = {
             search:'',
             currencyCompare:'',
-            stock:null,
-            bitcoin:null,
-            bitcoinValue:null,
-            currentStocks:[]
         } 
     }
-    getOneStock = () => {
-        fetch(`/api/stocks/${this.props.match.params.id}`)
-        .then( response => response.json())
-        .then( data => this.setState({stock:data}))
-    }
+
     
     searchParams = (e) => {
         this.setState({search:e.target.value})
@@ -42,14 +33,13 @@ class StocksPage extends React.Component {
     currencyParams = (e) => {
         console.log(e.target.value)
         this.setState({currencyCompare:e.target.value})
-        console.log(this.state.currencyCompare)
     }
 
-        populateUser = () => {
+    populateUser = () => {
         let header=this.getAuthRequestOptions('GET');
-        fetch('api/users/populate', header)
+        fetch('/api/users/populate', header)
         .then( response => response.json())
-        .then( data => this.setState({user:data}))
+        .then( data => this.setState({user: data}))
     }
 
     getAuthRequestOptions=(method)=> {
@@ -64,22 +54,22 @@ class StocksPage extends React.Component {
         .then( response => response.json())
         .then( data => this.setState({bitcoin:data}))
     }
-
+    getOneStock = () => {
+        fetch(`/api/stocks/${this.props.match.params.id}`)
+        .then( response => response.json())
+        .then( data => this.setState({stock:data}))
+    }
+    
     componentDidMount() {
+        fetch('/api/stocks')
+        .then( response => response.json())
+        .then( data => this.setState({stocks:data}))      
+        this.populateUser();
         this.getOneStock();
         this.getBitcoin();
-        this.populateUser();
     }
 
-    addToWatchlist = (stockId,stockSymbol,name) => {
-        let id = stockId
-        let header = this.getAuthRequestOptions('POST');
-        header.headers.append('Content-Type','application/json')
-        header.body= JSON.stringify({id, stockSymbol, name})
-        fetch(`/api/stocks/${stockId}`, header)
-        .then(response => response.json())
-        .then(data => this.setState({ currentStocks: data }))
-    }
+
 
     render() {
         return (
@@ -87,15 +77,12 @@ class StocksPage extends React.Component {
                 <NavBar
                 user={this.props.user}/>
                 <Row>
-                    <Col s={6}>
-                        <FavArticles
-                        articles={this.props.articles}
-                        user={this.props.user} />
-                    </Col>
-                    <Col s={6}>
+                    <Col s={12}>
                         <Watchlist
                         articles={this.props.articles}
-                        user={this.props.user} />
+                        user={this.props.user}
+                        currentStocks={this.state.currentStocks}
+                        updateStockLink={this.props.updateStockLink} />
                     </Col>
                 </Row>
                 <Row>   
@@ -105,8 +92,9 @@ class StocksPage extends React.Component {
                         user={this.props.user}
                         stock={this.state.stock}
                         bitcoin={this.state.bitcoin}
-                        addToWatchlist={this.addToWatchlist}
-                        currentStocks={this.state.currentStocks} /> :
+                        currentStocks={this.state.currentStocks}
+                        button={this.state.button}
+                        addToWatchlist={this.props.addToWatchlist}/> :
                         <div>
                             <Preloader size='big'/>
                             <p>Loading...</p>
@@ -118,6 +106,5 @@ class StocksPage extends React.Component {
         )
     }
 }
-
 
 export default StocksPage;

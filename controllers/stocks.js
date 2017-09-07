@@ -45,21 +45,22 @@ function addStock(req, res) {
                 } else {
                     console.log('adding stock to user array')
                     user.favStocks.push(stock);
-                    user.save();
-                    User.populate(user, 'favStocks', (err, user) => {
-                        console.log(user)
-                        res.json(user)
-                    })
+                    user.save((err) => {
+                        User.populate(user, 'favStocks', (err, user) => {
+                            console.log(user)
+                            res.json(user)
+                        })
+                    });
                 }
             } else {
                 console.log('the stock is not here')
-                let coin =new Stock({
+                let coin = new Stock({
                     name:req.body.name,
                     symbol:req.body.stockSymbol,
                     apiId:req.body.id
                 })
                 coin.save( (err, coin) => {
-                    user.favStocks.push(coin);
+                    user.favStocks.push(coin._id);
                     user.save(err => {
                         User.populate(user, 'favStocks', (err, user)=> {
                             res.json(user)

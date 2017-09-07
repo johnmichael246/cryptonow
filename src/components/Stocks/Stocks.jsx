@@ -8,18 +8,10 @@ import {
 import {
     Link
 } from 'react-router-dom';
-    class Stocks extends React.Component {
-        constructor(props) {
-            super(props);
-        }
-
-        changePercent=() => {
-            alert('the stock index is now', )
-        }
+    const Stocks = (props) => {
 
 
-        render() {
-            let stockChart =(this.props.stocks) ?
+            let stockChart =(props.stocks) ?
             <div>
                 <Table
                 responsive={true}
@@ -37,7 +29,7 @@ import {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.stocks.map( (stock, index) => {
+                        {props.stocks.map( (stock, index) => {
                             return (
                                 <tr>
                                     <Link to={`stocks/${stock.id}`} style={ {color:'black'} }>
@@ -75,7 +67,7 @@ import {
                 </Col>
             </div>
             return stockChart;
-        }
+
     }
 
 

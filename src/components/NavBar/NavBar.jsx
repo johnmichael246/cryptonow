@@ -11,7 +11,6 @@ const NavBar = (props) => {
             <Navbar className="nav-style main-font">
                 <span style={{marginLeft:'50%'}} >WELCOME {props.user.name.toUpperCase()} </span>
                 <NavItem href ='/'>Home</NavItem>
-                <NavItem href="/articles" >Articles</NavItem>
                 <NavItem href="/stocks" >Watchlist</NavItem>
                 <NavItem href="/" onClick={props.handleLogout}>Logout</NavItem>
             </Navbar>

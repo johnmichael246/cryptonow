@@ -24,8 +24,7 @@ class MainPage extends React.Component {
         } 
     }
     searchStocks = () => {
-        fetch('/api/stocks')
-        .then( response => response.json())
+        fetch('/api/stocks').then( response => response.json())
         .then( data => this.setState({stocks:data}))
     }
     

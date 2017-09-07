@@ -17,10 +17,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles:null
+      articles:null,
+      user: null,
+      currentStocks:[],
+      stock:null,
+      bitcoin:null,
+      bitcoinValue:null,
+      button:null
     }
   }
-
 
   handleSignup = () => {
     this.setState({user: tokenService.getUser()});
@@ -35,7 +40,6 @@ class App extends Component {
     this.setState({user: null});
   }
 
-
   getAuthRequestOptions=(method)=> {
       return {
           method: method,
@@ -43,27 +47,38 @@ class App extends Component {
       }
   }
 
-
+  updateStockLink=(stock)=> {
+    this.setState({stock:stock})
+  } 
 
 
   populateUser = () => {
     let header=this.getAuthRequestOptions('GET');
-    fetch('api/users/populate', header)
+    fetch('/api/users/populate', header)
     .then( response => response.json())
     .then( data => this.setState({user:data}))
   }
-  
+
   componentDidMount() {
     let user = userService.getUser();
     this.setState({user});
     this.populateUser();
-    fetch('api/news')
+    fetch('/api/news')
       .then( response => response.json())
       .then( data => this.setState({articles:data.articles}))
   }
 
+  addToWatchlist = (stockId,stockSymbol,name) => {
+    let id = stockId
+    let header = this.getAuthRequestOptions('POST');
+    header.headers.append('Content-Type','application/json')
+    header.body= JSON.stringify({id, stockSymbol, name})
+    fetch(`/api/stocks/${stockId}`, header)
+    .then(response => response.json())
+    .then(data => this.setState({user:data}))
+  }
+
   render() {
-      console.log('this.state.user =', this.state.user)
     if (!this.state.user) {
       return (
         <div>Loading</div>
@@ -78,15 +93,25 @@ class App extends Component {
               articles={this.state.articles}
               user={this.state.user}
               handleLogout={this.handleLogout}
+              addToWatchlist={this.addToWatchlist}
               />
             }/>
-            <Route exact path='/stocks/:id' render={(props) =>
-              <StocksPage
-               favstocks={this.state.user.favstocks}
-              {...props}
-              user={this.state.user}
-              handleLogout={this.handleLogout}
-              />
+            <Route exact path='/stocks/:id' render={(props) => {
+                return(
+                  <StocksPage
+                  favstocks={this.state.user.favstocks}
+                  {...props}
+                  user={this.state.user}
+                  handleLogout={this.handleLogout}
+                  addToWatchlist={this.addToWatchlist}
+                  stock={this.state.stock}
+                  bitcoin={this.state.bitcoin}
+                  bitcoinValue={this.state.bitcoinValue}
+                  getOneStock={this.getOneStock}
+                  updateLink={this.updateStockLink}
+                  />
+                )
+              }
             }/>
             <Route path='/articles/:title' render={(props) =>
               <ArticlesPage
@@ -108,7 +133,6 @@ class App extends Component {
             }/>
           </Switch>        
         </Router>
-
       </div>
     );
   }

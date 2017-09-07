@@ -18,9 +18,9 @@ class Watchlist extends React.Component {
                 {this.props.user.favStocks.map( (stock, index)=> {
                     return (
 
-                    <Col s={2}>
-                        <Link to={`/stocks/${stock.id}`}>
-                            <div className='watchlist'>
+                    <Col s={3} m={2} l={2} style={ {marginTop:'20px'} }>
+                        <Link onClick={this.props.updateStockLink} to={`/stocks/${stock.apiId}`} >
+                            <div className='watchlist' >
                                 <span>{stock.symbol}</span>
                             </div>
                         </Link>  

@@ -1,41 +1,75 @@
 import React from 'react';
 import './Stock.css';
+import tokenService from '../../utilities/tokenService';
 import {
     Row,
-    Col
+    Col,
+    Preloader
 } from 'react-materialize';
 
 
-const Stock = (props) => {
-    let bitcoinValue = props.stock[0].price_usd / props.bitcoin[0].price_usd
-    let value = parseFloat(bitcoinValue.toFixed(5))
-    let marketValue = props.stock[0].market_cap_usd.split('.')[0]
-    let bitcoinMV= (marketValue/props.bitcoin[0].price_usd)
-    let bitcoinVol24 = Math.round(props.stock[0]['24h_volume_usd'].split('.')[0] / props.bitcoin[0].price_usd)
-    let button 
-
-    if (props.currentStocks.favStocks === undefined) {
-        button =  <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Get Info</button>
-    } else {
-        console.log('currentStocks', props.currentStocks)
-        button = props.currentStocks.favStocks.filter( stock => stock.apiId === props.stock[0].id) ?
-            <div>
-                <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Remove From Watchlist</button>
-            </div> :
-            <div>
-                <button className='btn' type='submit' onClick={()=>props.addToWatchlist(props.stock[0].id, props.stock[0].symbol, props.stock[0].name)}> Add to Watchlist</button>
-            </div>
+class Stock extends React.Component {
+    constructor(props) {
+        super(props);
     }
-                        
+
+    componentDidMount = () => {
+        this.populateUser()
+        // this.compareStockToFavs()
+    }
+
+    populateUser = () => {
+        let header = this.getAuthRequestOptions('GET');
+        fetch('/api/users/populate', header)
+        .then( response => response.json())
+        .then( data => this.setState({user:data}))
+    }
+
+    compareStockToFavs() {
+        if (this.state.user)
+        this.state.user.favStocks.filter( stock => stock.apiId === this.props.stock[0].id) ?
+        this.setState({button:true}) :
+        this.setState({button:false})
+    }
+
+    getAuthRequestOptions = (method)=> {
+        return {
+            method: method,
+            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
+            }
+    }
+
+    render() {
+  
+        let button
+        if (this.props.user) {
+            if(this.props.user.favStocks) {
+                console.log('favs')
+                this.props.user.favStocks.find( s => s.apiId === this.props.stock[0].id) ?
+                    button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
+                    button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>
+            } else {
+                button =<h5>loading</h5>
+            }
+        } else {
+            button = <h5>Loading</h5>
+        }
+
+        let bitcoinValue = this.props.stock[0].price_usd / this.props.bitcoin[0].price_usd
+        let value = parseFloat(bitcoinValue.toFixed(5))
+        let marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
+        let bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
+        let bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
         return (
             <div>
                 <Row>
                     <Col s={12} m={6} >
-                        <h2>{props.stock[0].name}({props.stock[0].symbol})</h2>
-                        <h5>rank:{props.stock[0].rank}</h5>
+                        <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
+                        <h5>rank:{this.props.stock[0].rank}</h5>
                     </Col>
                     <Col s={12}m={6}>
-                        <h2>{props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;<span style={ props.stock[0].price_usd > 0 ?{color:'green'} :{color:'red'} }>({props.stock[0].percent_change_24h}%)</span></h2>
+                        <h2>{this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
+                        <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
                         <h6> {value} bitcoin</h6>
                     </Col>
                 </Row>
@@ -51,11 +85,11 @@ const Stock = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr key={this.props.stock[0].id}>
                                     <td className ='remove-lower-padding '>{marketValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className ='remove-lower-padding '>{props.stock[0]['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className='centered'>{props.stock[0].available_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td key={0}className='centered'>{props.stock[0].total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td className ='remove-lower-padding '>{this.props.stock[0]['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td className='centered'>{this.props.stock[0].available_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td key={0}className='centered'>{this.props.stock[0].total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     </tr>
                                 <tr>
                                     <td className='remove-margin centered' style ={{color:'grey'}} >{ Math.round(bitcoinMV)} <b>BTC</b></td>
@@ -63,11 +97,14 @@ const Stock = (props) => {
                                 </tr>
                             </tbody>
                         </table>
-                        {button}
+                        <div>
+                            {button}
+                        </div>
                     </Col>
                 </Row>
             </div>
         )
+    }               
 }
 
 
