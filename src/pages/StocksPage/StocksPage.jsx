@@ -94,7 +94,9 @@ class StocksPage extends React.Component {
                         bitcoin={this.state.bitcoin}
                         currentStocks={this.state.currentStocks}
                         button={this.state.button}
-                        addToWatchlist={this.props.addToWatchlist}/> :
+                        addToWatchlist={this.props.addToWatchlist}
+                        currency = {this.props.currency}
+                        currencyParams={this.props.currencyParams}/> :
                         <div>
                             <Preloader size='big'/>
                             <p>Loading...</p>

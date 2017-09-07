@@ -9,7 +9,6 @@ function getArticles(req, res) {
     }
     request(options.url, (err, response, body) => {
         let news = JSON.parse(body)
-        console.log(news)
         res.send(news)
     })
 }
@@ -20,7 +19,6 @@ function getOneArticle(req, res) {
     }
     request(options.url, (err, response, body) => {
         let news = JSON.parse(body)
-        console.log(news)
         res.send(news)
     })
 }

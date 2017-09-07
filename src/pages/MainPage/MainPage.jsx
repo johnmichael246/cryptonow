@@ -32,11 +32,7 @@ class MainPage extends React.Component {
         this.setState({search:e.target.value})
         console.log(this.state.search)
     }
-    currencyParams = (e) => {
-        console.log(e.target.value)
-        this.setState({currencyCompare:e.target.value})
-        console.log(this.state.currencyCompare)
-    }
+
 
     componentDidMount() {
         this.searchStocks();

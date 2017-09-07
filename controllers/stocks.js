@@ -24,8 +24,15 @@ function getOneStock(req, res) {
     })
 }
 
+function getFavStocks(req,res) {
+    console.log('the body is', req.body)
+}
+
+
+
+
+
 function addStock(req, res) {
-    console.log('hitting here')
     User.findById(req.user._id, (err,user) => {
         Stock.findOne({apiId:req.body.id}, (err, stock) => {
             if(stock) {
@@ -78,30 +85,8 @@ function addStock(req, res) {
 module.exports = {
     getStocks,
     getOneStock,
-    addStock
+    addStock,
+    getFavStocks
 }
-
-
-
-   // // find stock by it's api id
-    //     // if stock exists
-    //         // toggle if already in user.stocks
-    //         if (user.favStocks.id(stock._id)) {
-    //             user.favStocks.id(stock._id).remove();
-    //             //save user
-    //             // populate user
-    //             res.json(user);
-    //         } else {
-    //             user.favStocks.push(stock._id);
-    //             //save user
-    //             // populate user
-    //             res.json(user);
-    //         }
-    //     // else, stock doesn't exist
-    //         // create stock
-    //             user.favStocks.push(stock._id);
-    //             //save user
-    //             // populate user
-    //             res.json(user);
 
 

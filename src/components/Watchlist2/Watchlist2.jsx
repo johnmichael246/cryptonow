@@ -1,5 +1,5 @@
 import React from 'react';
-import './Watchlist.css';
+import './Watchlist2.css';
 import {
     Row,
     Col
@@ -11,13 +11,16 @@ class Watchlist extends React.Component {
     constructor(props) {
         super(props); 
     }
+
+
+
+
     render() {
         let stocklist = this.props.user && this.props.user.favStocks.length > 1 ?
         <div>
             <Row>
                 {this.props.user.favStocks.map( (stock, index)=> {
                     return (
-
                     <Col s={3} m={2} l={2} style={ {marginTop:'20px'} }>
                         <Link onClick={this.props.updateStockLink} to={`/stocks/${stock.apiId}`} >
                             <div className='watchlist btn waves' >
@@ -35,6 +38,5 @@ class Watchlist extends React.Component {
         return stocklist;
     }
 }
-
 
 export default Watchlist;

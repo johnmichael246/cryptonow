@@ -7,7 +7,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import MainPage from '../MainPage/MainPage';
-import ArticlesPage from '../ArticlesPage/ArticlesPage';
+import WatchlistPage from '../WatchlistPage/WatchlistPage';
 import StocksPage from '../StocksPage/StocksPage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -23,7 +23,7 @@ class App extends Component {
       stock:null,
       bitcoin:null,
       bitcoinValue:null,
-      button:null
+      currency:null
     }
   }
 
@@ -49,7 +49,13 @@ class App extends Component {
 
   updateStockLink=(stock)=> {
     this.setState({stock:stock})
-  } 
+  }
+
+  currencyParams = (e) => {
+    console.log(e.target.value)
+    this.setState({currency:e.target.value})
+    console.log(this.state.currency)
+  }
 
 
   populateUser = () => {
@@ -94,6 +100,7 @@ class App extends Component {
               user={this.state.user}
               handleLogout={this.handleLogout}
               addToWatchlist={this.addToWatchlist}
+              
               />
             }/>
             <Route exact path='/stocks/:id' render={(props) => {
@@ -109,12 +116,14 @@ class App extends Component {
                   bitcoinValue={this.state.bitcoinValue}
                   getOneStock={this.getOneStock}
                   updateLink={this.updateStockLink}
+                  currency={this.state.currency}
+                  currencyParams={this.currencyParams}                
                   />
                 )
               }
             }/>
-            <Route path='/articles/:title' render={(props) =>
-              <ArticlesPage
+            <Route path='/watchlist' render={(props) =>
+              <WatchlistPage
               {...props}
               articles={this.state.articles}
               user={this.state.user}

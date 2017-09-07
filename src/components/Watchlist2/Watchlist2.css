@@ -1,0 +1,14 @@
+.watchlist {
+    border-radius:50%;
+    width:80px;
+    height:80px;
+    color:white;
+    background-color:grey;
+    vertical-align: middle;
+    line-height: 80px;
+}
+
+.padder-top {
+    margin-top: 20px;
+    
+}
