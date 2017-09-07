@@ -12,7 +12,6 @@ import Favs from '../../components/Favs/Favs';
 import NavBar from '../../components/NavBar/NavBar';
 import Watchlist from '../../components/Watchlist/Watchlist';
 import Stock from '../../components/Stock/Stock';
-import Article from '../../components/Article/Article';
 import tokenService from '../../utilities/tokenService';
 import './StocksPage.css';
 

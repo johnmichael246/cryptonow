@@ -14,10 +14,14 @@
     "morgan": "^1.8.2",
     "react": "^15.6.1",
     "react-autocomplete": "^1.7.1",
+    "react-bootstrap-table": "^4.0.3",
     "react-dom": "^15.6.1",
     "react-materialize": "^1.0.10",
+    "react-paginate": "^4.4.3",
+    "react-pagination-table": "^1.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.12",
+    "react-table": "^6.5.3",
     "serve-favicon": "^2.4.3"
   },
   "scripts": {

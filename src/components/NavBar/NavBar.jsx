@@ -8,7 +8,7 @@ import {
 const NavBar = (props) => {
     let nav = props.user ?
         <div>
-            <Navbar className="nav-style main-font">
+            <Navbar className="nav-style main-font padder">
                 <span style={{marginLeft:'50%'}} >WELCOME {props.user.name.toUpperCase()} </span>
                 <NavItem href ='/'>Home</NavItem>
                 <NavItem href="/watchlist" >Watchlist</NavItem>

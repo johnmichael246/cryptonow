@@ -7,3 +7,6 @@
 .main-font {
     font-family: 'Space Mono', monospace;
 }
+.padder {
+    margin-bottom:2%;
+}

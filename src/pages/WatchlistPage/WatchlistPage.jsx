@@ -12,62 +12,48 @@ import tokenService from '../../utilities/tokenService';
 
 class WatchlistPage extends React.Component {
     constructor(props) {
-        super(props); 
+        super(props);
+    }
+    updateFavorites = () => {
+        console.log('I am called! But WHY?!?')
+        if(this.props.user) {
+            let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
+            header.append('Content-Type','application/json')
+            let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
+            fetch('/api/favStocks', {
+                method:'post',
+                headers:header,
+                body:mainBody 
+            })
+            .then( response => response.json())
+            // .then(data => console.log('favorites', data))
+            .then( data => this.props.updateFavStockState(data))
+        }
+    }
 
+    componentWillReceiveProps() {
+        this.updateFavorites();
     }
 
 
-
-
-
-    componentDidMount() {
-        let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
-        let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
-        console.log(this.props.user)
-        fetch('/api/favStocks', {
-            method:'post',
-            headers:{
-                header
-            },
-            body:mainBody 
-        })
-        .then( response => console.log(response))
-    }
-    getAuthRequestOptions=(method)=> {
-        return {
-            method: method,
-            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()})
-     };
-}
-
-
-    render() { 
-        return (
+    render() {
+        let extractedWatchlist = this.props.user ?
             <div className='stockpage-font'>
-                <NavBar
-                user={this.props.user} />
-                <Row>
+                <Row>   
+                    <NavBar
+                    user={this.props.user} />
                     <Col s={12}>
                         <Watchlist2
-                        articles={this.props.articles}
-                        user={this.props.user} />
+                            user={this.props.user}
+                            favStocks={this.props.favStocks} />
                     </Col>
                 </Row>
-                <Row>   
-                    <Col s={12}>
-                    {this.props.user.favstocks ?
-                    <h1>Watchlist goes here</h1> :
-                    <div>
-                        <Preloader size='big'/>
-                        <h3>Loading...</h3> 
-                    </div>
-                        }
-
-                    </Col>
-
-                </Row>
-            </div>
-        )
+            </div>:
+            <div >
+                <Preloader size='big'/>
+                <h3>Loading...</h3> 
+            </div>    
+        return (extractedWatchlist)
     }
 }
 

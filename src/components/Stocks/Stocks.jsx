@@ -1,19 +1,35 @@
 import React from 'react';
 import './Stocks.css'
 import {
-    Table,
+    // Table,
     Col,
     Preloader
 } from 'react-materialize';
 import {
     Link
 } from 'react-router-dom';
+import ReactTable from 'react-table';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
     const Stocks = (props) => {
 
+            let stocks = props.stocks
 
             let stockChart =(props.stocks) ?
             <div>
-                <Table
+                <BootstrapTable data={props.stocks} version='4'striped hover>
+                    <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='symbol'>Product Price</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataField='price_usd'>Product ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='24h_volume_usd'>Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='market_cap_usd'>Market Cap</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataField='available_supply'>Available Supply</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataField='total_supply'>Total Supply</TableHeaderColumn>
+                    <TableHeaderColumn dataField='percent_change_1h'>Percent Change 1H</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataField='percent_change_24h'>Percent Change 24H</TableHeaderColumn>
+                    <TableHeaderColumn isKey dataField='percent_change_7d'>Percent Change 7D</TableHeaderColumn>
+                </BootstrapTable>
+
+                {/*<Table
                 responsive={true}
                 hoverable={true}>
                     <thead>
@@ -46,10 +62,10 @@ import {
                             ) 
                         })}
                     </tbody>
-                </Table>
+                </Table>*/}
             </div> :
             <div>
-                <Table>
+                {/*<Table>
                     <thead>
                         <tr>
                             <th data-field="name">Name</th>
@@ -60,15 +76,17 @@ import {
                             <th data-field="prctChange">Percent Change</th>
                         </tr>
                     </thead>
-                </Table>
+                </Table>*/}
                 <br/><br/>
                 <Col s={12}>
                     <Preloader size='big'/>
                 </Col>
             </div>
             return stockChart;
-
     }
+
+ 
+
 
 
 export default Stocks;

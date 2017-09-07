@@ -17,13 +17,12 @@ class Watchlist extends React.Component {
             <Row>
                 {this.props.user.favStocks.map( (stock, index)=> {
                     return (
-
                     <Col s={3} m={2} l={2} style={ {marginTop:'20px'} }>
-                        <Link onClick={this.props.updateStockLink} to={`/stocks/${stock.apiId}`} >
                             <div className='watchlist btn waves' >
-                                <span key={stock.symbol}>{stock.symbol}</span>
-                            </div>
+                        <Link onClick={this.props.updateStockLink} to={`/stocks/${stock.apiId}`} >
+                                <div key={stock.symbol}>{stock.symbol}</div>
                         </Link>  
+                            </div>
                     </Col>
                     )
                 })}

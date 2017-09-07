@@ -23,7 +23,8 @@ class App extends Component {
       stock:null,
       bitcoin:null,
       bitcoinValue:null,
-      currency:null
+      currency:null,
+      favStocks:null,
     }
   }
 
@@ -47,8 +48,16 @@ class App extends Component {
       }
   }
 
+  updateFavStockState = (data) => {
+    this.setState({favStocks:data})
+  }
+
   updateStockLink=(stock)=> {
     this.setState({stock:stock})
+  }
+
+  updateCurrency=(currency)=> {
+    this.setState({currency:currency})
   }
 
   currencyParams = (e) => {
@@ -72,6 +81,7 @@ class App extends Component {
     fetch('/api/news')
       .then( response => response.json())
       .then( data => this.setState({articles:data.articles}))
+
   }
 
   addToWatchlist = (stockId,stockSymbol,name) => {
@@ -84,12 +94,18 @@ class App extends Component {
     .then(data => this.setState({user:data}))
   }
 
+
+
+
+
+
+
   render() {
-    if (!this.state.user) {
-      return (
-        <div>Loading</div>
-      )
-    }
+    // if (!this.state.user) {
+    //   return (
+    //     <div>Loading</div>
+    //   )
+    // }
     return (
       <div className="App">
         <Router>
@@ -117,7 +133,8 @@ class App extends Component {
                   getOneStock={this.getOneStock}
                   updateLink={this.updateStockLink}
                   currency={this.state.currency}
-                  currencyParams={this.currencyParams}                
+                  currencyParams={this.currencyParams}   
+                  updateCurrency={this.updateCurrency}             
                   />
                 )
               }
@@ -127,10 +144,13 @@ class App extends Component {
               {...props}
               articles={this.state.articles}
               user={this.state.user}
+              favStocks={this.state.favStocks}
+              updateFavStockState={this.updateFavStockState}
               />
             }/>
             <Route exact path='/login' render={(props)=>
             <LoginPage
+            {...props}
             handleLogin={this.handleLogin}
              />
             }/>

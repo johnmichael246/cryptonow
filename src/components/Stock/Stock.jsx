@@ -73,8 +73,7 @@ class Stock extends React.Component {
                     <Col s={12}m={6}>
                         <h2>{this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
                         <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
-                        <h6> {value} bitcoin</h6><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                        
+                        <h6> {value} bitcoin</h6>
                         <Input s={3} type='select' className='margin-top'label="Convert To" defaultValue='USD' onChange={this.props.currencyParams} name='currencyParams'>
                             <option value='USD'>USD</option>
                             <option value='EU'>EU</option>

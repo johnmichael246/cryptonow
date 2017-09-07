@@ -25,12 +25,18 @@ function getOneStock(req, res) {
 }
 
 function getFavStocks(req,res) {
-    console.log('the body is', req.body)
+    let favStockArray = req.body.stocks.map( function(stock) {
+        console.log('promise for',stock.apiId)
+        return new Promise(function(resolve, reject) {
+            request(`${stockURL}${stock.apiId}/`, function (err, response, body) {
+                let coin = JSON.parse(body)
+                resolve(coin)
+            })
+        })
+    })
+    Promise.all(favStockArray)
+        .then(data => res.json(data) )
 }
-
-
-
-
 
 function addStock(req, res) {
     User.findById(req.user._id, (err,user) => {
