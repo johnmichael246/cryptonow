@@ -32,7 +32,7 @@ class WatchlistPage extends React.Component {
     // }
 
     componentDidMount() {
-        this.props.updateFavorites();
+        // console.log('watchlist > component mounted')
     }
 
 

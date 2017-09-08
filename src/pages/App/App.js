@@ -32,6 +32,7 @@ class App extends Component {
 
   handleSignup = () => {
     this.setState({user: userService.getUser()});
+    this.refreshData();
   }
 
   handleLogin = () => {
@@ -40,6 +41,7 @@ class App extends Component {
   }
 
   refreshData = () => {
+    console.log('app > refreshdata()')
     this.populateUser();
     fetch('/api/news')
       .then( response => response.json())
@@ -52,18 +54,19 @@ class App extends Component {
   }
 
   updateFavorites = () => {
-    console.log('I am called! But WHY?!?')
-    if(this.props.user) {
+    console.log('App > updateFavorites > this.state.user =', this.state.user)
+    if(this.state.user) {
+        console.log('sending fetch request')
         let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
         header.append('Content-Type','application/json')
-        let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
+        let mainBody = JSON.stringify({stocks:this.state.user.favStocks})
         fetch('/api/favStocks', {
             method:'post',
             headers:header,
             body:mainBody 
         })
         .then( response => response.json())
-        .then( data => this.props.updateFavStockState(data))
+        .then( data => this.setState({favStocks:data}))
     }
   }
 
@@ -74,9 +77,9 @@ class App extends Component {
       }
   }
 
-  updateFavStockState = (data) => {
-    this.setState({favStocks:data})
-  }
+  // updateFavStockState = (data) => {
+  //   this.setState({favStocks:data})
+  // }
 
   updateStockLink = (stock) => {
     this.setState({stock:stock})
@@ -95,9 +98,13 @@ class App extends Component {
     fetch('/api/users/populate', header)
     .then( response => response.json())
     .then( data => this.setState({user:data}))
+    .then( ()=> this.updateFavorites())
   }
 
   componentDidMount() {
+    console.log('app > component mounted')
+    this.setState({user: userService.getUser()});
+    this.refreshData();
   }
 
   addToWatchlist = (stockId,stockSymbol,name) => {
@@ -136,6 +143,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' render={(props) =>
             <MainPage
+              {...props}
               articles={this.state.articles}
               user={this.state.user}
               handleLogout={this.handleLogout}
@@ -150,7 +158,7 @@ class App extends Component {
           <Route exact path='/stocks/:id' render={(props) => {
               return(
                 <StocksPage
-                  favstocks={this.state.user ? this.state.user.favstocks : []}
+                  favstocks={this.state.favStocks}
                   {...props}
                   user={this.state.user}
                   handleLogout={this.handleLogout}
@@ -173,7 +181,7 @@ class App extends Component {
             <WatchlistPage
             {...props}
             user={this.state.user}
-            favStocks={this.state.favStocks}
+            favStocks={this.user ? this.state.user.favStocks : [] }
             updateFavStockState={this.updateFavStockState}
             stock={this.state.stock}
             updateFavorites={this.updateFavorites}

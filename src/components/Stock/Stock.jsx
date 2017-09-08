@@ -14,9 +14,8 @@ class Stock extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    handleReturn=()=> {
-      this.props.history.push('/');
+    handleReturn = () => {
+      this.props.history.goBack();
     }
 
     render() {
@@ -35,8 +34,9 @@ class Stock extends React.Component {
             return (
 
                 <div>
+                    
                     <Row>
-                        <button onClick={this.handleReturn}>BACK</button>
+                        <button className='btn btn-default'onClick={this.handleReturn}>BACK</button>
                         <Col s={12} m={6} >
                             <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
                             <h5>rank:{this.props.stock[0].rank}</h5>

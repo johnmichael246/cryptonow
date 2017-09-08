@@ -42,6 +42,7 @@ class StocksPage extends React.Component {
             }
     }
 
+
     getBitcoin = () => {
         fetch('/api/stocks/bitcoin')
         .then( response => response.json())
@@ -80,6 +81,7 @@ class StocksPage extends React.Component {
                     <Col s={12}>
                     {this.props.stock ?
                         <Stock
+                            history={this.props.history}
                             user={this.props.user}
                             stock={this.props.stock}
                             bitcoin={this.props.bitcoin}

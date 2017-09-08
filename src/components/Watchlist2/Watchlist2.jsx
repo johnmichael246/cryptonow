@@ -28,7 +28,7 @@ const Watchlist2 = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                    {/*{props.favStocks.map( (stock, index)=> {
+                    {props.favStocks.map( (stock, index)=> {
                         return (
                             <tr>
                                 <td>{stock.name}</td>
@@ -41,8 +41,8 @@ const Watchlist2 = (props) => {
                                 <td>style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
                             </tr>
                         )
-                    })}*/}
-                    HELLO
+                    })}
+                    {/*HELLO*/}
                     </tbody>
                 </Table>
             </Row>

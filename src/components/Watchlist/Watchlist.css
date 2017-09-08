@@ -2,12 +2,14 @@
     border-radius:50%;
     width:80px;
     height:80px;
-    color:white;
+    color:white !important;
     background-color:grey;
     vertical-align: middle;
     line-height: 80px;
 }
-
+.black-text {
+    color:black;
+}
 .padder-top {
     margin-top: 20px;
     

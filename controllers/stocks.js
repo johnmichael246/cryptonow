@@ -25,6 +25,7 @@ function getOneStock(req, res) {
 }
 
 function getFavStocks(req,res) {
+    console.log('im here')
     let favStockArray = req.body.stocks.map( function(stock) {
         console.log('promise for',stock.apiId)
         return new Promise(function(resolve, reject) {

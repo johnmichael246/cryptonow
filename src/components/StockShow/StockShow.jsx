@@ -7,6 +7,7 @@ const StockShow = (props) => {
         return (
             <div>
                 <Stocks
+                {...props}
                 stocks={props.stocks} />
             </div>
 
