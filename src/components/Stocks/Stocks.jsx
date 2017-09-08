@@ -14,7 +14,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
             let stockChart =(props.stocks) ?
             <div>
-                <Table
+                <Table className='table'
                 responsive={true}
                 hoverable={true}
                 bordered={true}>

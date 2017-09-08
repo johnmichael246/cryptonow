@@ -6,6 +6,7 @@ import {
   Input
 } from 'react-materialize';
 import userService from '../../utilities/userService';
+import './LoginForm.css'
 
 class LoginForm extends Component {
   constructor(props) {
@@ -38,15 +39,18 @@ class LoginForm extends Component {
     return (
       <div className='background'>
         <Row>
+          <br/><br/>
           <header className="sign-up-title">Log In</header>
+          <br/><br/>
           <form className="form-horizontal" onSubmit={this.handleSubmit} >
             <Col s={12} offset='s3'>
-              <Input s={6} type="email" className="form-control" placeholder="Email" value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
+              <Input s={6} type="email" className="form-control" placeholder="Email" autocomplete='off'value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
             </Col>
             <Col s={12} offset='s3'>
-              <Input s={6}type="password" className="form-control" placeholder="Password" value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
+              <Input s={6}type="password" className="form-control" placeholder="Password" autocomplete='off'value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
             </Col>
             <Col s={12} >
+            <br/>
               <button className="btn btn-default"style={ {color:'black',fontFamily:'Space Mono, Monospace'} }>Log In</button>&nbsp;&nbsp;&nbsp;
               <Link to='/'style={ {color:'black',fontFamily:'Space Mono, Monospace'} }>CANCEL</Link>
             </Col>

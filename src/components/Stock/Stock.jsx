@@ -38,29 +38,19 @@ class Stock extends React.Component {
             bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
         }
             return (
-
-                <div>
-                    
-                    <Row>
-                        <button className='btn btn-default'onClick={this.handleReturn}>BACK</button>
+                <div>   
+                    <Row className='center'>
                         <Col s={12} m={6} >
                             <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
-                            <h5>rank:{this.props.stock[0].rank}</h5>
-                            {button}                    
+                            <h5><span><i className="material-icons">stars</i></span>rank:{this.props.stock[0].rank}</h5>
+                            {button}<br/><br/>
+                            <button className='btn'onClick={this.handleReturn}>BACK</button>                  
                         </Col>
-                        <Col s={12}m={6}>
+                        <Col s={12}m={6} >
                             <h2>{this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
                             <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6> {parseFloat(bitcoinValue.toFixed(5))} bitcoin</h6>
-                            <Input s={3} type='select' className='margin-top'label="Convert To" defaultValue='USD' onChange={this.props.currencyParams} name='currencyParams'>
-                                <option value='USD'>USD</option>
-                                <option value='EU'>EU</option>
-                                <option value='AUD'>AUD</option>
-                                <option value='BRL'>BRL</option>
-                                <option value='CAD'>CAD</option>
-                                <option value='CLP'>CLP</option>
-                                <option value='RUB'>RUB</option>
-                            </Input>
+
                         </Col>
                     </Row>
                     <Row>
@@ -87,6 +77,17 @@ class Stock extends React.Component {
                                     </tr>
                                 </tbody>
                             </Table>
+                        </Col>
+                        <Col s={4}>
+                            <Input s={6}m={3} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams'>
+                                <option value='USD'>USD</option>
+                                <option value='EU'>EU</option>
+                                <option value='AUD'>AUD</option>
+                                <option value='BRL'>BRL</option>
+                                <option value='CAD'>CAD</option>
+                                <option value='CLP'>CLP</option>
+                                <option value='RUB'>RUB</option>
+                            </Input>
                         </Col>
                     </Row>
                 </div>

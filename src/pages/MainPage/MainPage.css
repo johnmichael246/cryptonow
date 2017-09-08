@@ -36,8 +36,16 @@
 .title-img-align {
     text-align:right;
 }
-table{
+table.table{
    overflow-y:scroll;
    height:500px;
    display:block;
+}
+
+.title-page-img {
+    max-width: 350px;
+    height: auto;
+}
+.text-size {
+    font-size:20px;
 }

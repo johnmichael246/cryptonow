@@ -66,12 +66,13 @@ class MainPage extends React.Component {
             <Row>
                 <div className='title'>CryptoNow</div>
                 <br/><br/>
-                <img src="https://i.imgur.com/mVoVb7e.png" alt=""/>
+                <img className='title-page-img'src="https://i.imgur.com/QWoAAtn.png" alt=""/>
+                {/*<img src="https://i.imgur.com/mVoVb7e.png" alt=""/>*/}
             </Row>
-                <br/><br/>
+
                 <nav className='welcome-nav'>
-                    <Link to='/signup' className='text-color'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
-                    <Link to='/login' className='text-color'>LOG IN</Link>
+                    <Link to='/signup' className='text-color text-size'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
+                    <Link to='/login' className='text-color text-size'>LOG IN</Link>
                 </nav>
 
         </div>

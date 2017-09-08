@@ -23,6 +23,16 @@ function getOneStock(req, res) {
         res.send(stock)
     })
 }
+function getOneStockCurrency(req, res) {
+    console.log(req.body.currency, req.body.id)
+    var options = {
+        url: `${stockURL}${req.params.id}/?convert=`
+    }
+    request(options.url, (err, response, body) => {
+        let stock = JSON.parse(body)
+        res.send(stock)
+    })
+}
 
 function getFavStocks(req,res) {
     console.log('im here')
@@ -94,7 +104,8 @@ module.exports = {
     getStocks,
     getOneStock,
     addStock,
-    getFavStocks
+    getFavStocks,
+    getOneStockCurrency
 }
 
 

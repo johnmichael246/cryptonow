@@ -24,7 +24,6 @@ class StocksPage extends React.Component {
     }
 
     currencyParams = (e) => {
-        console.log(e.target.value)
         this.setState({currencyCompare:e.target.value})
     }
 
@@ -42,7 +41,6 @@ class StocksPage extends React.Component {
             }
     }
 
-
     getBitcoin = () => {
         fetch('/api/stocks/bitcoin')
         .then( response => response.json())
@@ -54,6 +52,7 @@ class StocksPage extends React.Component {
         .then( response => response.json())
         .then( data => this.props.updateOneStock(data))
     }
+
 
     setOneStockTimer = () => {
         console.log('starting one stock timer')

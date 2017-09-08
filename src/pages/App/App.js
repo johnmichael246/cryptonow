@@ -87,6 +87,17 @@ class App extends Component {
 
   currencyParams = (e) => {
     this.setState({currency: e.target.value})
+    this.getOneStockCurrency(e.target.value)
+  }
+
+  getOneStockCurrency = (currency) => {
+    let header = this.getAuthRequestOptions('POST');
+    header.headers.append('Content-Type','application/json');
+    header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
+    console.log('sending fetch request now')
+    fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
+    .then( response => response.json())
+    .then( data => this.updateOneStock(data))
   }
 
   populateUser = () => {
