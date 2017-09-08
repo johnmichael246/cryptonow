@@ -14,18 +14,16 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
             let stockChart =(props.stocks) ?
             <div>
-                {/*<BootstrapTable data={stocks} striped hover>
+                <BootstrapTable data={props.stocks} striped hover>
                     <TableHeaderColumn isKey dataField='name'> Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField='symbol'>Product Price</TableHeaderColumn>
-                    <TableHeaderColumn dataField='price_usd'>price_usd</TableHeaderColumn>
-                    <TableHeaderColumn dataField='24h_volume_usd'>Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='symbol'>Symbol</TableHeaderColumn>
                     <TableHeaderColumn dataField='market_cap_usd'>Market Cap</TableHeaderColumn>
-                    <TableHeaderColumn dataField='available_supply'>Available Supply</TableHeaderColumn>
-                    <TableHeaderColumn dataField='total_supply'>Total Supply</TableHeaderColumn>
+                    <TableHeaderColumn dataField='available_supply'>Circulating Supply</TableHeaderColumn>
+                    <TableHeaderColumn dataField='24h_volume_usd'>Volume(24H)</TableHeaderColumn>
                     <TableHeaderColumn dataField='percent_change_1h'>Percent Change 1H</TableHeaderColumn>
                     <TableHeaderColumn dataField='percent_change_24h'>Percent Change 24H</TableHeaderColumn>
                     <TableHeaderColumn dataField='percent_change_7d'>Percent Change 7D</TableHeaderColumn>
-                </BootstrapTable>*/}
+                </BootstrapTable>
                 <Table
                 responsive={true}
                 hoverable={true}>
