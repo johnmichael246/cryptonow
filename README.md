@@ -31,7 +31,7 @@ Aftr signing up or logging in, you will be taken to the main page, which display
 
 
 
-[CryptoNow](http://cryptonow.herokuapp.com// "CryptoNow on Heroku")
+[CryptoNow](http://cryptonow.herokuapp.com/ "CryptoNow on Heroku")
 
 [CryptoNow Trello Board](https://trello.com/b/fuJEfWiN/cryptonow
  "CryptoNow on Trello")
