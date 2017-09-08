@@ -37,7 +37,7 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div className='background'>
+      <div>
         <Row>
           <br/><br/>
           <header className="sign-up-title">Log In</header>

@@ -16,12 +16,12 @@ class LoginPage extends React.Component  {
 
     render() {
         return (
-            <div>
+            <div className='background'>
                 <LoginForm
                     updateMessage={this.updateMessage}
                     {...this.props}
                  />
-                <p>{this.state.message}</p>
+                <p><b>{this.state.message}</b></p>
             </div>
         )
     }
