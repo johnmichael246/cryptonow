@@ -35,12 +35,36 @@ class App extends Component {
   }
 
   handleLogin = () => {
-    this.setState({user: userService.getUser()})
+    this.setState({user: userService.getUser()});
+    this.refreshData();
+  }
+
+  refreshData = () => {
+    this.populateUser();
+    fetch('/api/news')
+      .then( response => response.json())
+      .then( data => this.setState({articles:data.articles}))
   }
 
   handleLogout = () => {
     userService.logout();
     this.setState({user: null});
+  }
+
+  updateFavorites = () => {
+    console.log('I am called! But WHY?!?')
+    if(this.props.user) {
+        let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
+        header.append('Content-Type','application/json')
+        let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
+        fetch('/api/favStocks', {
+            method:'post',
+            headers:header,
+            body:mainBody 
+        })
+        .then( response => response.json())
+        .then( data => this.props.updateFavStockState(data))
+    }
   }
 
   getAuthRequestOptions = (method) => {
@@ -74,12 +98,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let user = userService.getUser();
-    this.setState({user});
-    this.populateUser();
-    fetch('/api/news')
-      .then( response => response.json())
-      .then( data => this.setState({articles:data.articles}))
   }
 
   addToWatchlist = (stockId,stockSymbol,name) => {
@@ -154,11 +172,11 @@ class App extends Component {
           <Route path='/watchlist' render={(props) =>
             <WatchlistPage
             {...props}
-            articles={this.state.articles}
             user={this.state.user}
             favStocks={this.state.favStocks}
             updateFavStockState={this.updateFavStockState}
             stock={this.state.stock}
+            updateFavorites={this.updateFavorites}
             />
           }/>
           <Route exact path='/login' render={(props)=>

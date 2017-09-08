@@ -64,7 +64,7 @@ class MainPage extends React.Component {
                 </Col>
             </Row>
         </div> :
-        <div className='background'>
+        <div>
             <Row>
                 <div className='title'>CryptoNow</div>
                 <br/><br/>
@@ -72,8 +72,8 @@ class MainPage extends React.Component {
             </Row>
                 <br/><br/>
                 <nav className='welcome-nav'>
-                    <Link to='/signup'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
-                    <Link to='/login'>LOG IN</Link>
+                    <Link to='/signup' className='text-color'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
+                    <Link to='/login' className='text-color'>LOG IN</Link>
                 </nav>
 
         </div>

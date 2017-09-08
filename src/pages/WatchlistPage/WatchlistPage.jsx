@@ -14,25 +14,25 @@ class WatchlistPage extends React.Component {
     constructor(props) {
         super(props);
     }
-    updateFavorites = () => {
-        console.log('I am called! But WHY?!?')
-        if(this.props.user) {
-            let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
-            header.append('Content-Type','application/json')
-            let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
-            fetch('/api/favStocks', {
-                method:'post',
-                headers:header,
-                body:mainBody 
-            })
-            .then( response => response.json())
-            // .then(data => console.log('favorites', data))
-            .then( data => this.props.updateFavStockState(data))
-        }
-    }
+    // updateFavorites = () => {
+    //     console.log('I am called! But WHY?!?')
+    //     if(this.props.user) {
+    //         let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
+    //         header.append('Content-Type','application/json')
+    //         let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
+    //         fetch('/api/favStocks', {
+    //             method:'post',
+    //             headers:header,
+    //             body:mainBody 
+    //         })
+    //         .then( response => response.json())
+    //         // .then(data => console.log('favorites', data))
+    //         .then( data => this.props.updateFavStockState(data))
+    //     }
+    // }
 
-    componentWillReceiveProps() {
-        this.updateFavorites();
+    componentDidMount() {
+        this.props.updateFavorites();
     }
 
 

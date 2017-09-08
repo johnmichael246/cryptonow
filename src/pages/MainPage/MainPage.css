@@ -1,5 +1,4 @@
 .background {
-    background-color: rgb(167,178,201);
     height:100vh;
     min-height:100vh;
 }
@@ -7,20 +6,24 @@
     height:100%;
     min-height:100%;
 }
-
 .welcome-nav {
-    background-color: rgb(167,178,201);
+    background-color: white;
     text-align:center;
     box-shadow: none;
     float:none;
     font-family: 'Space Mono', monospace;
+    color:black;
+}
+.text-color {
+    color:black;
 }
 .title {
   font-size:4rem;
   padding-top:15px;
   padding-bottom:0px;
   margin-bottom:0px;
-  color:rgb(10,232,94);
+  color:green;
+  text-shadow: 5px,5px,black;
   font-family: 'Space Mono', monospace;
 }
 

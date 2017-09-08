@@ -14,6 +14,11 @@ class Stock extends React.Component {
     constructor(props) {
         super(props);
     }
+
+    handleReturn=()=> {
+      this.props.history.push('/');
+    }
+
     render() {
         let button  
         if (this.props.stock && this.props.user.favStocks) {
@@ -27,12 +32,11 @@ class Stock extends React.Component {
             let marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
             let bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
             let bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
-        // let xs = this.props.stock.map(stock => <div>{stock.name}</div>)
-        // console.log(this.props.stock)
             return (
 
                 <div>
                     <Row>
+                        <button onClick={this.handleReturn}>BACK</button>
                         <Col s={12} m={6} >
                             <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
                             <h5>rank:{this.props.stock[0].rank}</h5>
