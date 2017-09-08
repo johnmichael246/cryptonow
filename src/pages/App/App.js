@@ -25,7 +25,7 @@ class App extends Component {
       stock: null,
       bitcoin: null,
       bitcoinValue: null,
-      currency: null,
+      currency: 'usd',
       favStocks: [],
     }
   }
@@ -91,13 +91,14 @@ class App extends Component {
   }
 
   getOneStockCurrency = (currency) => {
+    console.log('hittin the route')
     let header = this.getAuthRequestOptions('POST');
     header.headers.append('Content-Type','application/json');
     header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
     console.log('sending fetch request now')
     fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
     .then( response => response.json())
-    .then( data => this.updateOneStock(data))
+    .then( data => this.setState({stock:data}))
   }
 
   populateUser = () => {

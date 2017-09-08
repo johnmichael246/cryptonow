@@ -35,7 +35,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
                             return (
                                 <tr>
                                     <Link to={`stocks/${stock.id}`} style={ {color:'black'} }>
-                                        <td>{stock.name.toUpperCase()}</td>
+                                        <td key={stock.name}>{stock.name.toUpperCase()}</td>
                                     </Link>
                                     <td><b>{stock.symbol}</b></td>
                                     <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>

@@ -24,12 +24,14 @@ function getOneStock(req, res) {
     })
 }
 function getOneStockCurrency(req, res) {
-    console.log(req.body.currency, req.body.id)
+    console.log('hitting this path')
+    console.log('the stocks are', req.body.currency, req.body.id)
     var options = {
-        url: `${stockURL}${req.params.id}/?convert=`
+        url: `${stockURL}${req.body.id}/?convert=${req.body.currency}`
     }
     request(options.url, (err, response, body) => {
         let stock = JSON.parse(body)
+        console.log(stock)
         res.send(stock)
     })
 }

@@ -35,8 +35,8 @@ class Watchlist extends React.Component {
                 })}
             </Row>
         </div> :
-        <div>
-            No favorites yet, start your watchlist by searching for stocks!
+        <div className='watchlist-font'>
+            No favorites yet, start your Watchlist!
         </div>;
         return stocklist;
     }

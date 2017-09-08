@@ -37,6 +37,15 @@ class Stock extends React.Component {
             bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
             bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
         }
+        var coinValue
+        var coinCap
+        if(this.props.currency & this.props.stock) {
+            coinValue = this.props.stock[0].market_cap_`${this.props.currency}`
+            coinCap = this.props.stock[0]['24h_volume_rub']
+        } else {
+            coinValue='select a currency to compare'
+            coinCap=0;
+        }
             return (
                 <div>   
                     <Row className='center'>
@@ -75,18 +84,22 @@ class Stock extends React.Component {
                                         <td style ={{color:'grey'}} >{ Math.round(bitcoinMV)} <b>BTC</b></td>
                                         <td style ={{color:'grey'}} >{bitcoinVol24} <b>BTC</b></td>
                                     </tr>
+                                    <tr>
+                                        <td>{coinValue}</td>
+                                        <td>{coinCap}</td>
+                                    </tr>
                                 </tbody>
                             </Table>
                         </Col>
                         <Col s={4}>
-                            <Input s={6}m={3} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams'>
-                                <option value='USD'>USD</option>
-                                <option value='EU'>EU</option>
-                                <option value='AUD'>AUD</option>
-                                <option value='BRL'>BRL</option>
-                                <option value='CAD'>CAD</option>
-                                <option value='CLP'>CLP</option>
-                                <option value='RUB'>RUB</option>
+                            <Input s={6}m={3} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
+                                <option value='usd'>USD</option>
+                                <option value='eu'>EU</option>
+                                <option value='aud'>AUD</option>
+                                <option value='brl'>BRL</option>
+                                <option value='cad'>CAD</option>
+                                <option value='clp'>CLP</option>
+                                <option value='rub'>RUB</option>
                             </Input>
                         </Col>
                     </Row>
