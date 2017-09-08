@@ -36,7 +36,6 @@ Aftr signing up or logging in, you will be taken to the main page, which display
 [CryptoNow Trello Board](https://trello.com/b/fuJEfWiN/cryptonow
  "CryptoNow on Trello")
 
-[Adopted Pitch Deck](https://ga-students.slack.com/files/jessbakk/F6N2A9A0P/adopted_pitch_deck.key)
 
 #Unsolved Problems
 
