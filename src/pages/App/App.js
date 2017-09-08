@@ -6,6 +6,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+
 import MainPage from '../MainPage/MainPage';
 import WatchlistPage from '../WatchlistPage/WatchlistPage';
 import StocksPage from '../StocksPage/StocksPage';
@@ -13,27 +14,28 @@ import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import userService from '../../utilities/userService';
 import tokenService from '../../utilities/tokenService';
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles:null,
+      articles: [],
       user: null,
-      currentStocks:[],
-      stock:null,
-      bitcoin:null,
-      bitcoinValue:null,
-      currency:null,
-      favStocks:null,
+      stocks: [],
+      stock: null,
+      bitcoin: null,
+      bitcoinValue: null,
+      currency: null,
+      favStocks: [],
     }
   }
 
   handleSignup = () => {
-    this.setState({user: tokenService.getUser()});
+    this.setState({user: userService.getUser()});
   }
 
   handleLogin = () => {
-    this.setState({user:userService.getUser()})
+    this.setState({user: userService.getUser()})
   }
 
   handleLogout = () => {
@@ -41,7 +43,7 @@ class App extends Component {
     this.setState({user: null});
   }
 
-  getAuthRequestOptions=(method)=> {
+  getAuthRequestOptions = (method) => {
       return {
           method: method,
           headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
@@ -52,23 +54,20 @@ class App extends Component {
     this.setState({favStocks:data})
   }
 
-  updateStockLink=(stock)=> {
+  updateStockLink = (stock) => {
     this.setState({stock:stock})
   }
 
-  updateCurrency=(currency)=> {
+  updateCurrency = (currency) => {
     this.setState({currency:currency})
   }
 
   currencyParams = (e) => {
-    console.log(e.target.value)
-    this.setState({currency:e.target.value})
-    console.log(this.state.currency)
+    this.setState({currency: e.target.value})
   }
 
-
   populateUser = () => {
-    let header=this.getAuthRequestOptions('GET');
+    let header = this.getAuthRequestOptions('GET');
     fetch('/api/users/populate', header)
     .then( response => response.json())
     .then( data => this.setState({user:data}))
@@ -81,7 +80,6 @@ class App extends Component {
     fetch('/api/news')
       .then( response => response.json())
       .then( data => this.setState({articles:data.articles}))
-
   }
 
   addToWatchlist = (stockId,stockSymbol,name) => {
@@ -94,6 +92,19 @@ class App extends Component {
     .then(data => this.setState({user:data}))
   }
 
+   updateBitcoin = (data) => {
+    this.setState( { bitcoin: data })
+  }
+
+  updateOneStock = (data) => {
+    this.setState( { stock: data })
+    console.log(`Current stock is: ${this.state.stock} and expected stock is ${JSON.stringify(data)}`)
+  }
+
+  searchStocks = () => {
+      fetch('/api/stocks').then( response => response.json())
+      .then( data => this.setState({ stocks: data }))
+  }
 
 
 
@@ -101,67 +112,68 @@ class App extends Component {
 
 
   render() {
-    // if (!this.state.user) {
-    //   return (
-    //     <div>Loading</div>
-    //   )
-    // }
+
     return (
       <div className="App">
-        <Router>
-          <Switch>
-            <Route exact path='/' render={(props) =>
-              <MainPage
+        <Switch>
+          <Route exact path='/' render={(props) =>
+            <MainPage
               articles={this.state.articles}
               user={this.state.user}
               handleLogout={this.handleLogout}
               addToWatchlist={this.addToWatchlist}
-              
-              />
-            }/>
-            <Route exact path='/stocks/:id' render={(props) => {
-                return(
-                  <StocksPage
-                  favstocks={this.state.user.favstocks}
+              updateStockLink={this.updateStockLink}
+              searchStocks={this.searchStocks}
+              currencyParams={this.currencyParams}
+              stocks={this.state.stocks}
+              stock={this.state.stock}
+            />
+          }/>
+          <Route exact path='/stocks/:id' render={(props) => {
+              return(
+                <StocksPage
+                  favstocks={this.state.user ? this.state.user.favstocks : []}
                   {...props}
                   user={this.state.user}
                   handleLogout={this.handleLogout}
                   addToWatchlist={this.addToWatchlist}
-                  stock={this.state.stock}
+                  stock={this.state.stock }
                   bitcoin={this.state.bitcoin}
                   bitcoinValue={this.state.bitcoinValue}
-                  getOneStock={this.getOneStock}
                   updateLink={this.updateStockLink}
                   currency={this.state.currency}
                   currencyParams={this.currencyParams}   
-                  updateCurrency={this.updateCurrency}             
+                  updateCurrency={this.updateCurrency}  
+                  updateOneStock={this.updateOneStock}
+                  updateStockLink={this.updateStockLink}
+                  updateBitcoin={this.updateBitcoin}          
                   />
-                )
-              }
-            }/>
-            <Route path='/watchlist' render={(props) =>
-              <WatchlistPage
-              {...props}
-              articles={this.state.articles}
-              user={this.state.user}
-              favStocks={this.state.favStocks}
-              updateFavStockState={this.updateFavStockState}
-              />
-            }/>
-            <Route exact path='/login' render={(props)=>
+              )
+            }
+          }/>
+          <Route path='/watchlist' render={(props) =>
+            <WatchlistPage
+            {...props}
+            articles={this.state.articles}
+            user={this.state.user}
+            favStocks={this.state.favStocks}
+            updateFavStockState={this.updateFavStockState}
+            stock={this.state.stock}
+            />
+          }/>
+          <Route exact path='/login' render={(props)=>
             <LoginPage
             {...props}
             handleLogin={this.handleLogin}
-             />
-            }/>
-            <Route exact path='/signup' render={(props)=>
+            />
+          }/>
+          <Route exact path='/signup' render={(props)=>
             <SignupPage
             {...props}
             handleSignup={this.handleSignup}
-            />
-            }/>
-          </Switch>        
-        </Router>
+          />
+          }/>
+        </Switch>        
       </div>
     );
   }

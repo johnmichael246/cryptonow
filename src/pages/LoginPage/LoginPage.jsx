@@ -9,16 +9,18 @@ class LoginPage extends React.Component  {
             message:''
         }
     }
-      updateMessage = (msg) => {
-    this.setState({message: msg});
-  }
+
+    updateMessage = (msg) => {
+        this.setState({message: msg});
+    }
 
     render() {
         return (
             <div>
                 <LoginForm
+                    updateMessage={this.updateMessage}
+                    {...this.props}
                  />
-                updateMessage={this.updateMessage}
                 <p>{this.state.message}</p>
             </div>
         )

@@ -35,7 +35,8 @@ function getFavStocks(req,res) {
         })
     })
     Promise.all(favStockArray)
-        .then(data => res.json(data) )
+        .then(data => res.json(data))
+
 }
 
 function addStock(req, res) {

@@ -19,16 +19,10 @@ class StocksPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            search:'',
-            currencyCompare:'',
+            currencyCompare: ''
         } 
     }
 
-    
-    searchParams = (e) => {
-        this.setState({search:e.target.value})
-        console.log(this.state.search)
-    }
     currencyParams = (e) => {
         console.log(e.target.value)
         this.setState({currencyCompare:e.target.value})
@@ -41,28 +35,26 @@ class StocksPage extends React.Component {
         .then( data => this.setState({user: data}))
     }
 
-    getAuthRequestOptions=(method)=> {
-    return {
-        method: method,
-        headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
-        }
+    getAuthRequestOptions = (method) => {
+        return {
+            method: method,
+            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
+            }
     }
 
     getBitcoin = () => {
         fetch('/api/stocks/bitcoin')
         .then( response => response.json())
-        .then( data => this.setState({bitcoin:data}))
+        .then( data => this.props.updateBitcoin(data))
     }
+
     getOneStock = () => {
         fetch(`/api/stocks/${this.props.match.params.id}`)
         .then( response => response.json())
-        .then( data => this.setState({stock:data}))
+        .then( data => this.props.updateOneStock(data))
     }
     
-    componentDidMount() {
-        fetch('/api/stocks')
-        .then( response => response.json())
-        .then( data => this.setState({stocks:data}))      
+    componentDidMount() {     
         this.populateUser();
         this.getOneStock();
         this.getBitcoin();
@@ -86,16 +78,16 @@ class StocksPage extends React.Component {
                 </Row>
                 <Row>   
                     <Col s={12}>
-                    {this.state.stock && this.state.bitcoin ?
+                    {this.props.stock ?
                         <Stock
-                        user={this.props.user}
-                        stock={this.state.stock}
-                        bitcoin={this.state.bitcoin}
-                        currentStocks={this.state.currentStocks}
-                        button={this.state.button}
-                        addToWatchlist={this.props.addToWatchlist}
-                        currency = {this.props.currency}
-                        currencyParams={this.props.currencyParams}/> :
+                            user={this.props.user}
+                            stock={this.props.stock}
+                            bitcoin={this.props.bitcoin}
+                            currentStocks={this.props.currentStocks}
+                            button={this.props.button}
+                            addToWatchlist={this.props.addToWatchlist}
+                            currency = {this.props.currency}
+                            currencyParams={this.props.currencyParams}/> :
                         <div>
                             <Preloader size='big'/>
                             <p>Loading...</p>

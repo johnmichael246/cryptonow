@@ -19,13 +19,8 @@ class MainPage extends React.Component {
         super(props);
         this.state={
             search:'',
-            currencyCompare:'',
-            stocks:null
+            currencyCompare:''
         } 
-    }
-    searchStocks = () => {
-        fetch('/api/stocks').then( response => response.json())
-        .then( data => this.setState({stocks:data}))
     }
     
     searchParams = (e) => {
@@ -35,7 +30,7 @@ class MainPage extends React.Component {
 
 
     componentDidMount() {
-        this.searchStocks();
+        this.props.searchStocks();
         // setInterval( () => {
         //     this.searchStocks()
         // }, 1200000)
@@ -56,16 +51,16 @@ class MainPage extends React.Component {
                     
                 <Col s={12}m={8}>
                     <SearchBar
-                    stocks={this.state.stocks}
-                    search={this.state.search}
-                    searchStocks ={this.searchStocks}
-                    searchParams={this.searchParams}
-                    currencyParams={this.currencyParams} />
+                        stocks={this.props.stocks}
+                        search={this.props.search}
+                        searchStocks ={this.props.searchStocks}
+                        searchParams={this.searchParams}
+                        currencyParams={this.props.currencyParams} />
                     <Favs
                     user={this.props.user} />
                     <StockShow
                     user={this.props.user}
-                    stocks={this.state.stocks} />
+                    stocks={this.props.stocks} />
                 </Col>
             </Row>
         </div> :
