@@ -16,7 +16,8 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
             <div>
                 <Table
                 responsive={true}
-                hoverable={true}>
+                hoverable={true}
+                bordered={true}>
                     <thead>
                         <tr>
                             <th className='center'data-field="name">Name</th>

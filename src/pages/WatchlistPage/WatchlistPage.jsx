@@ -14,27 +14,9 @@ class WatchlistPage extends React.Component {
     constructor(props) {
         super(props);
     }
-    // updateFavorites = () => {
-    //     console.log('I am called! But WHY?!?')
-    //     if(this.props.user) {
-    //         let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
-    //         header.append('Content-Type','application/json')
-    //         let mainBody = JSON.stringify({stocks:this.props.user.favStocks})
-    //         fetch('/api/favStocks', {
-    //             method:'post',
-    //             headers:header,
-    //             body:mainBody 
-    //         })
-    //         .then( response => response.json())
-    //         // .then(data => console.log('favorites', data))
-    //         .then( data => this.props.updateFavStockState(data))
-    //     }
-    // }
-
-    componentDidMount() {
-        // console.log('watchlist > component mounted')
+    handleTheReturn = () => {
+        this.props.history.goBack();
     }
-
 
     render() {
         let extractedWatchlist = this.props.user ?
@@ -44,6 +26,8 @@ class WatchlistPage extends React.Component {
                     user={this.props.user} />
                     <Col s={12}>
                         <Watchlist2
+                            handleTheReturn={this.handleTheReturn}
+                            history={this.props.history}
                             user={this.props.user}
                             favStocks={this.props.favStocks} />
                     </Col>

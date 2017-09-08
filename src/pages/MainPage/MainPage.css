@@ -36,3 +36,8 @@
 .title-img-align {
     text-align:right;
 }
+table{
+   overflow-y:scroll;
+   height:500px;
+   display:block;
+}

@@ -27,10 +27,16 @@ class Stock extends React.Component {
         } else {
             button = <Preloader/>
         }
-            let bitcoinValue = this.props.stock[0].price_usd / this.props.bitcoin[0].price_usd
-            let marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
-            let bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
-            let bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
+        var bitcoinValue = 0
+        var marketValue = ''
+        var bitcoinMV= ''
+        var bitcoinVol24 = ''
+        if (this.props.bitcoin && this.props.stock) {
+            bitcoinValue = this.props.stock[0].price_usd / this.props.bitcoin[0].price_usd
+            marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
+            bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
+            bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
+        }
             return (
 
                 <div>

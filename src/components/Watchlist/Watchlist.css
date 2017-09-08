@@ -2,8 +2,8 @@
     border-radius:50%;
     width:80px;
     height:80px;
-    color:white !important;
-    background-color:grey;
+    /*color:white !important;*/
+    background-color:rgb(164,222,253);
     vertical-align: middle;
     line-height: 80px;
 }
@@ -11,6 +11,5 @@
     color:black;
 }
 .padder-top {
-    margin-top: 20px;
-    
+    margin-top: 20px; 
 }

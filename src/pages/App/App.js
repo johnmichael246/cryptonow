@@ -77,10 +77,6 @@ class App extends Component {
       }
   }
 
-  // updateFavStockState = (data) => {
-  //   this.setState({favStocks:data})
-  // }
-
   updateStockLink = (stock) => {
     this.setState({stock:stock})
   }
@@ -131,10 +127,17 @@ class App extends Component {
       .then( data => this.setState({ stocks: data }))
   }
 
+  setTimer = () => {
+    setInterval(() =>{
+      console.log('the timer has started')
+    this.searchStocks()
+  }, 120000)
+  }
 
-
-
-
+  clearTimer= () => {
+    console.log('the timer has been cleared')
+    clearInterval(this.setTimer)
+  }
 
   render() {
 
@@ -153,6 +156,7 @@ class App extends Component {
               currencyParams={this.currencyParams}
               stocks={this.state.stocks}
               stock={this.state.stock}
+              setTimer={this.setTimer}
             />
           }/>
           <Route exact path='/stocks/:id' render={(props) => {
@@ -172,7 +176,8 @@ class App extends Component {
                   updateCurrency={this.updateCurrency}  
                   updateOneStock={this.updateOneStock}
                   updateStockLink={this.updateStockLink}
-                  updateBitcoin={this.updateBitcoin}          
+                  updateBitcoin={this.updateBitcoin} 
+                  clearTimer={this.clearTimer}         
                   />
               )
             }
@@ -181,7 +186,7 @@ class App extends Component {
             <WatchlistPage
             {...props}
             user={this.state.user}
-            favStocks={this.user ? this.state.user.favStocks : [] }
+            favStocks={this.state.favStocks}
             updateFavStockState={this.updateFavStockState}
             stock={this.state.stock}
             updateFavorites={this.updateFavorites}

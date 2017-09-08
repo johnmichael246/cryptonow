@@ -1,6 +1,6 @@
 var Stock = require('../models/stock');
 var User = require('../models/user');
-var baseStockURL = 'https://api.coinmarketcap.com/v1/ticker/?limit=10'
+var baseStockURL = 'https://api.coinmarketcap.com/v1/ticker/?limit=30'
 var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
 var request = require('request');
 

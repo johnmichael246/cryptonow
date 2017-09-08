@@ -31,9 +31,7 @@ class MainPage extends React.Component {
 
     componentDidMount() {
         this.props.searchStocks();
-        // setInterval( () => {
-        //     this.searchStocks()
-        // }, 1200000)
+        this.props.setTimer();
     }
 
     render() {
