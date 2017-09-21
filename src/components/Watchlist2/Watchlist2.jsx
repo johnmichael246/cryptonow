@@ -5,15 +5,14 @@ import {
     Col,
     Table
 } from 'react-materialize';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 
 const Watchlist2 = (props) => {
     return (
-
-    // let favorites = props.favstocks && props.user.favStocks ? 
         <div>
             <Row>
+                <Col s={8}>
                 <Table>
                     <thead>
                         <tr>
@@ -28,7 +27,7 @@ const Watchlist2 = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                            {props.favStocks.map( (stock, index)=> {
+                            {props.favStocks.map( (stock, index) => {
                                 return (
                                     <tr key={index}>
                                         <td key={stock.name}>{stock.name}</td>
@@ -36,20 +35,17 @@ const Watchlist2 = (props) => {
                                         <td key={stock.market_cap_usd}>{stock.market_cap_usd}</td>
                                         <td key={stock.total_supply}>{stock.total_supply}</td>
                                         <td key={stock['24h_volume_usd']}>{stock['24h_volume_usd']}</td>
-                                        <td key={stock.percent_change_1h}>{stock.percent_change_1h}style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                        <td key={stock.percent_change_24h}>{stock.percent_change_24h}style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                        <td key={stock.percent_change_7d}>{stock.percent_change_7d}style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_1h} style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_24h} style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} } >{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_7d} style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
                                     </tr>
                                 )
                             })}
                     </tbody>
                 </Table>
+                </Col>
             </Row> 
         </div> 
-    //     :
-    //    <p>IM loading and waiting for state to change</p>
-
-    // return favorites
     )
 }
 
