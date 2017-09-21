@@ -10,7 +10,7 @@ import {Link} from 'react-router-dom'
 
 
 const Watchlist2 = (props) => {
-    let favorites = props.user.favstocks && props.favstocks ? 
+    let favorites = props.favstocks ? 
         <div>
             <Row>
                 <Table>
