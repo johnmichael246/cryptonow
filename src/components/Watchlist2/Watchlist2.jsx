@@ -31,14 +31,14 @@ const Watchlist2 = (props) => {
                             {props.favStocks.map( (stock, index)=> {
                                 return (
                                     <tr key={index}>
-                                        <td>{stock.name}</td>
-                                        <td>{stock.symbol}</td>
-                                        <td>{stock.market_cap_usd}</td>
-                                        <td>{stock.total_supply}</td>
-                                        <td>{stock['24h_volume_usd']}</td>
-                                        <td>{stock.percent_change_1h}style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                        <td>{stock.percent_change_24h}style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                        <td>{stock.percent_change_7d}style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.name}>{stock.name}</td>
+                                        <td key={stock.symbol}>{stock.symbol}</td>
+                                        <td key={stock.market_cap_usd}>{stock.market_cap_usd}</td>
+                                        <td key={stock.total_supply}>{stock.total_supply}</td>
+                                        <td key={stock['24h_volume_usd']}>{stock['24h_volume_usd']}</td>
+                                        <td key={stock.percent_change_1h}>{stock.percent_change_1h}style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_24h}>{stock.percent_change_24h}style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_7d}>{stock.percent_change_7d}style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
                                     </tr>
                                 )
                             })}
