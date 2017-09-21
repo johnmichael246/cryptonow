@@ -7,7 +7,6 @@ import {
 } from 'react-materialize';
 import Watchlist2 from '../../components/Watchlist2/Watchlist2';
 import NavBar from '../../components/NavBar/NavBar';
-import tokenService from '../../utilities/tokenService';
 
 
 class WatchlistPage extends React.Component {

@@ -3,14 +3,15 @@ import './Watchlist2.css';
 import {
     Row,
     Col,
-    Table,
-    Preloader
+    Table
 } from 'react-materialize';
 import {Link} from 'react-router-dom'
 
 
 const Watchlist2 = (props) => {
-    let favorites = props.favstocks ? 
+    return (
+
+    // let favorites = props.favstocks && props.user.favStocks ? 
         <div>
             <Row>
                 <Table>
@@ -27,7 +28,7 @@ const Watchlist2 = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                            {props.user.favStocks.map( (stock, index)=> {
+                            {props.favStocks.map( (stock, index)=> {
                                 return (
                                     <tr key={index}>
                                         <td>{stock.name}</td>
@@ -44,10 +45,12 @@ const Watchlist2 = (props) => {
                     </tbody>
                 </Table>
             </Row> 
-        </div> :
-       <p>IM loading and waiting for state to change</p>
+        </div> 
+    //     :
+    //    <p>IM loading and waiting for state to change</p>
 
-    return favorites
+    // return favorites
+    )
 }
 
 export default Watchlist2;

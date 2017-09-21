@@ -7,7 +7,6 @@ import {
 import {
     Link,
 } from 'react-router-dom';
-import SearchBar from '../../components/SearchBar/SearchBar';
 import Favs from '../../components/Favs/Favs';
 import NavBar from '../../components/NavBar/NavBar';
 import Watchlist from '../../components/Watchlist/Watchlist';
@@ -98,7 +97,6 @@ class StocksPage extends React.Component {
                             stock={this.props.stock}
                             bitcoin={this.props.bitcoin}
                             currentStocks={this.props.currentStocks}
-                            button={this.props.button}
                             addToWatchlist={this.props.addToWatchlist}
                             currency = {this.props.currency}
                             currencyParams={this.props.currencyParams}/> :
