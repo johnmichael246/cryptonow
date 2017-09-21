@@ -69,13 +69,13 @@ class Stock extends React.Component {
                             <button className='btn'onClick={this.handleReturn}>BACK</button>                  
                         </Col>
                         <Col s={12} m={6}>
-                            <h2>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
-                            <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
-                            <h6>  {bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
+                            <h2 className='center-text'>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
+                            <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
+                            <h6>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
+                        <Col s={12} m={6}>
                             <Table responsive={true} centered={true}>
                                 <thead>
                                     <tr>
@@ -103,8 +103,10 @@ class Stock extends React.Component {
                                 </tbody>
                             </Table>
                         </Col>
-                        <Col s={4}>
-                            <Input s={6}m={3} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
+                    </Row>
+                    <Row>
+                        <Col s={5}>
+                            <Input s={7}m={4} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
                                 <option value='usd'>USD</option>
                                 <option value='eu'>EU</option>
                                 <option value='aud'>AUD</option>

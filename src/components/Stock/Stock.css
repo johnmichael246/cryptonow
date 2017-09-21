@@ -2,6 +2,6 @@
     padding: 0;
     margin:0;
 }
-.center {
-    text-align:center;
+h2.center-text {
+    text-align:center !important;
 }
