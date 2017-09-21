@@ -61,18 +61,17 @@ class Stock extends React.Component {
         }
             return (
                 <div>   
-                    <Row className='center'>
-                        <Col s={12} m={6} >
+                    <Row >
+                        <Col s={12} m={6}>
                             <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
                             <h5><span><i className="material-icons">stars</i></span>rank:{this.props.stock[0].rank}</h5>
                             {button}<br/><br/>
                             <button className='btn'onClick={this.handleReturn}>BACK</button>                  
                         </Col>
-                        <Col s={12}m={6} >
+                        <Col s={12} m={6}>
                             <h2>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
                             <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6>  {bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
-                            <h6>  {bitcoinValue}&nbsp;bitcoin</h6>
                         </Col>
                     </Row>
                     <Row>
