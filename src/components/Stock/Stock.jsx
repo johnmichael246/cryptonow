@@ -18,14 +18,16 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
     findfloatParseInt = (int) => {
-        var arr = int.toString().split('.')[1].split('').map(Number);
-        for(var i=0; i<arr.length; i++) {
-            if (arr[i] !== 0){
-                console.log(i)
-                let num = i + 2;
-                console.log(num);
-                return num
+        if (int.toString().length > 0) {
+            var arr = int.toString().split('.')[1].split('').map(Number);
+            for(var i=0; i<arr.length; i++) {
+                if (arr[i] !== 0){
+                    let num = i + 2;
+                    return num
+                }
             }
+        } else {
+            return int
         }
     }
 
@@ -71,7 +73,6 @@ class Stock extends React.Component {
                             <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} } > ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6>  {bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
                             <h6>  {bitcoinValue}&nbsp;bitcoin</h6>
-{/*{parseFloat(bitcoinValue.toFixed(5))}*/}
                         </Col>
                     </Row>
                     <Row>

@@ -8,13 +8,10 @@ import {
 } from 'react-materialize';
 import {Link} from 'react-router-dom'
 
-// const test = (str) => {
-//     str('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-// }
 
 const Watchlist2 = (props) => {
 
-    let favorites = props.favStocks ?
+    let favorites = props.user.favstocks ? 
     <div>
             <Row>
                 <Table>
@@ -31,7 +28,7 @@ const Watchlist2 = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                            {props.favStocks.map( (stock, index)=> {
+                            {props.user.favStocks.map( (stock, index)=> {
                                 return (
                                     <tr key={index}>
                                         <td>{stock.name}</td>

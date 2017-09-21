@@ -49,15 +49,14 @@ function getFavStocks(req,res) {
     })
     Promise.all(favStockArray)
     .then(data => {
-        let reducedData = null;
-          data.reduce(function(arr1,arr2) {
-        reducedData = arr1.concat(arr2);
-            return reducedData
-          })
-          console.log('the new value of the data array is',reducedData)
-          res.json(reducedData)
+        let reducedData = data.reduce(function(arr1,arr2) {
+            return arr1.concat(arr2);
+        })
+        console.log(reducedData);
+        res.json(reducedData)
+        // res.send(reducedData)
+        // console.log('data sent')
     })
-    // .then(data => res.json(data))
 }
 
 function addStock(req, res) {

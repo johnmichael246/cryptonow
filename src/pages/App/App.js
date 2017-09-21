@@ -64,7 +64,7 @@ class App extends Component {
             headers:header,
             body:mainBody 
         })
-        .then( response => response.json())
+        .then( response => response.json() )
         .then( data => this.setState({favStocks:data}))
     }
   }
