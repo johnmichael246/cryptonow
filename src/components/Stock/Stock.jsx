@@ -83,6 +83,17 @@ class Stock extends React.Component {
                                         <th>Volume(24hr)</th>
                                         <th>Supply Circulating</th>
                                         <th>Maximum Supply</th>
+                                        <th>
+                                            <Input type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
+                                                <option value='usd'>USD</option>
+                                                <option value='eu'>EU</option>
+                                                <option value='aud'>AUD</option>
+                                                <option value='brl'>BRL</option>
+                                                <option value='cad'>CAD</option>
+                                                <option value='clp'>CLP</option>
+                                                <option value='rub'>RUB</option>
+                                            </Input>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,17 +116,7 @@ class Stock extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col s={5}>
-                            <Input s={7}m={4} type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
-                                <option value='usd'>USD</option>
-                                <option value='eu'>EU</option>
-                                <option value='aud'>AUD</option>
-                                <option value='brl'>BRL</option>
-                                <option value='cad'>CAD</option>
-                                <option value='clp'>CLP</option>
-                                <option value='rub'>RUB</option>
-                            </Input>
-                        </Col>
+
                     </Row>
                 </div>
             )    
