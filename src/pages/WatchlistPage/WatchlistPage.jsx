@@ -19,7 +19,7 @@ class WatchlistPage extends React.Component {
     }
 
     render() {
-        let extractedWatchlist = this.props.user ?
+        let extractedWatchlist = this.props.user && this.props.user.favstocks ?
             <div className='stockpage-font'>
                 <Row>   
                     <NavBar
@@ -37,7 +37,7 @@ class WatchlistPage extends React.Component {
                 <Preloader size='big'/>
                 <h3>Loading...</h3> 
             </div>    
-        return (extractedWatchlist)
+        return extractedWatchlist;
     }
 }
 

@@ -12,7 +12,7 @@ import ReactTable from 'react-table';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
     const Stocks = (props) => {
 
-            let stockChart =(props.stocks) ?
+            let stockChart = props.stocks ?
             <div>
                 <Table className='table'
                 responsive={true}
@@ -20,7 +20,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
                 bordered={true}>
                     <thead>
                         <tr>
-                            <th className='center'data-field="name">Name</th>
+                            <th data-field="name">Name</th>
                             <th data-field="sym">Symbol</th>
                             <th data-field="mc">Market Cap</th>
                             <th data-field="supply">Circulating Supply</th>
@@ -41,9 +41,9 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
                                     <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock.total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                     <td>{stock['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className='center'style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                    <td className='center'style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_24h}&nbsp;%</td>
-                                    <td className='center'style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_7d}&nbsp;%</td>
+                                    <td style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                    <td style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_24h}&nbsp;%</td>
+                                    <td style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_7d}&nbsp;%</td>
                                 </tr>   
                             ) 
                         })}

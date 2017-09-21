@@ -48,8 +48,16 @@ function getFavStocks(req,res) {
         })
     })
     Promise.all(favStockArray)
-        .then(data => res.json(data))
-
+    .then(data => {
+        let reducedData = null;
+          data.reduce(function(arr1,arr2) {
+        reducedData = arr1.concat(arr2);
+            return reducedData
+          })
+          console.log('the new value of the data array is',reducedData)
+          res.json(reducedData)
+    })
+    // .then(data => res.json(data))
 }
 
 function addStock(req, res) {

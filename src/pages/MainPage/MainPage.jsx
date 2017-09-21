@@ -48,12 +48,12 @@ class MainPage extends React.Component {
                 </Col>
                     
                 <Col s={12}m={8}>
-                    {/*<SearchBar
+                    <SearchBar
                         stocks={this.props.stocks}
                         search={this.props.search}
                         searchStocks ={this.props.searchStocks}
                         searchParams={this.searchParams}
-                        currencyParams={this.props.currencyParams} />*/}
+                        currencyParams={this.props.currencyParams} />
                     <Favs
                     user={this.props.user} />
                     <StockShow
@@ -67,7 +67,6 @@ class MainPage extends React.Component {
                 <div className='title'>CryptoNow</div>
                 <br/><br/>
                 <img className='title-page-img'src="https://i.imgur.com/QWoAAtn.png" alt=""/>
-                {/*<img src="https://i.imgur.com/mVoVb7e.png" alt=""/>*/}
             </Row>
 
                 <nav className='welcome-nav'>

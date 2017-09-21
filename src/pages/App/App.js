@@ -56,7 +56,6 @@ class App extends Component {
   updateFavorites = () => {
     console.log('App > updateFavorites > this.state.user =', this.state.user)
     if(this.state.user) {
-        console.log('sending fetch request')
         let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
         header.append('Content-Type','application/json')
         let mainBody = JSON.stringify({stocks:this.state.user.favStocks})
@@ -91,11 +90,9 @@ class App extends Component {
   }
 
   getOneStockCurrency = (currency) => {
-    console.log('hittin the route')
     let header = this.getAuthRequestOptions('POST');
     header.headers.append('Content-Type','application/json');
     header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
-    console.log('sending fetch request now')
     fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
     .then( response => response.json())
     .then( data => this.setState({stock:data}))
