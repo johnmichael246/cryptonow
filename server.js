@@ -3,7 +3,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var cors = require('cors');
+
 
 require('dotenv').config();
 require('./config/database');
@@ -17,7 +17,7 @@ app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(bodyParser.json());
-app.use(cors());
+
 
 
 app.use(require('./config/auth'));

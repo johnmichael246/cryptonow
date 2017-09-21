@@ -10,9 +10,8 @@ import {Link} from 'react-router-dom'
 
 
 const Watchlist2 = (props) => {
-
-    let favorites = props.user.favstocks ? 
-    <div>
+    let favorites = props.user.favstocks && props.favstocks ? 
+        <div>
             <Row>
                 <Table>
                     <thead>
@@ -46,7 +45,7 @@ const Watchlist2 = (props) => {
                 </Table>
             </Row> 
         </div> :
-        null
+       <p>IM loading and waiting for state to change</p>
 
     return favorites
 }

@@ -8,7 +8,6 @@ import {
 import {
     Link
 } from 'react-router-dom';
-import ReactTable from 'react-table';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
     const Stocks = (props) => {
 
