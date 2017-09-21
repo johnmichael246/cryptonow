@@ -58,17 +58,21 @@ class StocksPage extends React.Component {
         console.log('starting one stock timer')
         setInterval(()=> {
             this.getOneStock()
-        },60000)
+        },120000)
+    }
+    clearOneStockTimer = () => {
+        clearInterval(this.setOneStockTimer)
     }
     
     componentDidMount() {     
         this.populateUser();
         this.getOneStock();
         this.getBitcoin();
-        this.props.clearTimer();
         this.setOneStockTimer();
     }
-
+    componentWillUnmount() {
+        this.clearOneStockTimer()
+    }
 
 
     render() {

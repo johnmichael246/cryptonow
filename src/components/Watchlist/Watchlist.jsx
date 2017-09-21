@@ -26,7 +26,7 @@ class Watchlist extends React.Component {
                     return (
                     <Col s={3} m={2} l={2} style={ {marginTop:'20px'} } key={stock.name}>
                         <Link to={`/stocks/${stock.apiId}`} key={index} className='watchlist btn waves waves-effect white-text' onClick={this.getOneStock} >
-                                {stock.symbol}
+                            {stock.symbol}
                         </Link>  
                     </Col>
                     )

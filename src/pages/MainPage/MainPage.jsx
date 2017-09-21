@@ -33,6 +33,9 @@ class MainPage extends React.Component {
         this.props.searchStocks();
         this.props.setTimer();
     }
+    componentWillUnmount() {
+        this.props.clearTimer();
+    }
 
     render() {
         let mainPage = this.props.user ?

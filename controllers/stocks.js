@@ -24,7 +24,6 @@ function getOneStock(req, res) {
     })
 }
 function getOneStockCurrency(req, res) {
-    console.log('hitting this path')
     console.log('the stocks are', req.body.currency, req.body.id)
     var options = {
         url: `${stockURL}${req.body.id}/?convert=${req.body.currency}`
@@ -54,8 +53,6 @@ function getFavStocks(req,res) {
         })
         console.log(reducedData);
         res.json(reducedData)
-        // res.send(reducedData)
-        // console.log('data sent')
     })
 }
 

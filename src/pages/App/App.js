@@ -166,14 +166,15 @@ class App extends Component {
               stocks={this.state.stocks}
               stock={this.state.stock}
               setTimer={this.setTimer}
+              clearTimer={this.clearTimer}
             />
           }/>
           <Route exact path='/stocks/:id' render={(props) => {
               return(
                 <StocksPage
-                  favstocks={this.state.favStocks}
                   {...props}
                   user={this.state.user}
+                  favstocks={this.state.favStocks}
                   handleLogout={this.handleLogout}
                   addToWatchlist={this.addToWatchlist}
                   stock={this.state.stock }
@@ -185,8 +186,7 @@ class App extends Component {
                   updateCurrency={this.updateCurrency}  
                   updateOneStock={this.updateOneStock}
                   updateStockLink={this.updateStockLink}
-                  updateBitcoin={this.updateBitcoin} 
-                  clearTimer={this.clearTimer}         
+                  updateBitcoin={this.updateBitcoin}        
                   />
               )
             }
