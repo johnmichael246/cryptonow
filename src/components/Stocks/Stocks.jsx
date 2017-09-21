@@ -14,10 +14,8 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
             let stockChart = props.stocks ?
             <div>
-                <Table className='table'
-                responsive={true}
-                hoverable={true}
-                bordered={true}>
+                <Table
+                responsive={true}>
                     <thead>
                         <tr>
                             <th data-field="name">Name</th>
@@ -30,6 +28,29 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
                             <th data-field="prctChange">Percent Change 7d</th>
                         </tr>
                     </thead>
+                    <tbody className ='hide-mobile boomboom'>
+                        {props.stocks.map( (stock, index) => {
+                            return (
+                                <tr>
+                                    <Link to={`stocks/${stock.id}`} style={ {color:'black'} }>
+                                        <td key={stock.name}>{stock.name.toUpperCase()}</td>
+                                    </Link>
+                                    <td><b>{stock.symbol}</b></td>
+                                    <td>{stock.market_cap_usd.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td>{stock.total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td>{stock['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                    <td style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_24h}&nbsp;%</td>
+                                    <td style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_7d}&nbsp;%</td>
+                                </tr>   
+                            ) 
+                        })}
+                    </tbody>
+                </Table>
+                <Table  className='table hide-mobile boom'
+                responsive={true}
+                hoverable={true}
+                bordered={true}>
                     <tbody>
                         {props.stocks.map( (stock, index) => {
                             return (

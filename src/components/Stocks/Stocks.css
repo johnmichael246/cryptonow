@@ -6,3 +6,13 @@ table.table{
    height:500px;
    display:block;
 }
+@media (max-width:993px) {
+    table.hide-mobile {
+        display:none;
+    }
+}
+@media(min-width:992px) {
+    tbody.boomboom {
+        display:none;
+    }
+}
