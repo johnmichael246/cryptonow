@@ -90,7 +90,6 @@ class StocksPage extends React.Component {
                 </Row>
                 <Row>   
                     <Col s={12}>
-                    {/*{this.props.stock ?*/}
                         <Stock
                             history={this.props.history}
                             user={this.props.user}
@@ -100,11 +99,6 @@ class StocksPage extends React.Component {
                             addToWatchlist={this.props.addToWatchlist}
                             currency = {this.props.currency}
                             currencyParams={this.props.currencyParams}/> 
-                        {/*<div>
-                            <Preloader size='big'/>
-                            <p>Loading...</p>
-                        </div>   
-                    }*/}
                     </Col>
                 </Row>
             </div>

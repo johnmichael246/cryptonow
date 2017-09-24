@@ -10,7 +10,6 @@ import {
 import SearchBar from '../../components/SearchBar/SearchBar';
 import Favs from '../../components/Favs/Favs';
 import News from '../../components/News/News';
-import StockShow from '../../components/StockShow/StockShow';
 import Stocks from '../../components/Stocks/Stocks';
 import NavBar from '../../components/NavBar/NavBar';
 
@@ -28,14 +27,6 @@ class MainPage extends React.Component {
         this.setState({search:e.target.value})
         console.log(this.state.search)
     }
-
-    // componentDidMount() {
-    //     this.props.searchStocks();
-    //     this.props.setTimer();
-    // }
-    // componentWillUnmount() {
-    //     this.props.clearTimer();
-    // }
 
     render() {
         let mainPage = this.props.user ?
