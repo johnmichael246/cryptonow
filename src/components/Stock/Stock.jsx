@@ -18,7 +18,7 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
     findfloatParseInt = (int) => {
-        if (int.toString().length > 0) {
+        if (!int === null && int.toString().length > 0 || !int === undefined && int.toString().length > 0) {
             var arr = int.toString().split('.')[1].split('').map(Number);
             for(var i=0; i<arr.length; i++) {
                 if (arr[i] !== 0){
@@ -37,8 +37,6 @@ class Stock extends React.Component {
             this.props.user.favStocks.find( s => s.apiId === this.props.stock[0].id) ?
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>;
-        } else {
-            button = <Preloader/>
         }
         var bitcoinValue = 0
         var marketValue = ''
@@ -59,7 +57,7 @@ class Stock extends React.Component {
             coinValue='select a currency to compare'
             coinCap=0;
         }
-            return (
+        let oneStock = this.props.stock ? 
                 <div>   
                     <Row >
                         <Col s={12} m={6}>
@@ -114,12 +112,13 @@ class Stock extends React.Component {
                                 </tbody>
                             </Table>
                         </Col>
-                    </Row>
-                    <Row>
-
-                    </Row>
-                </div>
-            )    
+                    </Row> 
+                </div> :
+                <div>
+                    <Preloader size='big'/>
+                    <p>Loading...</p>
+                </div>   
+            return oneStock;    
     }               
 }
 

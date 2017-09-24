@@ -63,6 +63,7 @@ class MainPage extends React.Component {
                     user={this.props.user}
                     stocks={this.props.stocks}
                     setTimer={this.props.setTimer}
+                    clearTimer={this.props.clearTimer}
                     searchStocks={this.props.searchStocks} />
                 </Col>
             </Row>
