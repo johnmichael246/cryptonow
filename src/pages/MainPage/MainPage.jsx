@@ -11,6 +11,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import Favs from '../../components/Favs/Favs';
 import News from '../../components/News/News';
 import StockShow from '../../components/StockShow/StockShow';
+import Stocks from '../../components/Stocks/Stocks';
 import NavBar from '../../components/NavBar/NavBar';
 
 
@@ -28,14 +29,13 @@ class MainPage extends React.Component {
         console.log(this.state.search)
     }
 
-
-    componentDidMount() {
-        this.props.searchStocks();
-        this.props.setTimer();
-    }
-    componentWillUnmount() {
-        this.props.clearTimer();
-    }
+    // componentDidMount() {
+    //     this.props.searchStocks();
+    //     this.props.setTimer();
+    // }
+    // componentWillUnmount() {
+    //     this.props.clearTimer();
+    // }
 
     render() {
         let mainPage = this.props.user ?
@@ -59,9 +59,11 @@ class MainPage extends React.Component {
                         currencyParams={this.props.currencyParams} />
                     <Favs
                     user={this.props.user} />
-                    <StockShow
+                    <Stocks
                     user={this.props.user}
-                    stocks={this.props.stocks} />
+                    stocks={this.props.stocks}
+                    setTimer={this.props.setTimer}
+                    searchStocks={this.props.searchStocks} />
                 </Col>
             </Row>
         </div> :
