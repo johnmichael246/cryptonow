@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Redirect
@@ -27,16 +26,21 @@ class App extends Component {
       bitcoinValue: null,
       currency: 'usd',
       favStocks: [],
+      loggedIn: false
     }
   }
 
   handleSignup = () => {
     this.setState({user: userService.getUser()});
     this.refreshData();
+    this.setState({loggedIn:true})
   }
 
   handleLogin = () => {
-    this.setState({user: userService.getUser()});
+    this.setState({
+      user: userService.getUser(),
+      loggedIn:true
+    });
     this.refreshData();
   }
 
@@ -50,7 +54,9 @@ class App extends Component {
 
   handleLogout = () => {
     userService.logout();
-    this.setState({user: null});
+    this.setState({
+      user: null,
+      loggeIn:false});
   }
 
   updateFavorites = () => {
@@ -191,15 +197,15 @@ class App extends Component {
               )
             }
           }/>
-          <Route path='/watchlist' render={(props) =>
-            <WatchlistPage
+          <Route path='/watchlist' loggedIn={this.state.loggedIn} render={(props) =>
+            props.loggedIn ? <WatchlistPage
             {...props}
             user={this.state.user}
             favStocks={this.state.favStocks}
             updateFavStockState={this.updateFavStockState}
-            stock={this.state.stock}
             updateFavorites={this.updateFavorites}
-            />
+            /> :
+            <Redirect to='/signup'/>
           }/>
           <Route exact path='/login' render={(props)=>
             <LoginPage
