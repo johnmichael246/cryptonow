@@ -1,4 +1,4 @@
-#!/bin/env node
+#!/usr/bin/env node
 
 var Stock = require('../models/stock');
 var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
