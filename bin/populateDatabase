@@ -46,4 +46,3 @@ function populateDatabase() {
     });
 }
 populateDatabase();
-process.exit();
