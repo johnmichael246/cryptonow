@@ -47,3 +47,4 @@ function populateDatabase(req,res) {
     })
 }
 populateDatabase();
+process.exit();
