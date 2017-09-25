@@ -45,6 +45,7 @@ function populateDatabase(req,res) {
                 }
             })
         })
+        res.end()
     })
 }
 populateDatabase();
