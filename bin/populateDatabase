@@ -44,6 +44,6 @@ function populateDatabase(req,res) {
             });
         });
     });
-    process.exit()
 }
 populateDatabase();
+process.exit()
