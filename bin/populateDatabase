@@ -9,9 +9,10 @@ function populateDatabase(req,res) {
     console.log(res);
     request(stockURL, (err, response, body) => {
         let coins = JSON.parse(body);
-        coins.map( coin => {
+        coins.map(coin => {
             Stock.findOne({apiId:coin.id}, (err, stock) => {
                 if (stock) {
+                if (err) console.log(err);  
                     let todaysDate = new Date().toDateString();
                     stock.closingStockValues.push({
                         day:todaysDate,
@@ -23,8 +24,6 @@ function populateDatabase(req,res) {
                         console.log(stock.name,'has been updated with values,',stock.closingStockValues)         
                     })
                     console.log('the stock', stock.name, 'exists')
-
-                if (err) console.log(err);  
                 } else {
                     console.log('creating the stock')
                     let newCoin = new Stock({
@@ -41,11 +40,11 @@ function populateDatabase(req,res) {
                     newCoin.save( (err, coin)=> {
                         if(err) console.log(err)
                         console.log('coin created, value ===', coin.closingStockValues)
-                    })
+                    });
                 }
-            })
-        })
-    })
-    response.end();
+            });
+        });
+    });
+    res.json('successful completion')
 }
 populateDatabase();
