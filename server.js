@@ -26,6 +26,7 @@ app.use(require('./config/auth'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/news', require('./routes/api/news'));
 app.use('/api/stocks', require('./routes/api/stocks'));
+app.use('/api/populateDatabase', require('./routes/api/populateDatabase'));
 app.use('/api/favStocks', require('./routes/api/favStocks'));
 
 

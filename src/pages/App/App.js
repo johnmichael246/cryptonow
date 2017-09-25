@@ -142,20 +142,13 @@ class App extends Component {
       .then( data => this.setState({ stocks: data }))
   }
 
-  setTimer = () => {
-    setInterval(() =>{
-      console.log('the timer has started')
-    this.searchStocks()
-  }, 120000)
-  }
-
-  clearTimer= () => {
-    console.log('the timer has been cleared')
-    clearInterval(this.setTimer)
+  populateDatabase = () => {
+    console.log('here')
+    fetch('/api/populateDatabase').then(response => response.json())
+    .then(data => console.log(data))
   }
 
   render() {
-
     return (
       <div className="App">
         <Switch>
@@ -171,8 +164,7 @@ class App extends Component {
               currencyParams={this.currencyParams}
               stocks={this.state.stocks}
               stock={this.state.stock}
-              setTimer={this.setTimer}
-              clearTimer={this.clearTimer}
+              populateDatabase={this.populateDatabase}
             />
           }/>
           <Route exact path='/stocks/:id' render={(props) => {

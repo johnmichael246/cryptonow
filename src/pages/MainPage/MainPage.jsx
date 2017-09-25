@@ -23,9 +23,25 @@ class MainPage extends React.Component {
         } 
     }
     
+    componentDidMount() {
+        this.props.populateDatabase();
+    }
+
     searchParams = (e) => {
         this.setState({search:e.target.value})
         console.log(this.state.search)
+    }
+
+    setTimer = () => {
+        setInterval(() =>{
+      console.log('the timer has started')
+        this.props.searchStocks()
+        }, 120000)
+    }
+
+    clearTimer = () => {
+        console.log('the timer has been cleared')
+        clearInterval(this.setTimer)
     }
 
     render() {
@@ -53,8 +69,8 @@ class MainPage extends React.Component {
                     <Stocks
                     user={this.props.user}
                     stocks={this.props.stocks}
-                    setTimer={this.props.setTimer}
-                    clearTimer={this.props.clearTimer}
+                    setTimer={this.setTimer}
+                    clearTimer={this.clearTimer}
                     searchStocks={this.props.searchStocks} />
                 </Col>
             </Row>

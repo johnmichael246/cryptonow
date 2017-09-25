@@ -1,0 +1,47 @@
+#!/bin/env node
+
+var Stock = require('../models/stock');
+var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
+var request = require('request');
+
+function populateDatabase(req,res) {
+    request(stockURL, (err, response, body) => {
+        let coins = JSON.parse(body);
+        coins.map( coin => {
+            Stock.findOne({apiId:coin.id}, (err, stock) => {
+                if (stock) {
+                    let todaysDate = new Date().toDateString();
+                    stock.closingStockValues.push({
+                        day:todaysDate,
+                        value:coin.price_usd || 0,
+                        bitcoinValue:coin.price_btc || 0 
+                    })
+                    stock.save( (err, stock)=> {
+                        if(err) console.log(err);
+                        console.log(stock.name,'has been updated with values,',stock.closingStockValues)         
+                    })
+                    console.log('the stock', stock.name, 'exists')
+
+                if (err) console.log(err);  
+                } else {
+                    console.log('creating the stock')
+                    let newCoin = new Stock({
+                        name:coin.name,
+                        symbol:coin.stockSymbol,
+                        apiId:coin.id
+                    })
+                    let todaysDate = new Date().toDateString();
+                    newCoin.closingStockValues.push({
+                        day:todaysDate,
+                        value:coin.price_usd || 0,
+                        bitcoinValue:coin.price_btc || 0
+                    })
+                    newCoin.save( (err, coin)=> {
+                        if(err) console.log(err)
+                        console.log('coin created', coin.closingStockValues)
+                    })
+                }
+            })
+        })
+    })
+}

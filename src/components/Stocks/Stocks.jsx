@@ -100,7 +100,7 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
                         </tr>
                     </thead>
                 </Table>
-                <br/><br/>
+                <br/>
                 <Col s={12}>
                     <Preloader size='big'/>
                 </Col>

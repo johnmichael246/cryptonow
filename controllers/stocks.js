@@ -5,15 +5,12 @@ var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
 var request = require('request');
 
 function getStocks(req, res) {
-    var options = {
-        url: `${baseStockURL}`
-    }
-    request(options.url, (err, response, body) => {
+    request(baseStockURL, (err, response, body) => {
         let stocks = JSON.parse(body)
-        console.log(stocks)
         res.send(stocks)
     })
 }
+
 function getOneStock(req, res) {
     var options = {
         url: `${stockURL}${req.params.id}`
@@ -23,8 +20,8 @@ function getOneStock(req, res) {
         res.send(stock)
     })
 }
+
 function getOneStockCurrency(req, res) {
-    console.log('the stocks are', req.body.currency, req.body.id)
     var options = {
         url: `${stockURL}${req.body.id}/?convert=${req.body.currency}`
     }
@@ -36,7 +33,6 @@ function getOneStockCurrency(req, res) {
 }
 
 function getFavStocks(req,res) {
-    console.log('im here')
     let favStockArray = req.body.stocks.map( function(stock) {
         console.log('promise for',stock.apiId)
         return new Promise(function(resolve, reject) {
@@ -51,8 +47,52 @@ function getFavStocks(req,res) {
         let reducedData = data.reduce(function(arr1,arr2) {
             return arr1.concat(arr2);
         })
-        console.log(reducedData);
         res.json(reducedData)
+    })
+}
+
+function populateDatabase(req,res) {
+    console.log('hitting path to populate database with all stocks');
+    request(stockURL, (err, response, body) => {
+        let coins = JSON.parse(body);
+        console.log(coins)
+        coins.map( coin => {
+            Stock.findOne({apiId:coin.id}, (err, stock) => {
+                if (stock) {
+                    console.log(stock.name,'exists, being updated')
+                    let todaysDate = new Date().toDateString();
+                    stock.closingStockValues.push({
+                        day:todaysDate,
+                        value:coin.price_usd || 0,
+                        bitcoinValue:coin.price_btc || 0 
+                    })
+                    stock.save( (err, stock)=> {
+                        if(err) console.log(err);
+                        console.log(stock.name,'has been updated with values,',stock.closingStockValues)         
+                    })
+                    console.log('the stock', stock.name, 'exists')
+
+                if (err) console.log(err);  
+                } else {
+                    console.log('creating the stock')
+                    let newCoin = new Stock({
+                        name:coin.name,
+                        symbol:coin.stockSymbol,
+                        apiId:coin.id
+                    })
+                    let todaysDate = new Date().toDateString();
+                    newCoin.closingStockValues.push({
+                        day:todaysDate,
+                        value:coin.price_usd || 0,
+                        bitcoinValue:coin.price_btc || 0
+                    })
+                    newCoin.save( (err, coin)=> {
+                        if(err) console.log(err)
+                        console.log('coin created', coin.closingStockValues)
+                    })
+                }
+            })
+        })
     })
 }
 
@@ -69,7 +109,7 @@ function addStock(req, res) {
                         user.save(err => {
                             if(err)console.log(err)
                             User.populate(user, 'favStocks', (err, user)=> {
-                                console.log(user)
+                                // console.log(user)
                                 res.json(user)
                             })
                         })
@@ -78,7 +118,7 @@ function addStock(req, res) {
                     user.favStocks.push(stock);
                     user.save((err) => {
                         User.populate(user, 'favStocks', (err, user) => {
-                            console.log(user)
+                            // console.log(user)
                             res.json(user)
                         })
                     });
@@ -111,7 +151,8 @@ module.exports = {
     getOneStock,
     addStock,
     getFavStocks,
-    getOneStockCurrency
+    getOneStockCurrency,
+    populateDatabase
 }
 
 
