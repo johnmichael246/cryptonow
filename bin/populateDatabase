@@ -43,7 +43,7 @@ function populateDatabase() {
                 }
             });
         });
-        process.exit()
     });
 }
 populateDatabase();
+process.exit();
