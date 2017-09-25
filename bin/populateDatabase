@@ -5,13 +5,13 @@ var stockURL = 'https://api.coinmarketcap.com/v1/ticker/';
 var request = require('request');
 
 
-function populateDatabase(req,res) {
+function populateDatabase() {
     request(stockURL, (err, response, body) => {
         let coins = JSON.parse(body);
         coins.map(coin => {
             Stock.findOne({apiId:coin.id}, (err, stock) => {
-                if (stock) {
                 if (err) console.log(err);  
+                if (stock) {
                     let todaysDate = new Date().toDateString();
                     stock.closingStockValues.push({
                         day:todaysDate,
@@ -43,7 +43,7 @@ function populateDatabase(req,res) {
                 }
             });
         });
+        process.exit()
     });
-    res.end();
 }
-populateDatabase(req,res);
+populateDatabase();
