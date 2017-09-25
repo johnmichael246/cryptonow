@@ -6,6 +6,7 @@ var request = require('request');
 
 
 function populateDatabase(req,res) {
+    console.log(res);
     request(stockURL, (err, response, body) => {
         let coins = JSON.parse(body);
         coins.map( coin => {
@@ -39,12 +40,12 @@ function populateDatabase(req,res) {
                     })
                     newCoin.save( (err, coin)=> {
                         if(err) console.log(err)
-                        console.log('coin created', coin.closingStockValues)
+                        console.log('coin created, value ===', coin.closingStockValues)
                     })
                 }
             })
         })
     })
-    res.end();
+    response.end();
 }
 populateDatabase();
