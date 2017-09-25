@@ -4,8 +4,10 @@ var Stock = require('../models/stock');
 var stockURL = 'https://api.coinmarketcap.com/v1/ticker/'
 var request = require('request');
 
+
 function populateDatabase(req,res) {
     request(stockURL, (err, response, body) => {
+        console.log('hello')
         let coins = JSON.parse(body);
         coins.map( coin => {
             Stock.findOne({apiId:coin.id}, (err, stock) => {
@@ -45,3 +47,4 @@ function populateDatabase(req,res) {
         })
     })
 }
+populateDatabase();
