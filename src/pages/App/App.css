@@ -2,17 +2,34 @@ html, body {
   margin:0;
 }
 .header {
-  background: url(https://i.imgur.com/uXuLm3k.jpg) no-repeat center left scroll;
+  background-image: url(https://i.imgur.com/uXuLm3k.jpg);
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+  background-position:center;
   height:375px;
 }
 .header-intro {
   margin-top:6%;
-  background-color:rgba(255,250,240,.7);
+  background-color:rgba(255,250,240,.3);
   color:rgb(112,138,144);
-  /*font-size:26px;*/
   display:inline-grid;
 }
 .App-intro {
   font-size: large;
+}
+
+@media (max-width:993px) {
+  .header-intro {
+    font-size:50px;
+    text-align:center;
+  }
+}
+@media (max-width:695px) {
+  .header-intro {
+    font-size:30px;
+    width:65%;
+  }
 }
 

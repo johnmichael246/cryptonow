@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+require('../config/database');
+
+function exitCall() {
+    console.log('Exiting call')
+}
+exitCall();
+process.exit();
