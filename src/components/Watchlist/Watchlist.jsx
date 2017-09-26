@@ -19,23 +19,32 @@ class Watchlist extends React.Component {
     }
 
     render() {
-        let stocklist = this.props.user && this.props.user.favStocks.length >= 1 ?
-        <div>
-            <Row>
-                {this.props.user.favStocks.map( (stock, index)=> {
-                    return (
-                    <Col s={3} m={2} l={2} style={ {marginTop:'20px'} } key={stock.name}>
-                        <Link to={`/stocks/${stock.apiId}`} key={index} className='watchlist btn waves waves-effect white-text' onClick={this.getOneStock} >
-                            {stock.symbol}
-                        </Link>  
-                    </Col>
-                    )
-                })}
-            </Row>
-        </div> :
+        let stocklist = null;
+        if(this.props.user === null) {
+            stocklist = 
+            <div className='watchlist-font'>
+                Sign up or Log in to enable the watchlist
+            </div>
+        } else if(this.props.user.favStocks.length >= 1) {
+            stocklist =
+            <div>
+                <Row>
+                    {this.props.user.favStocks.map( (stock, index)=> {
+                        return (
+                        <Col s={3} m={2} l={2} style={ {marginTop:'20px'} } key={stock.name}>
+                            <Link to={`/stocks/${stock.apiId}`} key={index} className='watchlist btn waves waves-effect white-text' onClick={this.getOneStock} >
+                                {stock.symbol}
+                            </Link>  
+                        </Col>
+                        )
+                    })}
+                </Row>
+            </div>
+        } else {
         <div className='watchlist-font'>
             No favorites yet, start your Watchlist!
-        </div>;
+        </div>
+        }
         return stocklist;
     }
 }

@@ -45,7 +45,9 @@ class MainPage extends React.Component {
     }
 
     render() {
-        let mainPage = this.props.user ?
+        // let mainPage = this.props.user ?
+        return (
+
         <div className='background-main'>
             <Row>
                 <NavBar
@@ -74,21 +76,23 @@ class MainPage extends React.Component {
                     searchStocks={this.props.searchStocks} />
                 </Col>
             </Row>
-        </div> :
-        <div>
-            <Row>
-                <div className='title'>CryptoNow</div>
-                <br/><br/>
-                <img className='title-page-img'src="https://i.imgur.com/QWoAAtn.png" alt=""/>
-            </Row>
+        </div> 
+        )
+        // :
+        // <div>
+        //     <Row>
+        //         <div className='title'>CryptoNow</div>
+        //         <br/><br/>
+        //         <img className='title-page-img'src="https://i.imgur.com/QWoAAtn.png" alt=""/>
+        //     </Row>
 
-                <nav className='welcome-nav'>
-                    <Link to='/signup' className='text-color text-size'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
-                    <Link to='/login' className='text-color text-size'>LOG IN</Link>
-                </nav>
+        //         <nav className='welcome-nav'>
+        //             <Link to='/signup' className='text-color text-size'>SIGN UP</Link> &nbsp;&nbsp; | &nbsp;&nbsp;
+        //             <Link to='/login' className='text-color text-size'>LOG IN</Link>
+        //         </nav>
 
-        </div>
-        return mainPage;
+        // </div>
+        // return mainPage;
     }
 }
 

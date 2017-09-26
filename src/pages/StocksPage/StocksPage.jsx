@@ -52,7 +52,6 @@ class StocksPage extends React.Component {
         .then( data => this.props.updateOneStock(data))
     }
 
-
     setOneStockTimer = () => {
         console.log('starting one stock timer')
         setInterval(()=> {

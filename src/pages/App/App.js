@@ -150,69 +150,74 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Switch>
-          <Route exact path='/' render={(props) =>
-            <MainPage
+      <div className='reset'>
+        <div className="header">
+          <h2 className='header-intro'>
+            Every investment starts with knowledge
+          </h2>
+        </div>
+          <Switch>
+            <Route exact path='/' render={(props) =>
+              <MainPage
+                {...props}
+                articles={this.state.articles}
+                user={this.state.user}
+                handleLogout={this.handleLogout}
+                addToWatchlist={this.addToWatchlist}
+                updateStockLink={this.updateStockLink}
+                searchStocks={this.searchStocks}
+                currencyParams={this.currencyParams}
+                stocks={this.state.stocks}
+                stock={this.state.stock}
+                populateDatabase={this.populateDatabase}
+              />
+            }/>
+            <Route exact path='/stocks/:id' render={(props) => {
+                return(
+                  <StocksPage
+                    {...props}
+                    user={this.state.user}
+                    favstocks={this.state.favStocks}
+                    handleLogout={this.handleLogout}
+                    addToWatchlist={this.addToWatchlist}
+                    stock={this.state.stock }
+                    bitcoin={this.state.bitcoin}
+                    bitcoinValue={this.state.bitcoinValue}
+                    updateLink={this.updateStockLink}
+                    currency={this.state.currency}
+                    currencyParams={this.currencyParams}   
+                    updateCurrency={this.updateCurrency}  
+                    updateOneStock={this.updateOneStock}
+                    updateStockLink={this.updateStockLink}
+                    updateBitcoin={this.updateBitcoin}        
+                    />
+                )
+              }
+            }/>
+            <Route path='/watchlist' loggedIn={this.state.loggedIn} render={(props) =>
+              props.loggedIn ? <WatchlistPage
               {...props}
-              articles={this.state.articles}
               user={this.state.user}
-              handleLogout={this.handleLogout}
-              addToWatchlist={this.addToWatchlist}
-              updateStockLink={this.updateStockLink}
-              searchStocks={this.searchStocks}
-              currencyParams={this.currencyParams}
-              stocks={this.state.stocks}
-              stock={this.state.stock}
-              populateDatabase={this.populateDatabase}
+              favStocks={this.state.favStocks}
+              updateFavStockState={this.updateFavStockState}
+              updateFavorites={this.updateFavorites}
+              /> :
+              <Redirect to='/signup'/>
+            }/>
+            <Route exact path='/login' render={(props)=>
+              <LoginPage
+              {...props}
+              handleLogin={this.handleLogin}
+              />
+            }/>
+            <Route exact path='/signup' render={(props)=>
+              <SignupPage
+              {...props}
+              handleSignup={this.handleSignup}
             />
-          }/>
-          <Route exact path='/stocks/:id' render={(props) => {
-              return(
-                <StocksPage
-                  {...props}
-                  user={this.state.user}
-                  favstocks={this.state.favStocks}
-                  handleLogout={this.handleLogout}
-                  addToWatchlist={this.addToWatchlist}
-                  stock={this.state.stock }
-                  bitcoin={this.state.bitcoin}
-                  bitcoinValue={this.state.bitcoinValue}
-                  updateLink={this.updateStockLink}
-                  currency={this.state.currency}
-                  currencyParams={this.currencyParams}   
-                  updateCurrency={this.updateCurrency}  
-                  updateOneStock={this.updateOneStock}
-                  updateStockLink={this.updateStockLink}
-                  updateBitcoin={this.updateBitcoin}        
-                  />
-              )
-            }
-          }/>
-          <Route path='/watchlist' loggedIn={this.state.loggedIn} render={(props) =>
-            props.loggedIn ? <WatchlistPage
-            {...props}
-            user={this.state.user}
-            favStocks={this.state.favStocks}
-            updateFavStockState={this.updateFavStockState}
-            updateFavorites={this.updateFavorites}
-            /> :
-            <Redirect to='/signup'/>
-          }/>
-          <Route exact path='/login' render={(props)=>
-            <LoginPage
-            {...props}
-            handleLogin={this.handleLogin}
-            />
-          }/>
-          <Route exact path='/signup' render={(props)=>
-            <SignupPage
-            {...props}
-            handleSignup={this.handleSignup}
-          />
-          }/>
-        </Switch>        
-      </div>
+            }/>
+          </Switch>        
+        </div>
     );
   }
 }

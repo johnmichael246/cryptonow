@@ -33,7 +33,9 @@ class Stock extends React.Component {
 
     render() {
         let button  
-        if (this.props.stock && this.props.user.favStocks) {
+        if (!this.props.user) {
+            button = <div>hellooooooo</div>
+        } else if (this.props.stock && this.props.user.favStocks) {
             this.props.user.favStocks.find( s => s.apiId === this.props.stock[0].id) ?
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>;
@@ -61,15 +63,17 @@ class Stock extends React.Component {
                 <div>   
                     <Row >
                         <Col s={12} m={6}>
-                            <h2>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
+                            <h2 className='center-text'>{this.props.stock[0].name}({this.props.stock[0].symbol})</h2>
                             <h5><span><i className="material-icons">stars</i></span>rank:{this.props.stock[0].rank}</h5>
-                            {button}<br/><br/>
-                            <button className='btn'onClick={this.handleReturn}>BACK</button>                  
+                            <div className='center-text'>
+                                {button}<br/><br/>
+                                <button className='btn'onClick={this.handleReturn}>BACK</button>                  
+                            </div>
                         </Col>
                         <Col s={12} m={6}>
                             <h2 className='center-text'>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
-                            <h2 style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
-                            <h6>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
+                            <h2 className='center-text' style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
+                            <h6 className='center-text'>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
                         </Col>
                     </Row>
                     <Row>
