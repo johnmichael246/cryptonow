@@ -6,6 +6,15 @@ table.table{
    height:500px;
    display:block;
 }
+.setting-class {
+    display:none;
+}
+.row-class {
+    border-bottom: 1px solid black;
+}
+.row-class:hover {
+    background-color: rgba(0,0,0,.1);
+}
 @media (max-width:993px) {
     table.hide-mobile {
         display:none;

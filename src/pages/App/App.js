@@ -26,7 +26,8 @@ class App extends Component {
       bitcoinValue: null,
       currency: 'usd',
       favStocks: [],
-      loggedIn: false
+      loggedIn: false,
+      header: ["Name", "Symbol", "Market Cap", "Circulating Supply", "Volume(24hr)","Percent Change 1h","Percent Change 24h","Percent Change 7d"]
     }
   }
 
@@ -170,6 +171,7 @@ class App extends Component {
                 stocks={this.state.stocks}
                 stock={this.state.stock}
                 populateDatabase={this.populateDatabase}
+                header={this.state.header}
               />
             }/>
             <Route exact path='/stocks/:id' render={(props) => {

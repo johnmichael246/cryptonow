@@ -18,7 +18,7 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
     findfloatParseInt = (int) => {
-        if (!int === null && int.toString().length > 0 || !int === undefined && int.toString().length > 0) {
+        if ( (!int === null && int.toString().length > 0) || (!int === undefined && int.toString().length > 0) ) {
             var arr = int.toString().split('.')[1].split('').map(Number);
             for(var i=0; i<arr.length; i++) {
                 if (arr[i] !== 0){
@@ -34,7 +34,7 @@ class Stock extends React.Component {
     render() {
         let button  
         if (!this.props.user) {
-            button = <div>hellooooooo</div>
+            button = '';
         } else if (this.props.stock && this.props.user.favStocks) {
             this.props.user.favStocks.find( s => s.apiId === this.props.stock[0].id) ?
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :

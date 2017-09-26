@@ -60,20 +60,21 @@ class MainPage extends React.Component {
                 </Col>
                     
                 <Col s={12}m={8}>
-                    <SearchBar
+                    {/*<SearchBar
                         stocks={this.props.stocks}
                         search={this.props.search}
                         searchStocks ={this.props.searchStocks}
                         searchParams={this.searchParams}
-                        currencyParams={this.props.currencyParams} />
+                        currencyParams={this.props.currencyParams} />*/}
                     <Favs
                     user={this.props.user} />
-                    <Stocks
+                    <Stocks.Stocks
                     user={this.props.user}
                     stocks={this.props.stocks}
                     setTimer={this.setTimer}
                     clearTimer={this.clearTimer}
-                    searchStocks={this.props.searchStocks} />
+                    searchStocks={this.props.searchStocks}
+                    header={this.props.header} />
                 </Col>
             </Row>
         </div> 
