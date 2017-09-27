@@ -1,10 +1,15 @@
 .center {
     text-align:center !important;
 }
-table.table{
+/*table.table{
    overflow-y:scroll;
    height:500px;
    display:block;
+}*/
+.table-body{
+   overflow-y:scroll;
+   height:400px;
+   /*display:block;*/
 }
 .setting-class {
     display:none;

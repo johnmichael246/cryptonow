@@ -3,6 +3,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var createReactClass = require('create-react-class');
+
 require('dotenv').config();
 require('./config/database');
 
