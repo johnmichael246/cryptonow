@@ -19,7 +19,6 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
     findfloatParseInt = (int) => {
-        console.log(int.toString().length)
         if ( int.toString().length > 1  ) {
             console.log('int is greater than 0, length is', int.toString().length)
             var arr = int.toString().split('.')[1].split('').map(Number);
@@ -34,7 +33,6 @@ class Stock extends React.Component {
         }
     }
     render() {
-        console.log(bitcoinValue);
         let button  
         if (!this.props.user) {
             button = '';
