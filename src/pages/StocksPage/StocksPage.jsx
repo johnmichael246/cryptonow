@@ -19,7 +19,7 @@ class StocksPage extends React.Component {
         super(props);
         this.state = {
             currencyCompare: '',
-            stockVisualizeData:null
+            stockVisualData:null
         } 
     }
 
@@ -34,13 +34,6 @@ class StocksPage extends React.Component {
         .then( data => this.setState({user: data}))
     }
 
-    getAuthRequestOptions = (method) => {
-        return {
-            method: method,
-            headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
-            }
-    }
-
     getBitcoin = () => {
         fetch('/api/stocks/bitcoin')
         .then( response => response.json())
@@ -50,7 +43,6 @@ class StocksPage extends React.Component {
     getStockGraphData = () => {
         console.log('im hitting over here!!')
         let id = this.props.stock[0].id
-        console.log(id)
         fetch('/api/stockVisualizeData/', {
             method:'POST',
             headers: {
@@ -59,7 +51,10 @@ class StocksPage extends React.Component {
             body:JSON.stringify({id:id})
         })
         .then(res => res.json())
-        .then( data => this.setState({stockVisualizeData:data}))
+        .then( data => {
+            console.log(data)
+            this.setState({stockVisualData:data})
+        })
     }
 
     getOneStockCurrency = (currency) => {
@@ -98,7 +93,7 @@ class StocksPage extends React.Component {
     }
     componentWillUnmount() {
         this.clearOneStockTimer()
-        this.setState({stockVisualizeData:null})
+        this.setState({stockVisualData:null})
     }
 
 
@@ -126,7 +121,8 @@ class StocksPage extends React.Component {
                             currentStocks={this.props.currentStocks}
                             addToWatchlist={this.props.addToWatchlist}
                             currency = {this.props.currency}
-                            currencyParams={this.props.currencyParams}/> 
+                            currencyParams={this.props.currencyParams}
+                            stockVisualData={this.state.stockVisualData}/> 
                     </Col>
                 </Row>
             </div>

@@ -53,8 +53,9 @@ function populateGraph(req,res) {
     console.log('HEEEEEEREEEEEE')
     console.log(req.body)
     Stock.find({apiId:req.body.id}, (err, stock)=> {
-        console.log('stocks are', stock)
-        res.json(stock);
+        console.log('stocks are', stock[0].closingStockValues)
+
+        res.json(stock[0].closingStockValues);
     })
 }
 
