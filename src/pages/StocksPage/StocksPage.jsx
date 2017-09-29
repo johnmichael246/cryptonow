@@ -18,7 +18,8 @@ class StocksPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currencyCompare: ''
+            currencyCompare: '',
+            stockVisualizeData:null
         } 
     }
 
@@ -46,10 +47,37 @@ class StocksPage extends React.Component {
         .then( data => this.props.updateBitcoin(data))
     }
 
+    getStockGraphData = () => {
+        console.log('im hitting over here!!')
+        let id = this.props.stock[0].id
+        console.log(id)
+        fetch('/api/stockVisualizeData/', {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({id:id})
+        })
+        .then(res => res.json())
+        .then( data => this.setState({stockVisualizeData:data}))
+    }
+
+    getOneStockCurrency = (currency) => {
+        let header = this.getAuthRequestOptions('POST');
+        header.headers.append('Content-Type','application/json');
+        header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
+        fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
+        .then( response => response.json())
+        .then( data => this.setState({stock:data}))
+    }
+
     getOneStock = () => {
         fetch(`/api/stocks/${this.props.match.params.id}`)
         .then( response => response.json())
-        .then( data => this.props.updateOneStock(data))
+        .then( data => {
+            this.props.updateOneStock(data)
+            this.getStockGraphData()
+        })
     }
 
     setOneStockTimer = () => {
@@ -63,13 +91,14 @@ class StocksPage extends React.Component {
     }
     
     componentDidMount() {     
-        this.populateUser();
+        // this.populateUser();
         this.getOneStock();
         this.getBitcoin();
         this.setOneStockTimer();
     }
     componentWillUnmount() {
         this.clearOneStockTimer()
+        this.setState({stockVisualizeData:null})
     }
 
 

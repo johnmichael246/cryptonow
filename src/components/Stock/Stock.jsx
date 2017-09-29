@@ -31,6 +31,9 @@ class Stock extends React.Component {
         }
     }
 
+    componentWillUnmount() {    
+        this.setState({stockVisualizeData:null})
+    }
     render() {
         let button  
         if (!this.props.user) {

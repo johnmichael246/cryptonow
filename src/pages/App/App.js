@@ -26,8 +26,7 @@ class App extends Component {
       bitcoinValue: null,
       currency: 'usd',
       favStocks: [],
-      loggedIn: false,
-      header: ["Name", "Symbol", "Market Cap", "Circulating Supply", "Volume(24hr)","Percent Change 1h","Percent Change 24h","Percent Change 7d"]
+      loggedIn: false
     }
   }
 
@@ -135,18 +134,12 @@ class App extends Component {
 
   updateOneStock = (data) => {
     this.setState( { stock: data })
-    console.log(`Current stock is: ${this.state.stock} and expected stock is ${JSON.stringify(data)}`)
+    console.log(`Current stock is: ${JSON.stringify(this.state.stock)} and expected stock is ${JSON.stringify(data)}`)
   }
 
   searchStocks = () => {
       fetch('/api/stocks').then( response => response.json())
       .then( data => this.setState({ stocks: data }))
-  }
-
-  populateDatabase = () => {
-    console.log('here')
-    fetch('/api/populateDatabase').then(response => response.json())
-    .then(data => console.log(data))
   }
 
   render() {
@@ -170,7 +163,6 @@ class App extends Component {
                 currencyParams={this.currencyParams}
                 stocks={this.state.stocks}
                 stock={this.state.stock}
-                populateDatabase={this.populateDatabase}
                 header={this.state.header}
               />
             }/>
@@ -191,7 +183,8 @@ class App extends Component {
                     updateCurrency={this.updateCurrency}  
                     updateOneStock={this.updateOneStock}
                     updateStockLink={this.updateStockLink}
-                    updateBitcoin={this.updateBitcoin}        
+                    updateBitcoin={this.updateBitcoin}
+                    getAuthRequestOptions={this.getAuthRequestOptions}  
                     />
                 )
               }
