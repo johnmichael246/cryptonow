@@ -19,7 +19,9 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
     findfloatParseInt = (int) => {
-        if ( (!int === null && int.toString().length > 0) || (!int === undefined && int.toString().length > 0) ) {
+        console.log(int.toString().length)
+        if ( int.toString().length > 1  ) {
+            console.log('int is greater than 0, length is', int.toString().length)
             var arr = int.toString().split('.')[1].split('').map(Number);
             for(var i=0; i<arr.length; i++) {
                 if (arr[i] !== 0){
@@ -32,6 +34,7 @@ class Stock extends React.Component {
         }
     }
     render() {
+        console.log(bitcoinValue);
         let button  
         if (!this.props.user) {
             button = '';
@@ -63,18 +66,8 @@ class Stock extends React.Component {
         if(this.props.stockVisualData) {
             graph = <Graph
             stockVisualData={this.props.stockVisualData}
-            stock={this.props.stock}/>
-            // graph = <div>
-            //             {this.props.stockVisualData.map( stock => {
-            //                 return (
-            //                     <div>
-            //                         <p>{stock.day}</p>
-            //                         <p>{stock.bitcoinValue}</p>
-            //                         <p>{stock.value}</p>
-            //                     </div>
-            //                 )
-            //             })}
-            //         </div>
+            stock={this.props.stock}
+            bitcoin={this.props.bitcoin}/>
         } 
         let oneStock = this.props.stock ? 
                 <div>   

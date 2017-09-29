@@ -8,20 +8,26 @@ class Graph extends React.Component {
         super(props)
     }
     render() {
-        // let points = [];
-        // let points2 =[];
-        // this.props.stockVisualData.forEach( (stock,index )=> {
-        //     points.push({x:index,y:stock.value})
-        //     points2.push({x:index, y:stock.bitcoinValue})
-        // });
-        // let data = [{
-        //     id:this.props.stock.apiId,
-        //     name:this.props.stock.name,
-        //     color:'steelblue',
-        //     points:points,
-        // }]
-        let graphData = this.props.stockVisualData;
-        let data = parseFlatArray(graphData, 'day',['value','bitcoinValue']);
+        let points = [];
+        let points2 =[];
+        this.props.stockVisualData.forEach( (stock,index )=> {
+            points.push({x:index,y:stock.value})
+            points2.push({x:index, y:stock.bitcoinValue})
+        });
+        let data = [{
+            id:this.props.stock.apiId,
+            name:this.props.stock.name,
+            color:'steelblue',
+            points:points,
+        }
+        // {
+        //     name:this.props.bitcoin.name,
+        //     color:'red',
+        //     points:points2
+        // }
+        ]
+        // let gsmData = this.props.stockVisualData;
+        // let gsmFlat = parseFlatArray(gsmData, 'day',['value','bitcoinValue']);
         return (
             <div>
                 <h4 className='centered'> Historical Values</h4>
