@@ -12,6 +12,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import Watchlist from '../../components/Watchlist/Watchlist';
 import Stock from '../../components/Stock/Stock';
 import tokenService from '../../utilities/tokenService';
+import Graph from '../../components/Graph/Graph';
 import './StocksPage.css';
 
 class StocksPage extends React.Component {
@@ -19,7 +20,7 @@ class StocksPage extends React.Component {
         super(props);
         this.state = {
             currencyCompare: '',
-            stockVisualData:null
+            stockVisualData:[]
         } 
     }
 
@@ -53,7 +54,7 @@ class StocksPage extends React.Component {
         .then(res => res.json())
         .then( data => {
             console.log(data)
-            this.setState({stockVisualData:data})
+            this.setState({stockVisualData:data })
         })
     }
 

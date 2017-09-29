@@ -8,6 +8,7 @@ import {
     Input,
     Table
 } from 'react-materialize';
+import Graph from '../Graph/Graph';
 
 
 class Stock extends React.Component {
@@ -30,7 +31,6 @@ class Stock extends React.Component {
             return int
         }
     }
-
     render() {
         let button  
         if (!this.props.user) {
@@ -59,27 +59,23 @@ class Stock extends React.Component {
             coinValue='select a currency to compare'
             coinCap=0;
         }
-        var graph 
+        let graph=''
         if(this.props.stockVisualData) {
-            graph = <div>
-                        {this.props.stockVisualData.map( stock => {
-                            return (
-                                <div>
-                                    <p>{stock.day}</p>
-                                    <p>{stock.bitcoinValue}</p>
-                                    <p>{stock.value}</p>
-                                </div>
-                            )
-                        })}
-                    </div>
-        } else {
-            graph =
-            <div>
-                <p>loading</p>
-            </div>
-        }
-
-
+            graph = <Graph
+            stockVisualData={this.props.stockVisualData}
+            stock={this.props.stock}/>
+            // graph = <div>
+            //             {this.props.stockVisualData.map( stock => {
+            //                 return (
+            //                     <div>
+            //                         <p>{stock.day}</p>
+            //                         <p>{stock.bitcoinValue}</p>
+            //                         <p>{stock.value}</p>
+            //                     </div>
+            //                 )
+            //             })}
+            //         </div>
+        } 
         let oneStock = this.props.stock ? 
                 <div>   
                     <Row >
@@ -95,7 +91,7 @@ class Stock extends React.Component {
                             <h2 className='center-text'>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
                             <h2 className='center-text' style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6 className='center-text'>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
-                            <div>GRAPH IS {graph}</div>                            
+                            <div>{graph}</div>                            
                         </Col>
                     </Row>
                     <Row>
