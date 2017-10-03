@@ -40,7 +40,8 @@ import Griddle, { plugins, RowDefinition, ColumnDefinition } from 'griddle-react
                 styles: {
                     Filter: {
                         fontSize: 18,
-                        maxWidth:'50%'
+                        maxWidth:'50%',
+                        placeHolder:'Filter Stocks'
                     }   
                 }
             }
@@ -107,8 +108,8 @@ import Griddle, { plugins, RowDefinition, ColumnDefinition } from 'griddle-react
                 styleConfig={styleConfig}
                 plugins={[plugins.LocalPlugin]}>
                     <RowDefinition>
-                        <ColumnDefinition id='name' title='Name'/>
-                        <ColumnDefinition id='id' title='ID' customComponent={customLinkComponent}/>
+                        {/*<ColumnDefinition id='name' title='Name'/>*/}
+                        <ColumnDefinition id='id' title='Name' customComponent={customLinkComponent}/>
                         <ColumnDefinition id='symbol' title='Symbol' customComponent={customSymbolColumn}/>
                         <ColumnDefinition id='market_cap_usd' title='Market Cap'customComponent={customDataMC}/>
                         <ColumnDefinition id='total_supply' title='Circulating Supply' customComponent={customDataMC}/>

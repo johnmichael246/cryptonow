@@ -1,12 +1,5 @@
 import React from 'react';
 import './Articles.css';
-import {
-    Icon,
-    Col
-} from 'react-materialize';
-import {
-    Link
-} from 'react-router-dom'
 import Article from '../Article/Article'
 const Articles = (props) => {
     return (

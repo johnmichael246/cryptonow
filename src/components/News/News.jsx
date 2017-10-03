@@ -24,7 +24,7 @@ class News extends React.Component {
 
     render() {
         return (
-            <div className='background-color main-font padding-top'>
+            <div className='background-color main-font padding-top alignment'>
                 <h5>Related News</h5>
                 <hr width='70%'/>
                 {!this.state.articles

@@ -82,7 +82,6 @@ class Stock extends React.Component {
                             <h2 className='center-text'>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
                             <h2 className='center-text' style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6 className='center-text'>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
-                            <div>{graph}</div>                            
                         </Col>
                     </Row>
                     <Row>
@@ -124,6 +123,9 @@ class Stock extends React.Component {
                                     </tr>
                                 </tbody>
                             </Table>
+                        </Col>
+                        <Col s={12} m={6}>
+                            {graph}                                                        
                         </Col>
                     </Row> 
                 </div> :
