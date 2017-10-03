@@ -22,10 +22,12 @@ function getOneStock(req, res) {
 
 function getOneStockCurrency(req, res) {
     var options = {
-        url: `${stockURL}${req.body.id}/?convert=${req.body.currency}`
+        url: `${stockURL}${req.params.id}/?convert=${req.params.currency}`
     }
+    console.log(options.url)
     request(options.url, (err, response, body) => {
         let stock = JSON.parse(body)
+        console.log(stock)
         res.send(stock)
     })
 }
@@ -50,8 +52,6 @@ function getFavStocks(req,res) {
 }
 
 function populateGraph(req,res) {
-    console.log('HEEEEEEREEEEEE')
-    console.log(req.body)
     Stock.find({apiId:req.body.id}, (err, stock)=> {
         console.log('stocks are', stock[0].closingStockValues)
 

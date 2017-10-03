@@ -5,12 +5,12 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-
 import MainPage from '../MainPage/MainPage';
 import WatchlistPage from '../WatchlistPage/WatchlistPage';
 import StocksPage from '../StocksPage/StocksPage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
+import NavBar from '../../components/NavBar/NavBar';
 import userService from '../../utilities/userService';
 import tokenService from '../../utilities/tokenService';
 
@@ -26,7 +26,9 @@ class App extends Component {
       bitcoinValue: null,
       currency: 'usd',
       favStocks: [],
-      loggedIn: false
+      loggedIn: false,
+      currencyCompare:null,
+      volume24Compare:null
     }
   }
 
@@ -90,18 +92,17 @@ class App extends Component {
     this.setState({currency:currency})
   }
 
-  currencyParams = (e) => {
-    this.setState({currency: e.target.value})
-    this.getOneStockCurrency(e.target.value)
+  updateCurrencyCompare = (currencyProp) => {
+    this.setState({currencyCompare:currencyProp})
   }
 
-  getOneStockCurrency = (currency) => {
-    let header = this.getAuthRequestOptions('POST');
-    header.headers.append('Content-Type','application/json');
-    header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
-    fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
-    .then( response => response.json())
-    .then( data => this.setState({stock:data}))
+  updateVolume24Compare = (volume) => {
+    this.setState({volume24Compare:volume})
+  }
+
+  currencyParams = (e) => {
+    this.updateCurrency(e.target.value);
+    this.getOneStockCurrency(e.target.value)
   }
 
   populateUser = () => {
@@ -128,13 +129,12 @@ class App extends Component {
     .then(data => this.setState({user:data}))
   }
 
-   updateBitcoin = (data) => {
+  updateBitcoin = (data) => {
     this.setState( { bitcoin: data })
   }
 
   updateOneStock = (data) => {
-    this.setState( { stock: data })
-    console.log(`Current stock is: ${JSON.stringify(this.state.stock)} and expected stock is ${JSON.stringify(data)}`)
+    this.setState({stock:data})
   }
 
   searchStocks = () => {
@@ -150,20 +150,22 @@ class App extends Component {
             Every investment starts with knowledge
           </h2>
         </div>
+        <NavBar
+        user={this.state.user}
+        handleLogout={this.handleLogout}
+        />
           <Switch>
             <Route exact path='/' render={(props) =>
               <MainPage
                 {...props}
                 articles={this.state.articles}
                 user={this.state.user}
-                handleLogout={this.handleLogout}
                 addToWatchlist={this.addToWatchlist}
                 updateStockLink={this.updateStockLink}
                 searchStocks={this.searchStocks}
                 currencyParams={this.currencyParams}
                 stocks={this.state.stocks}
                 stock={this.state.stock}
-                header={this.state.header}
               />
             }/>
             <Route exact path='/stocks/:id' render={(props) => {
@@ -172,19 +174,20 @@ class App extends Component {
                     {...props}
                     user={this.state.user}
                     favstocks={this.state.favStocks}
-                    handleLogout={this.handleLogout}
                     addToWatchlist={this.addToWatchlist}
                     stock={this.state.stock }
                     bitcoin={this.state.bitcoin}
                     bitcoinValue={this.state.bitcoinValue}
                     updateLink={this.updateStockLink}
                     currency={this.state.currency}
-                    currencyParams={this.currencyParams}   
+                    updateOneStock={this.updateOneStock} 
                     updateCurrency={this.updateCurrency}  
-                    updateOneStock={this.updateOneStock}
-                    updateStockLink={this.updateStockLink}
                     updateBitcoin={this.updateBitcoin}
-                    getAuthRequestOptions={this.getAuthRequestOptions}  
+                    getOneStockCurrency={this.getOneStockCurrency}
+                    currencyCompare={this.state.currencyCompare}
+                    updateCurrencyCompare={this.updateCurrencyCompare}
+                    updateVolume24Compare={this.updateVolume24Compare}
+                    volume24Compare={this.state.volume24Compare}
                     />
                 )
               }

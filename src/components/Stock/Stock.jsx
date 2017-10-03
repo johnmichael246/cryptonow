@@ -32,6 +32,7 @@ class Stock extends React.Component {
             return int
         }
     }
+
     render() {
         let button  
         if (!this.props.user) {
@@ -41,11 +42,13 @@ class Stock extends React.Component {
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
                 button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>;
         }
+        var currencyCompareValue = 0        
         var bitcoinValue = 0
         var marketValue = ''
         var bitcoinMV= ''
         var bitcoinVol24 = ''
         if (this.props.bitcoin && this.props.stock) {
+            currencyCompareValue = Math.round(this.props.stock[0][this.props.currencyCompare]*100) / 100;
             bitcoinValue = this.props.stock[0].price_usd / this.props.bitcoin[0].price_usd
             marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
             bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
@@ -54,10 +57,8 @@ class Stock extends React.Component {
         var coinValue
         var coinCap
         if(this.props.currency & this.props.stock) {
-            coinValue = this.props.stock[0].market_cap_`${this.props.currency}`
             coinCap = this.props.stock[0]['24h_volume_rub']
         } else {
-            coinValue='select a currency to compare'
             coinCap=0;
         }
         let graph=''
@@ -79,7 +80,7 @@ class Stock extends React.Component {
                             </div>
                         </Col>
                         <Col s={12} m={6}>
-                            <h2 className='center-text'>${this.props.stock[0].price_usd}&nbsp;&nbsp;&nbsp;</h2>
+                            <h2 className='center-text'>{(Math.round(this.props.stock[0][this.props.currencyCompare]*100)/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;{this.props.currency.toUpperCase()}&nbsp;&nbsp;</h2>
                             <h2 className='center-text' style={this.props.stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({this.props.stock[0].percent_change_24h}%)</h2> 
                             <h6 className='center-text'>{bitcoinValue.toFixed(this.findfloatParseInt(bitcoinValue))}&nbsp;bitcoin</h6>
                         </Col>
@@ -94,14 +95,14 @@ class Stock extends React.Component {
                                         <th>Supply Circulating</th>
                                         <th>Maximum Supply</th>
                                         <th>
-                                            <Input type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='usd'>
-                                                <option value='usd'>USD</option>
-                                                <option value='eu'>EU</option>
-                                                <option value='aud'>AUD</option>
-                                                <option value='brl'>BRL</option>
-                                                <option value='cad'>CAD</option>
-                                                <option value='clp'>CLP</option>
-                                                <option value='rub'>RUB</option>
+                                            <Input type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='USD'>
+                                                <option value='USD'>USD</option>
+                                                <option value='EUR'>EU</option>
+                                                <option value='AUD'>AUD</option>
+                                                <option value='BRL'>BRL</option>
+                                                <option value='CAD'>CAD</option>
+                                                <option value='CLP'>CLP</option>
+                                                <option value='RUB'>RUB</option>
                                             </Input>
                                         </th>
                                     </tr>
@@ -118,8 +119,7 @@ class Stock extends React.Component {
                                         <td style ={{color:'grey'}} >{bitcoinVol24} <b>BTC</b></td>
                                     </tr>
                                     <tr>
-                                        <td>{coinValue}</td>
-                                        <td>{coinCap}</td>
+                                        <td>{this.props.stock[0][this.props.volume24Compare]}</td>
                                     </tr>
                                 </tbody>
                             </Table>

@@ -7,8 +7,6 @@ import {
 import Favs from '../../components/Favs/Favs';
 import News from '../../components/News/News';
 import Stocks from '../../components/Stocks/Stocks';
-import NavBar from '../../components/NavBar/NavBar';
-
 
 class MainPage extends React.Component {
     constructor(props) {
@@ -31,9 +29,6 @@ class MainPage extends React.Component {
         return (
             <div className='background-main'>
                 <Row>
-                    <NavBar
-                    user={this.props.user}
-                    handleLogout={this.props.handleLogout} />
                     <Col s={12}m={4}>
                         <News
                         articles={this.props.articles}

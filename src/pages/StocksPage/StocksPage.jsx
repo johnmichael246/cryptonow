@@ -8,7 +8,6 @@ import {
     Link,
 } from 'react-router-dom';
 import Favs from '../../components/Favs/Favs';
-import NavBar from '../../components/NavBar/NavBar';
 import Watchlist from '../../components/Watchlist/Watchlist';
 import Stock from '../../components/Stock/Stock';
 import tokenService from '../../utilities/tokenService';
@@ -19,13 +18,8 @@ class StocksPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currencyCompare: '',
             stockVisualData:[]
         } 
-    }
-
-    currencyParams = (e) => {
-        this.setState({currencyCompare:e.target.value})
     }
 
     populateUser = () => {
@@ -42,7 +36,6 @@ class StocksPage extends React.Component {
     }
 
     getStockGraphData = () => {
-        console.log('im hitting over here!!')
         let id = this.props.stock[0].id
         fetch('/api/stockVisualizeData/', {
             method:'POST',
@@ -58,16 +51,8 @@ class StocksPage extends React.Component {
         })
     }
 
-    getOneStockCurrency = (currency) => {
-        let header = this.getAuthRequestOptions('POST');
-        header.headers.append('Content-Type','application/json');
-        header.body=JSON.stringify({currency:currency, id:this.state.stock[0].id})
-        fetch(`/api/stocks/${this.state.stock[0].id}/${this.state.currency}`, header)
-        .then( response => response.json())
-        .then( data => this.setState({stock:data}))
-    }
-
     getOneStock = () => {
+        console.log(this.props.match.params.id)
         fetch(`/api/stocks/${this.props.match.params.id}`)
         .then( response => response.json())
         .then( data => {
@@ -75,22 +60,70 @@ class StocksPage extends React.Component {
             this.getStockGraphData()
         })
     }
+    getOneStockCurrency = (currency) => {
+        fetch(`/api/stocks/${this.props.match.params.id}/currency/${this.props.currency}`, {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:{
+                currency:this.props.currency,
+                id:this.props.match.params.id
+            }
+        })
+        .then( response => response.json()) 
+        .then( data => {
+            console.log(data)
+            this.props.updateOneStock(data)
+            this.getStockGraphData()
+            this.filterCurrency(this.props.stock[0])
+            this.filterCurrencyVolume(this.props.stock[0])
+        })
+    }
+
+    currencyParams = (e) => {
+        this.props.updateCurrency(e.target.value);
+        this.getOneStockCurrency(e.target.value)
+    }
 
     setOneStockTimer = () => {
-        console.log('starting one stock timer')
         setInterval(()=> {
-            this.getOneStock()
+            this.getOneStockCurrency()
         },120000)
     }
     clearOneStockTimer = () => {
         clearInterval(this.setOneStockTimer)
     }
+
+    filterCurrency = (object) => {
+        let filterNum = Object.keys(object)
+        console.log(filterNum)
+        let lowerCurrency = this.props.currency.toLowerCase();
+        let filteredNums = filterNum.filter(key=> key.includes(`price_${lowerCurrency}`))
+        let newObj = filteredNums.reduce( (obj, key)=> {
+            obj[key] =filterNum[filteredNums]
+        })
+        this.props.updateCurrencyCompare(newObj)
+    }
+    filterCurrencyVolume = (object) => {
+        let filterNum = Object.keys(object)
+        console.log(filterNum)
+        let lowerCurrency = this.props.currency.toLowerCase();
+        console.log(lowerCurrency)
+        if(filterNum.filter(key => !key.includes(`24_volume_${lowerCurrency}`))) return;
+        let filteredNums = filterNum.filter(key=> key.includes(`24_volume_${lowerCurrency}`))
+        console.log(filteredNums)
+        let newObj = filteredNums.reduce( (obj, key)=> {
+            obj[key] =filterNum[filteredNums]
+        })
+        this.props.updateVolume24Compare(newObj)
+    }
     
     componentDidMount() {     
         // this.populateUser();
-        this.getOneStock();
-        this.getBitcoin();
+        this.getOneStockCurrency();
         this.setOneStockTimer();
+        this.getBitcoin();
     }
     componentWillUnmount() {
         this.clearOneStockTimer()
@@ -101,8 +134,6 @@ class StocksPage extends React.Component {
     render() {
         return (
             <div className='stockpage-font'>
-                <NavBar
-                user={this.props.user}/>
                 <Row>
                     <Col s={12}>
                         <Watchlist
@@ -122,8 +153,11 @@ class StocksPage extends React.Component {
                             currentStocks={this.props.currentStocks}
                             addToWatchlist={this.props.addToWatchlist}
                             currency = {this.props.currency}
-                            currencyParams={this.props.currencyParams}
-                            stockVisualData={this.state.stockVisualData}/> 
+                            currencyParams={this.currencyParams}
+                            stockVisualData={this.state.stockVisualData}
+                            getOneStockCurrency={this.props.getOneStockCurrency}
+                            currencyCompare={this.props.currencyCompare}
+                            volume24Compare={this.props.volume24Compare}/> 
                     </Col>
                 </Row>
             </div>
