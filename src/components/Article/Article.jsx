@@ -9,9 +9,9 @@ const Article = (props) => {
         return (
             <div key={props.title}>
                 <p className='news-font news-padding'>{props.title}</p>
-                <Link to={`articles/${props.title}`}>
-                    <img className="size-image image-border"src={props.urlToImage} alt=""/>
-                </Link><br/>
+                <a href={`${props.url}`} target='_blank'>
+                    <img className="size-image image-border"src={props.urlToImage} alt=""/><br/>
+                </a>
             </div>
         )
 }

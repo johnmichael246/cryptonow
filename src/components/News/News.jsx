@@ -1,6 +1,7 @@
 import React from 'react';
 import './News.css';
 import Articles from '../Articles/Articles';
+import Article from '../Article/Article';
 
 
 
@@ -30,9 +31,19 @@ class News extends React.Component {
                 {!this.state.articles
                 ? <p>Loading Articles</p>
                 :
-                <Articles
-                articles={this.state.articles}
-                favoriteArticle={this.favoriteArticle} />}
+                this.props.articles.map( (article, index) => {
+                    return (
+                        <Article
+                        key={article.title}
+                        title={article.title}
+                        urlToImage={article.urlToImage}
+                        publishedAt={article.publishedAt}
+                        description={article.description}
+                        url={article.url}
+                        favoriteArticle={article.favoriteArticle}
+                        index={index} />
+                    )
+                })}
             </div>
         )
     }
