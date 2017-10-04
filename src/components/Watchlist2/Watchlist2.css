@@ -9,6 +9,14 @@
 }
 
 .padder-top {
-    margin-top: 20px;
-    
+    margin-top: 20px; 
+}
+.center-watchlist-table {
+    text-align:center;
+}
+.remove-link-color{
+    color:black;
+}
+.alignment {
+    text-align:center;
 }

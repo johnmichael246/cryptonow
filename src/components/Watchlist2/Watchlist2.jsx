@@ -12,8 +12,10 @@ const Watchlist2 = (props) => {
     return (
         <div>
             <Row>
-                <Col s={8}>
-                <Table>
+                <Col s={12} className='center-watchlist-table'>
+                <Table
+                responsive
+                hoverable>
                     <thead>
                         <tr>
                             <td>Name</td>
@@ -30,14 +32,16 @@ const Watchlist2 = (props) => {
                             {props.favStocks.map( (stock, index) => {
                                 return (
                                     <tr key={index}>
+                                    <Link to={`/stocks/${stock.id}`} className='remove-link-color'>
                                         <td key={stock.name}>{stock.name}</td>
+                                    </Link>
                                         <td key={stock.symbol}>{stock.symbol}</td>
-                                        <td key={stock.market_cap_usd}>{stock.market_cap_usd}</td>
+                                        <td key={stock.market_cap_usd}>{props.formatData(stock.market_cap_usd)}</td>
                                         <td key={stock.total_supply}>{stock.total_supply}</td>
-                                        <td key={stock['24h_volume_usd']}>{stock['24h_volume_usd']}</td>
-                                        <td key={stock.percent_change_1h} style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
-                                        <td key={stock.percent_change_24h} style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} } >{stock.percent_change_1h}&nbsp;%</td>
-                                        <td key={stock.percent_change_7d} style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock['24h_volume_usd']}>{props.formatData(stock['24h_volume_usd'])}</td>
+                                        <td key={stock.percent_change_1h} className='alignment' style={ stock.percent_change_1h > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_1h}&nbsp;%</td>
+                                        <td key={stock.percent_change_24h} className='alignment' style={ stock.percent_change_24h > 0 ? {color:'green'} : {color:'red'} } >{stock.percent_change_24h}&nbsp;%</td>
+                                        <td key={stock.percent_change_7d} className='alignment' style={ stock.percent_change_7d > 0 ? {color:'green'} : {color:'red'} }>{stock.percent_change_7d}&nbsp;%</td>
                                     </tr>
                                 )
                             })}

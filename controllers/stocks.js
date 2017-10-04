@@ -63,11 +63,14 @@ function addStock(req, res) {
     User.findById(req.user._id, (err,user) => {
         Stock.findOne({apiId:req.body.id}, (err, stock) => {
             if(stock) {
-                console.log('the stock exists')
                 if(err)console.log(err);
+                if(stock.symbol === undefined) {
+                    stock.symbol = req.body.stockSymbol
+                    stock.save()
+                }
+
                 let idChecker = user.favStocks.findIndex(id => id.equals(stock._id))
                 if(idChecker > -1) {
-                    console.log('removing stock from user array')
                         user.favStocks.splice(idChecker, 1);
                         user.save(err => {
                             if(err)console.log(err)
@@ -76,7 +79,6 @@ function addStock(req, res) {
                             })
                         })
                 } else {
-                    console.log('adding stock to user array')
                     user.favStocks.push(stock);
                     user.save((err) => {
                         User.populate(user, 'favStocks', (err, user) => {
@@ -85,7 +87,6 @@ function addStock(req, res) {
                     });
                 }
             } else {
-                console.log('the stock is not here')
                 let coin = new Stock({
                     name:req.body.name,
                     symbol:req.body.stockSymbol,

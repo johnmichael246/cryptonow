@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {
-  Input
-} from 'react-materialize';
-import {
+  Input,
   Row,
   Col
-} from 'react-bootstrap';
+} from 'react-materialize';
 import userService from '../../utilities/userService';
 import './LoginForm.css'
 

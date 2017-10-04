@@ -15,6 +15,11 @@ class WatchlistPage extends React.Component {
         this.props.history.goBack();
     }
 
+    formatData = (str) => {
+        if (str === null || str === undefined) return;
+        return str.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
     render() {
         let extractedWatchlist = this.props.favStocks ?
             <div className='stockpage-font'>
@@ -24,7 +29,8 @@ class WatchlistPage extends React.Component {
                             handleTheReturn={this.handleTheReturn}
                             history={this.props.history}
                             user={this.props.user}
-                            favStocks={this.props.favStocks} />
+                            favStocks={this.props.favStocks}
+                            formatData={this.formatData} />
                     </Col>
                 </Row>
             </div>:

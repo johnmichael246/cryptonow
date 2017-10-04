@@ -21,12 +21,11 @@ function populateDatabase() {
                         if(err) console.log(err);
                         console.log(stock.name,'has been updated with values,',stock.closingStockValues)         
                     })
-                    console.log('the stock', stock.name, 'exists')
                 } else {
                     console.log('creating the stock')
                     let newCoin = new Stock({
                         name:coin.name,
-                        symbol:coin.stockSymbol,
+                        stockSymbol:coin.symbol,
                         apiId:coin.id
                     })
                     let todaysDate = new Date();

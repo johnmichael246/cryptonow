@@ -124,6 +124,7 @@ class App extends Component {
     let header = this.getAuthRequestOptions('POST');
     header.headers.append('Content-Type','application/json')
     header.body= JSON.stringify({id, stockSymbol, name})
+    console.log(header.body)
     fetch(`/api/stocks/${stockId}`, header)
     .then(response => response.json())
     .then(data => this.setState({user:data}))
@@ -192,15 +193,13 @@ class App extends Component {
                 )
               }
             }/>
-            <Route path='/watchlist' loggedIn={this.state.loggedIn} render={(props) =>
-              props.loggedIn ? <WatchlistPage
+            <Route path='/watchlist' render={(props) =>
+              <WatchlistPage
               {...props}
               user={this.state.user}
               favStocks={this.state.favStocks}
               updateFavStockState={this.updateFavStockState}
-              updateFavorites={this.updateFavorites}
-              /> :
-              <Redirect to='/signup'/>
+              updateFavorites={this.updateFavorites}/> 
             }/>
             <Route exact path='/login' render={(props)=>
               <LoginPage

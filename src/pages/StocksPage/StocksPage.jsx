@@ -139,8 +139,8 @@ class StocksPage extends React.Component {
                         <Watchlist
                         articles={this.props.articles}
                         user={this.props.user}
-                        currentStocks={this.state.currentStocks}
-                        updateStockLink={this.props.updateStockLink} />
+                        updateStockLink={this.props.updateStockLink}
+                        stock={this.props.stock} />
                     </Col>
                 </Row>
                 <Row>   
