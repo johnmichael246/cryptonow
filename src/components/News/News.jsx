@@ -1,6 +1,6 @@
 import React from 'react';
 import './News.css';
-import Articles from '../Articles/Articles';
+// import Articles from '../Articles/Articles';
 import Article from '../Article/Article';
 
 

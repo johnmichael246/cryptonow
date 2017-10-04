@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom';
 import './SignupForm.css';
 import userService from '../../utilities/userService';
 import {
-  Row,
   Input,
+  Row,
   Col
 } from 'react-materialize';
+
 
 class SignupForm extends Component {
   constructor(props) {
@@ -49,16 +50,16 @@ class SignupForm extends Component {
         <Row>
         <header className='sign-up-title'>Sign Up</header>
         <form className="form-horizontal" onSubmit={this.handleSubmit} >
-          <Col s={12}offset="s3">
-            <Input s={9} m={6}type="text" className="form-control" placeholder="Name" autoComplete='off' value={this.state.name} onChange={(e) => this.handleChange('name', e)}/>
+          <Col s={12}>
+            <Input s={9} m={6}type="text" offset='m3' className="form-control" placeholder="Name" autoComplete='off' value={this.state.name} onChange={(e) => this.handleChange('name', e)}/>
           </Col>
-          <Col s={12}offset="s3">
+          <Col s={12}>
             <Input s={9} m={6} type="email" className="form-control" placeholder="Email" autoComplete='off' value={this.state.email} onChange={(e) => this.handleChange('email', e)}/>
           </Col>
-          <Col s={12}offset="s3">
+          <Col s={12}>
             <Input s={9} m={6} type="password" className="form-control" placeholder="Password" autoComplete='off' value={this.state.password} onChange={(e) => this.handleChange('password', e)}/>
           </Col>
-          <Col s={12}offset="s3">          
+          <Col s={12}>          
             <Input className='border' s={9} m={6} type="password" className="form-control" placeholder="Confirm Password" autoComplete='off' value={this.state.passwordConf} onChange={(e) => this.handleChange('passwordConf', e)} />
           </Col>            
           <Col s={12}>

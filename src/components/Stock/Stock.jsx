@@ -97,12 +97,26 @@ class Stock extends React.Component {
                                         <th>
                                             <Input type='select' className='margin-top'label="Convert To" onChange={this.props.currencyParams} name='currencyParams' defaultValue='USD'>
                                                 <option value='USD'>USD</option>
-                                                <option value='EUR'>EU</option>
+                                                <option value='EUR'>EUR</option>
                                                 <option value='AUD'>AUD</option>
                                                 <option value='BRL'>BRL</option>
                                                 <option value='CAD'>CAD</option>
                                                 <option value='CLP'>CLP</option>
                                                 <option value='RUB'>RUB</option>
+                                                <option value='CHF'>CHF</option>
+                                                <option value='JPY'>JPY</option>
+                                                <option value='CZK'>CZK</option>
+                                                <option value='DKK'>DKK</option>
+                                                <option value='GBP'>GBP</option>
+                                                <option value='PHP'>PHP</option>
+                                                <option value='SEK'>SEK</option>
+                                                <option value='PKR'>PKR</option>
+                                                <option value='JPY'>JPY</option>
+                                                <option value='CZK'>CZK</option>
+                                                <option value='DKK'>DKK</option>
+                                                <option value='MXN'>MXN</option>
+                                                <option value='ZAR'>ZAR</option>
+                                                <option value='IDR'>IDR</option>
                                             </Input>
                                         </th>
                                     </tr>

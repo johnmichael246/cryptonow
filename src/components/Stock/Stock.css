@@ -14,4 +14,18 @@ h4.center-text {
 div.center-text {
     text-align:center !important;
 }
-
+@media screen and (max-width:815px) {
+    h2.center-text {
+        font-size:40px !important;
+    }
+}
+@media screen and (max-width:660px) {
+    h2.center-text {
+        font-size:35px !important;
+    }
+}
+@media screen and (max-width:600px) {
+    h2.center-text {
+        font-size:45px !important;
+    }
+}

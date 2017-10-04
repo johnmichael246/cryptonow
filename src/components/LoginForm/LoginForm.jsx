@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {
-  Row,
-  Col,
   Input
 } from 'react-materialize';
+import {
+  Row,
+  Col
+} from 'react-bootstrap';
 import userService from '../../utilities/userService';
 import './LoginForm.css'
 
@@ -43,10 +45,10 @@ class LoginForm extends Component {
           <header className="sign-up-title">Log In</header>
           <br/><br/>
           <form className="form-horizontal" onSubmit={this.handleSubmit} >
-            <Col s={12} offset='s3'>
+            <Col s={12} >
               <Input s={6} type="email" className="form-control" placeholder="Email" autocomplete='off'value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
             </Col>
-            <Col s={12} offset='s3'>
+            <Col s={12} >
               <Input s={6}type="password" className="form-control" placeholder="Password" autocomplete='off'value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
             </Col>
             <Col s={12} >
