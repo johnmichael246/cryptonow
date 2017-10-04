@@ -6,3 +6,7 @@
     margin-left:6%;
     margin-right:6%;
 }
+.size-image {
+    max-width:200px;
+    height:auto;
+}

@@ -2,6 +2,9 @@
     padding: 0;
     margin:0;
 }
+.center-preloader {
+    text-align:center;
+}
 h2.center-text {
     text-align:center !important;
 }

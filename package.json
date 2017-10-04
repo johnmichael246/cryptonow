@@ -17,7 +17,6 @@
     "morgan": "^1.8.2",
     "react": "^15.6.1",
     "react-autocomplete": "^1.7.1",
-    "react-bootstrap": "^0.31.3",
     "react-d3-components": "^0.6.8",
     "react-dom": "^15.6.1",
     "react-linechart": "^1.1.12",

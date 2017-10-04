@@ -143,10 +143,13 @@ class Stock extends React.Component {
                         </Col>
                     </Row> 
                 </div> :
-                <div>
-                    <Preloader size='big'/>
+                <Col s={12} className='center-preloader'>
+                    <Preloader 
+                    size='big'
+                    flashing
+                    className='center-preloader'/>
                     <p>Loading...</p>
-                </div>   
+                </Col>   
             return oneStock;    
     }               
 }
