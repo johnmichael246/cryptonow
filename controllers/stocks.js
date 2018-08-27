@@ -120,9 +120,13 @@ function populateGraph(req,res) {
 
 function addStock(req, res) {
     User.findById(req.user._id, (err,user) => {
-        Stock.findOne({apiId:req.body.id}, (err, stock) => {
-            if(err) return
+        Stock.findOne({ apiId:req.body.id }, (err, stock) => {
+            if(err) {
+                console.log(err)
+                return
+            }
             if(stock) {
+                console.log('found a stock')
                 if(stock.symbol === undefined) {
                     stock.symbol = req.body.stockSymbol
                     stock.save()
@@ -130,6 +134,7 @@ function addStock(req, res) {
 
                 let idChecker = user.favStocks.findIndex(id => id.equals(stock._id))
                 if(idChecker > -1) {
+                    console.log('remove stock from fav array')
                         user.favStocks.splice(idChecker, 1);
                         user.save(err => {
                             if(err)console.log(err)
@@ -138,6 +143,7 @@ function addStock(req, res) {
                             })
                         })
                 } else {
+                    console.log('add stock to fav array')
                     user.favStocks.push(stock);
                     user.save((err) => {
                         User.populate(user, 'favStocks', (err, user) => {
@@ -146,6 +152,7 @@ function addStock(req, res) {
                     });
                 }
             } else {
+                console.log('stock not found, adding')
                 let coin = new Stock({
                     name:req.body.name,
                     symbol:req.body.stockSymbol,

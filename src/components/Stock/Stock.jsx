@@ -11,17 +11,15 @@ import Graph from '../Graph/Graph';
 
 
 class Stock extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
     handleReturn = () => {
       this.props.history.goBack();
     }
+
     findfloatParseInt = (int) => {
         if ( int.toString().length > 1  ) {
-            console.log('int is greater than 0, length is', int.toString().length)
-            var arr = int.toString().split('.')[1].split('').map(Number);
-            for(var i=0; i<arr.length; i++) {
+            let arr = int.toString().split('.')[1].split('').map(Number);
+            for(let i=0; i<arr.length; i++) {
                 if (arr[i] !== 0){
                     let num = i + 2;
                     return num
@@ -33,14 +31,15 @@ class Stock extends React.Component {
     }
 
     render() {
-        console.log(this.props.stock ? this.props.stock[0]: 'boo')
-        let button  
-        if (!this.props.user) {
+        const { user, stock } = this.props
+        let button 
+        if (!user) {
             button = '';
-        } else if (this.props.stock && this.props.user.favStocks) {
-            this.props.user.favStocks.find( s => s.apiId === this.props.stock[0].id) ?
-                button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
-                button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>;
+        } else if (stock && user.favStocks) {
+            button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>{user.favStocks.find( s => s.apiId === stock[0].id) ? 'Remove From Watchlist': 'Add to Watchlist'}</button>
+            //  ?
+            //     button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Remove from Watchlist</button> :
+            //     button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(this.props.stock[0].id, this.props.stock[0].symbol, this.props.stock[0].name)}>Add to Watchlist</button>;
         }
         let currencyCompareValue = 0        
         let bitcoinValue = 0
