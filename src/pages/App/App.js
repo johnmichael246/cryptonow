@@ -22,7 +22,7 @@ class App extends Component {
     bitcoin: null,
     favStocks: [],
     currency: 'usd',
-    currencyCompare:null,
+    currencyCompare:'usd',
     loggedIn: false,
     volume24Compare:null
   }

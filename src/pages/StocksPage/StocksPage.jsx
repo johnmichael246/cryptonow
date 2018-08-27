@@ -3,14 +3,9 @@ import {
     Row,
     Col
 } from 'react-materialize';
-import {
-    Link,
-} from 'react-router-dom';
-import Favs from '../../components/Favs/Favs';
+import { Link } from 'react-router-dom';
 import Watchlist from '../../components/Watchlist/Watchlist';
 import Stock from '../../components/Stock/Stock';
-import tokenService from '../../utilities/tokenService';
-import Graph from '../../components/Graph/Graph';
 import './StocksPage.css';
 
 class StocksPage extends React.Component {
@@ -18,7 +13,7 @@ class StocksPage extends React.Component {
         stockVisualData:[]
     }
 
-    getBitcoin = async () => {
+    getBitcoinValue = async () => {
         let response = await fetch('/api/stocks/1')
         response = await response.json()
         this.props.updateBitcoin()
@@ -52,7 +47,6 @@ class StocksPage extends React.Component {
             }
         })
         response = await response.json() 
-
         this.props.updateOneStock(response)
         this.getStockGraphData()
         this.filterCurrency(this.props.stock[0])
@@ -60,8 +54,9 @@ class StocksPage extends React.Component {
     }
 
     currencyParams = (e) => {
-        this.props.updateCurrency(e.target.value);
-        this.getOneStockCurrency(e.target.value)
+        let value = e.target.value
+        this.props.updateCurrency(value)
+        this.getOneStockCurrency(value)
     }
 
     setOneStockTimer = () => {
@@ -75,19 +70,19 @@ class StocksPage extends React.Component {
     }
 
     filterCurrency = (object) => {
-        let quotedCurrency = Object.keys(object.quotes)
+        let quotedCurrency = Object.keys(object.quotes)[0]
         this.props.updateCurrencyCompare(quotedCurrency)
     }
 
     filterCurrencyVolume = (object) => {
-        let quotedCurrencyVolume = Object.keys(object.volume_24h)
+        let quotedCurrencyVolume = Object.keys(object.volume_24h)[0]
         this.props.updateVolume24Compare(quotedCurrencyVolume)
     }
     
     componentDidMount() {     
         this.getOneStockCurrency(this.props.currency)
         this.setOneStockTimer()
-        this.getBitcoin()
+        this.getBitcoinValue()
     }
     componentWillUnmount() {
         this.clearOneStockTimer()
@@ -96,24 +91,25 @@ class StocksPage extends React.Component {
 
 
     render() {
-        console.log('=====',this.props.stock)
+        console.log(this.props.currencyCompare)
+        const { articles, stock, user } = this.props
         return (
             <div className='stockpage-font'>
                 <Row>
                     <Col s={12}>
                         <Watchlist
-                        articles={this.props.articles}
-                        user={this.props.user}
+                        articles={articles}
+                        user={user}
                         updateStockLink={this.props.updateStockLink}
-                        stock={this.props.stock} />
+                        stock={stock} />
                     </Col>
                 </Row>
                 <Row>   
                     <Col s={12}>
                         <Stock
                             history={this.props.history}
-                            user={this.props.user}
-                            stock={this.props.stock}
+                            user={user}
+                            stock={stock}
                             bitcoin={this.props.bitcoin}
                             currentStocks={this.props.currentStocks}
                             addToWatchlist={this.props.addToWatchlist}
