@@ -9,14 +9,11 @@ import News from '../../components/News/News';
 import Stocks from '../../components/Stocks/Stocks';
 
 class MainPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     setTimer = () => {
-        setInterval(() =>{
-      console.log('the timer has started')
-        this.props.searchStocks()
+        return setInterval(() =>{
+            console.log('the timer has started')
+            this.props.searchStocks()
         }, 120000)
     }
 
@@ -26,24 +23,25 @@ class MainPage extends React.Component {
     }
 
     render() {
+        const { user, articles, header, stocks } = this.props 
         return (
             <div className='background-main'>
                 <Row>
                     <Col s={12}m={4}>
                         <News
-                        articles={this.props.articles}
-                        user={this.props.user} />
+                        articles={articles}
+                        user={user} />
                     </Col>     
                     <Col s={12}m={8}>
                         <Favs
-                        user={this.props.user} />
+                        user={user} />
                         <Stocks.Stocks
-                        user={this.props.user}
-                        stocks={this.props.stocks}
+                        user={user}
+                        stocks={stocks}
                         setTimer={this.setTimer}
                         clearTimer={this.clearTimer}
                         searchStocks={this.props.searchStocks}
-                        header={this.props.header} />
+                        header={header} />
                     </Col>
                 </Row>
             </div> 

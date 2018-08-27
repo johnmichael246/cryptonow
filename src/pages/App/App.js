@@ -3,7 +3,6 @@ import './App.css';
 import {
   Switch,
   Route,
-  Redirect
 } from 'react-router-dom';
 import MainPage from '../MainPage/MainPage';
 import WatchlistPage from '../WatchlistPage/WatchlistPage';
@@ -15,119 +14,110 @@ import userService from '../../utilities/userService';
 import tokenService from '../../utilities/tokenService';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      articles: [],
-      user: null,
-      stocks: [],
-      stock: null,
-      bitcoin: null,
-      bitcoinValue: null,
-      currency: 'usd',
-      favStocks: [],
-      loggedIn: false,
-      currencyCompare:null,
-      volume24Compare:null
-    }
+  state = {
+    articles: [],
+    user: null,
+    stock: null,
+    stocks: [],
+    bitcoinValue: null,
+    bitcoin: null,
+    favStocks: [],
+    currency: 'usd',
+    currencyCompare:null,
+    loggedIn: false,
+    volume24Compare:null
   }
 
   handleSignup = () => {
-    this.setState({user: userService.getUser()});
-    this.refreshData();
-    this.setState({loggedIn:true})
+    this.setState({ user: userService.getUser() })
+    this.refreshData()
+    this.setState({ loggedIn: true })
   }
 
   handleLogin = () => {
     this.setState({
       user: userService.getUser(),
       loggedIn:true
-    });
-    this.refreshData();
+    }, () => this.refreshData())
   }
 
-  refreshData = () => {
-    console.log('app > refreshdata()')
-    this.populateUser();
-    fetch('/api/news')
-      .then( response => response.json())
-      .then( data => this.setState({articles:data.articles}))
+  refreshData = async () => {
+    this.populateUser()
+    let response = await fetch('/api/news')
+    response = await response.json()
+    this.setState({ articles:response.articles })
   }
 
   handleLogout = () => {
-    userService.logout();
+    userService.logout()
     this.setState({
       user: null,
-      loggeIn:false});
+      loggeIn:false})
   }
 
-  updateFavorites = () => {
-    console.log('App > updateFavorites > this.state.user =', this.state.user)
+  updateFavorites = async () => {
     if(this.state.user) {
-        let header = new Headers({'Authorization':'Bearer '+ tokenService.getToken()});
-        header.append('Content-Type','application/json')
-        let mainBody = JSON.stringify({stocks:this.state.user.favStocks})
-        fetch('/api/favStocks', {
-            method:'post',
-            headers:header,
-            body:mainBody 
-        })
-        .then( response => response.json() )
-        .then( data => this.setState({favStocks:data}))
+      let header = this.getAuthRequestOptions('POST')
+      header.append('Content-Type','application/json')
+      let mainBody = JSON.stringify({stocks:this.state.user.favStocks})
+      let response = await fetch('/api/favStocks', {
+        headers:header,
+        body:mainBody 
+      })
+      response = await response.json()
+      this.setState({ favStocks:response })
     }
   }
 
-  getAuthRequestOptions = (method) => {
-      return {
-          method: method,
-          headers: new Headers({'Authorization':'Bearer '+ tokenService.getToken()}),
-      }
+  getAuthRequestOptions = (method = 'GET') => {
+    return {
+      method: method,
+      headers: new Headers({ 'Authorization':'Bearer '+ tokenService.getToken() }),
+    }
   }
 
   updateStockLink = (stock) => {
-    this.setState({stock:stock})
+    this.setState({ stock })
   }
 
   updateCurrency = (currency) => {
-    this.setState({currency:currency})
+    this.setState({ currency })
   }
 
   updateCurrencyCompare = (currencyProp) => {
-    this.setState({currencyCompare:currencyProp})
+    this.setState({ currencyCompare:currencyProp })
   }
 
   updateVolume24Compare = (volume) => {
-    this.setState({volume24Compare:volume})
+    this.setState({ volume24Compare:volume })
   }
 
   currencyParams = (e) => {
-    this.updateCurrency(e.target.value);
-    this.getOneStockCurrency(e.target.value)
+    let value = e.target.value
+    this.updateCurrency(value)
+    this.getOneStockCurrency(value)
   }
 
-  populateUser = () => {
-    let header = this.getAuthRequestOptions('GET');
-    fetch('/api/users/populate', header)
-    .then( response => response.json())
-    .then( data => this.setState({user:data}))
-    .then( ()=> this.updateFavorites())
+  populateUser = async () => {
+    const header = this.getAuthRequestOptions()
+    let response = await fetch('/api/users/populate', header)
+    response = await response.json()
+    this.setState({ user:response }, () => this.updateFavorites())
   }
 
   componentDidMount() {
-    console.log('app > component mounted')
-    this.setState({user: userService.getUser()});
-    this.refreshData();
+    this.setState({ user: userService.getUser() })
+    this.refreshData()
   }
 
-  addToWatchlist = (stockId,stockSymbol,name) => {
+  addToWatchlist = async (stockId, stockSymbol, name) => {
     let id = stockId
-    let header = this.getAuthRequestOptions('POST');
+    let header = this.getAuthRequestOptions('POST')
     header.headers.append('Content-Type','application/json')
-    header.body= JSON.stringify({id, stockSymbol, name})
-    console.log(header.body)
-    fetch(`/api/stocks/${stockId}`, header)
-    .then(response => response.json())
-    .then(data => this.setState({user:data}))
+    header.body= JSON.stringify({ id, stockSymbol, name })
+    let response = await fetch(`/api/stocks/${stockId}`, header)
+    response = await response.json()
+    this.setState({ user:response })
   }
 
   updateBitcoin = (data) => {
@@ -135,15 +125,17 @@ class App extends Component {
   }
 
   updateOneStock = (data) => {
-    this.setState({stock:data})
+    this.setState({ stock:data })
   }
 
-  searchStocks = () => {
-      fetch('/api/stocks').then( response => response.json())
-      .then( data => this.setState({ stocks: data }))
+  searchStocks = async () => {
+    let response = await fetch('/api/stocks')
+    response = await response.json()
+    this.setState({ stocks: response })
   }
 
   render() {
+    const { user, articles, stocks, stock, favStocks } = this.state 
     return (
       <div className='reset'>
         <div className="header">
@@ -152,70 +144,73 @@ class App extends Component {
           </h2>
         </div>
         <NavBar
-        user={this.state.user}
+        user={user}
         handleLogout={this.handleLogout}
         />
-          <Switch>
-            <Route exact path='/' render={(props) =>
-              <MainPage
-                {...props}
-                articles={this.state.articles}
-                user={this.state.user}
-                addToWatchlist={this.addToWatchlist}
-                updateStockLink={this.updateStockLink}
-                searchStocks={this.searchStocks}
-                currencyParams={this.currencyParams}
-                stocks={this.state.stocks}
-                stock={this.state.stock}
-              />
-            }/>
-            <Route exact path='/stocks/:id' render={(props) => {
-                return(
-                  <StocksPage
-                    {...props}
-                    user={this.state.user}
-                    favstocks={this.state.favStocks}
-                    addToWatchlist={this.addToWatchlist}
-                    stock={this.state.stock }
-                    bitcoin={this.state.bitcoin}
-                    bitcoinValue={this.state.bitcoinValue}
-                    updateLink={this.updateStockLink}
-                    currency={this.state.currency}
-                    updateOneStock={this.updateOneStock} 
-                    updateCurrency={this.updateCurrency}  
-                    updateBitcoin={this.updateBitcoin}
-                    getOneStockCurrency={this.getOneStockCurrency}
-                    currencyCompare={this.state.currencyCompare}
-                    updateCurrencyCompare={this.updateCurrencyCompare}
-                    updateVolume24Compare={this.updateVolume24Compare}
-                    volume24Compare={this.state.volume24Compare}
-                    />
-                )
-              }
-            }/>
-            <Route path='/watchlist' render={(props) =>
-              <WatchlistPage
+        <Switch>
+          <Route exact path='/' render={(props) =>
+            <MainPage
               {...props}
-              user={this.state.user}
-              favStocks={this.state.favStocks}
-              updateFavStockState={this.updateFavStockState}
-              updateFavorites={this.updateFavorites}/> 
-            }/>
-            <Route exact path='/login' render={(props)=>
-              <LoginPage
-              {...props}
-              handleLogin={this.handleLogin}
-              />
-            }/>
-            <Route exact path='/signup' render={(props)=>
-              <SignupPage
-              {...props}
-              handleSignup={this.handleSignup}
+              articles={articles}
+              user={user}
+              addToWatchlist={this.addToWatchlist}
+              updateStockLink={this.updateStockLink}
+              searchStocks={this.searchStocks}
+              currencyParams={this.currencyParams}
+              populateUser={this.populateUser}
+              stocks={stocks}
+              stock={stock}
             />
-            }/>
-          </Switch>        
-        </div>
-    );
+          }/>
+          <Route exact path='/stocks/:id' render={(props) => {
+              return(
+                <StocksPage
+                  {...props}
+                  user={user}
+                  favstocks={favStocks}
+                  addToWatchlist={this.addToWatchlist}
+                  stock={stock}
+                  bitcoin={this.state.bitcoin}
+                  bitcoinValue={this.state.bitcoinValue}
+                  updateLink={this.updateStockLink}
+                  currency={this.state.currency}
+                  updateOneStock={this.updateOneStock} 
+                  updateCurrency={this.updateCurrency}  
+                  updateBitcoin={this.updateBitcoin}
+                  getOneStockCurrency={this.getOneStockCurrency}
+                  currencyCompare={this.state.currencyCompare}
+                  updateCurrencyCompare={this.updateCurrencyCompare}
+                  updateVolume24Compare={this.updateVolume24Compare}
+                  volume24Compare={this.state.volume24Compare}
+                  getAuthRequestOptions={this.getAuthRequestOptions}
+                  populateUser={this.populateUser}
+                  />
+              )
+            }
+          }/>
+          <Route path='/watchlist' render={(props) =>
+            <WatchlistPage
+            {...props}
+            user={user}
+            favStocks={favStocks}
+            updateFavStockState={this.updateFavStockState}
+            updateFavorites={this.updateFavorites}/> 
+          }/>
+          <Route exact path='/login' render={(props)=>
+            <LoginPage
+            {...props}
+            handleLogin={this.handleLogin}
+            />
+          }/>
+          <Route exact path='/signup' render={(props)=>
+            <SignupPage
+            {...props}
+            handleSignup={this.handleSignup}
+          />
+          }/>
+        </Switch>        
+      </div>
+    )
   }
 }
 

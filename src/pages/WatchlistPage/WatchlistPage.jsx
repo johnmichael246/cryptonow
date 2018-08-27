@@ -28,7 +28,7 @@ class WatchlistPage extends React.Component {
                         <Watchlist2
                             handleTheReturn={this.handleTheReturn}
                             history={this.props.history}
-                            user={this.props.user}
+                            currentUser={this.props.currentUser}
                             favStocks={this.props.favStocks}
                             formatData={this.formatData} />
                     </Col>

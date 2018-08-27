@@ -1,24 +1,23 @@
-var User = require('../models/user');
-var Stock = require('../models/stock');
-var jwt = require('jsonwebtoken');
-var SECRET = process.env.SECRET;
+let User = require('../models/user')
+let jwt = require('jsonwebtoken')
+const SECRET = process.env.SECRET
 
 
 function createJWT(user) {
     return jwt.sign(
-        {user},
+        { user },
         SECRET,
         {expiresIn: '24h'}
     );
 }
 
 function signup(req,res) {
-    var user = new User(req.body);
+    const user = new User(req.body)
     user.save()
     .then(user => {
-        return res.json({token: createJWT(user)});
+        return res.json({token: createJWT(user)})
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => res.status(400).json(err))
 }
 
 function login(req, res) {
@@ -49,8 +48,8 @@ function checkAuth(req, res, next) {
 
 
 module.exports = {
-    signup,
-    login,
-    populateUser,
-    checkAuth
+  signup,
+  login,
+  populateUser,
+  checkAuth
 }
