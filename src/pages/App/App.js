@@ -42,17 +42,18 @@ class App extends Component {
   }
 
   refreshData = async () => {
-    this.populateUser()
-    let response = await fetch('/api/news')
-    response = await response.json()
-    this.setState({ articles:response.articles })
+    // this.populateUser()
+    // let response = await fetch('/api/news')
+    // response = await response.json()
+    // this.setState({ articles:response.articles })
   }
 
   handleLogout = () => {
     userService.logout()
     this.setState({
       user: null,
-      loggeIn:false})
+      loggeIn:false
+    })
   }
 
   updateFavorites = async () => {
@@ -102,6 +103,7 @@ class App extends Component {
     const header = this.getAuthRequestOptions()
     let response = await fetch('/api/users/populate', header)
     response = await response.json()
+    console.log(response)
     this.setState({ user:response }, () => this.updateFavorites())
   }
 
@@ -129,9 +131,13 @@ class App extends Component {
   }
 
   searchStocks = async () => {
-    let response = await fetch('/api/stocks')
-    response = await response.json()
-    this.setState({ stocks: response })
+    try {
+      let response = await fetch('/api/stocks')
+      response = await response.json()
+      this.setState({ stocks: response })
+    } catch (e) {
+      console.log('Error!', e)
+    }
   }
 
   render() {

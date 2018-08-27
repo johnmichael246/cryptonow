@@ -8,9 +8,7 @@ import {
 import Watchlist2 from '../../components/Watchlist2/Watchlist2';
 
 class WatchlistPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    
     handleTheReturn = () => {
         this.props.history.goBack();
     }

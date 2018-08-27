@@ -29,7 +29,6 @@ class MainPage extends React.Component {
                 <Row>
                     <Col s={12}m={4}>
                         <News
-                        articles={articles}
                         user={user} />
                     </Col>     
                     <Col s={12}m={8}>

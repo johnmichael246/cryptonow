@@ -1,6 +1,5 @@
 import React from 'react';
 import './Stock.css';
-import tokenService from '../../utilities/tokenService';
 import {
     Row,
     Col,
@@ -34,6 +33,7 @@ class Stock extends React.Component {
     }
 
     render() {
+        console.log(this.props.stock)
         let button  
         if (!this.props.user) {
             button = '';
@@ -50,8 +50,8 @@ class Stock extends React.Component {
         if (this.props.bitcoin && this.props.stock) {
             currencyCompareValue = Math.round(this.props.stock[0][this.props.currencyCompare]*100) / 100;
             bitcoinValue = this.props.stock[0].price_usd / this.props.bitcoin[0].price_usd
-            marketValue = this.props.stock[0].market_cap_usd.split('.')[0]
-            bitcoinMV= (marketValue/this.props.bitcoin[0].price_usd)
+            marketValue = this.props.stock[0].market_cap.toString().split('.')[0]
+            bitcoinMV= (marketValue/this.props.bitcoin[0].price)
             bitcoinVol24 = Math.round(this.props.stock[0]['24h_volume_usd'].split('.')[0] / this.props.bitcoin[0].price_usd)
         }
         var coinValue
@@ -62,7 +62,7 @@ class Stock extends React.Component {
             coinCap=0;
         }
         let graph=''
-        if(this.props.stockVisualData) {
+        if(this.props.stockVisualData.length > 0) {
             graph = <Graph
             stockVisualData={this.props.stockVisualData}
             stock={this.props.stock}
@@ -124,9 +124,9 @@ class Stock extends React.Component {
                                 <tbody>
                                     <tr key={this.props.stock[0].id}>
                                         <td className ='remove-lower-padding'>{marketValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                        <td className ='remove-lower-padding'>{this.props.stock[0]['24h_volume_usd'].split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                        <td className='centered'>{this.props.stock[0].available_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                        <td key={0}className='centered'>{this.props.stock[0].total_supply.split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                        <td className ='remove-lower-padding'>{this.props.stock[0]['volume_24h'].toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                        <td className='centered'>{this.props.stock[0].circulating_supply.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                        <td key={0}className='centered'>{this.props.stock[0].circulating_supply.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                                         </tr>
                                     <tr>
                                         <td style ={{color:'grey'}} >{ Math.round(bitcoinMV)} <b>BTC</b></td>

@@ -21,7 +21,6 @@ function signup(req,res) {
 }
 
 function login(req, res) {
-
   User.findOne({email: req.body.email}).exec().then(user => {
     if (!user) return res.status(401).json({err: 'bad credentials'});
     user.comparePassword(req.body.pw, (err, isMatch) => {
@@ -34,7 +33,8 @@ function login(req, res) {
   }).catch(err => res.status(401).json(err));
 }
 
-function populateUser(req,res) {
+function populateUser(req, res) {
+  console.log('yaaaaaaaaay')
   User.findById(req.user._id, (err, user) => {
     User.populate(user, 'favStocks', (err, user) => {
       res.json(user);

@@ -1,34 +1,85 @@
 var Stock = require('../models/stock');
 var User = require('../models/user');
-var stockURL = 'https://api.coinmarketcap.com/v1/ticker/';
+var stockURL = 'https://api.coinmarketcap.com/v2/ticker/';
 var request = require('request');
 
 function getStocks(req, res) {
     request(stockURL, (err, response, body) => {
-        let stocks = JSON.parse(body)
-        res.send(stocks)
+        if(err) {
+            res.status(500)
+            res.send(err)
+        } else {
+            let data = JSON.parse(body)
+            if (data.metadata.error) {
+                res.status(422)
+                res.send(data.metadata.error)
+            } else {
+                let stocks = Object.values(data.data)
+                stocks.forEach(item => {
+                    let market_info = Object.keys(item.quotes.USD)
+                    market_info.forEach(record => {
+                        item[record] = item.quotes.USD[record]
+                    })
+                })
+                res.status(200)
+                res.send(stocks)
+            }
+        }
     })
 }
 
 function getOneStock(req, res) {
-    var options = {
+    const options = {
         url: `${stockURL}${req.params.id}`
     }
     request(options.url, (err, response, body) => {
-        let stock = JSON.parse(body)
-        res.send(stock)
+        if(err) {
+            res.status(500)
+            res.send(err)
+        } else {
+            let data = JSON.parse(body)
+            if (data.metadata.error) {
+                res.status(422)
+                res.send(data.metadata.error)
+            } else {
+                let stock = [data.data]
+                stock.forEach(item => {
+                    let market_info = Object.keys(item.quotes.USD)
+                    market_info.forEach(record => {
+                        item[record] = item.quotes.USD[record]
+                    })
+                })
+                res.status(200)
+                res.send(stock)
+            }
+        }
     })
 }
 
 function getOneStockCurrency(req, res) {
-    var options = {
+    const options = {
         url: `${stockURL}${req.params.id}/?convert=${req.params.currency}`
     }
-    console.log(options.url)
     request(options.url, (err, response, body) => {
-        let stock = JSON.parse(body)
-        console.log(stock)
-        res.send(stock)
+        if (err) {
+            res.status(422)
+        } else {
+            let data = JSON.parse(body)
+            if (data.metadata.error) {
+                res.status(422)
+                res.send(data.metadata.error)
+            } else {
+                let stock = [data.data]
+                stock.forEach(item => {
+                    let market_info = Object.keys(item.quotes.USD)
+                    market_info.forEach(record => {
+                        item[record] = item.quotes.USD[record]
+                    })
+                })
+                res.status(200)
+                res.send(stock)
+            }
+        }
     })
 }
 
@@ -52,10 +103,16 @@ function getFavStocks(req,res) {
 }
 
 function populateGraph(req,res) {
-    Stock.find({apiId:req.body.id}, (err, stock)=> {
-        console.log('stocks are', stock[0].closingStockValues)
+    Stock.find({ apiId:req.body.id }, (err, stock)=> {
+        if (stock) {
+            console.log('the stock found is', stock, stock[0])
+            res.status(200)
+            res.json(stock[0].closingStockValues)
+        } else {
+            console.log('stock is', stock[0].closingStockValues)
+            res.status(422)
+        }
 
-        res.json(stock[0].closingStockValues);
     })
 }
 
