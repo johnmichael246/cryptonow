@@ -1,8 +1,7 @@
 import React from 'react';
 import {
     Row,
-    Col,
-    Preloader
+    Col
 } from 'react-materialize';
 import {
     Link,
@@ -15,11 +14,8 @@ import Graph from '../../components/Graph/Graph';
 import './StocksPage.css';
 
 class StocksPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            stockVisualData:[]
-        } 
+    state = {
+        stockVisualData:[]
     }
 
     getBitcoin = async () => {
@@ -35,7 +31,7 @@ class StocksPage extends React.Component {
             headers: {
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({id:id})
+            body:JSON.stringify({ id:id })
         })
         response = await response.json()
         this.setState({ stockVisualData: response })
@@ -45,7 +41,7 @@ class StocksPage extends React.Component {
         let response = await fetch(`/api/stocks/${this.props.match.params.id}`)
         response = await response.json()
         this.props.updateOneStock(response)
-        // this.getStockGraphData()
+        this.getStockGraphData()
     }
 
     getOneStockCurrency = async (currency) => {
@@ -58,9 +54,9 @@ class StocksPage extends React.Component {
         response = await response.json() 
 
         this.props.updateOneStock(response)
-        // this.getStockGraphData()
-        // this.filterCurrency(this.props.stock[0])
-        // this.filterCurrencyVolume(this.props.stock[0])
+        this.getStockGraphData()
+        this.filterCurrency(this.props.stock[0])
+        this.filterCurrencyVolume(this.props.stock[0])
     }
 
     currencyParams = (e) => {
@@ -79,38 +75,23 @@ class StocksPage extends React.Component {
     }
 
     filterCurrency = (object) => {
-        let filterNum = Object.keys(object)
-        console.log(filterNum)
-        let lowerCurrency = this.props.currency.toLowerCase();
-        let filteredNums = filterNum.filter(key=> key.includes(`price_${lowerCurrency}`))
-        let newObj = filteredNums.reduce( (obj, key)=> {
-            obj[key] =filterNum[filteredNums]
-        })
-        this.props.updateCurrencyCompare(newObj)
+        let quotedCurrency = Object.keys(object.quotes)
+        this.props.updateCurrencyCompare(quotedCurrency)
     }
 
     filterCurrencyVolume = (object) => {
-        let filterNum = Object.keys(object)
-        console.log(filterNum)
-        let lowerCurrency = this.props.currency.toLowerCase();
-        console.log(lowerCurrency)
-        if(filterNum.filter(key => !key.includes(`24_volume_${lowerCurrency}`))) return;
-        let filteredNums = filterNum.filter(key=> key.includes(`24_volume_${lowerCurrency}`))
-        console.log(filteredNums)
-        let newObj = filteredNums.reduce( (obj, key)=> {
-            obj[key] =filterNum[filteredNums]
-        })
-        this.props.updateVolume24Compare(newObj)
+        let quotedCurrencyVolume = Object.keys(object.volume_24h)
+        this.props.updateVolume24Compare(quotedCurrencyVolume)
     }
     
     componentDidMount() {     
-        this.getOneStockCurrency(this.props.currency);
-        this.setOneStockTimer();
-        this.getBitcoin();
+        this.getOneStockCurrency(this.props.currency)
+        this.setOneStockTimer()
+        this.getBitcoin()
     }
     componentWillUnmount() {
         this.clearOneStockTimer()
-        this.setState({stockVisualData:null})
+        this.setState({ stockVisualData:null })
     }
 
 

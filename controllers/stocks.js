@@ -103,24 +103,26 @@ function getFavStocks(req,res) {
 }
 
 function populateGraph(req,res) {
-    Stock.find({ apiId:req.body.id }, (err, stock)=> {
+    Stock.findOne({ apiId:req.body.id }, (err, stock)=> {
+        if (err) {
+            console.log(err)
+            return
+        }
         if (stock) {
-            console.log('the stock found is', stock, stock[0])
             res.status(200)
             res.json(stock[0].closingStockValues)
         } else {
-            console.log('stock is', stock[0].closingStockValues)
+            console.log('stock is not found')
             res.status(422)
         }
-
     })
 }
 
 function addStock(req, res) {
     User.findById(req.user._id, (err,user) => {
         Stock.findOne({apiId:req.body.id}, (err, stock) => {
+            if(err) return
             if(stock) {
-                if(err)console.log(err);
                 if(stock.symbol === undefined) {
                     stock.symbol = req.body.stockSymbol
                     stock.save()

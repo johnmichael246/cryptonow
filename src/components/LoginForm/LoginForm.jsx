@@ -44,10 +44,10 @@ class LoginForm extends Component {
           <br/><br/>
           <form className="form-horizontal" onSubmit={this.handleSubmit} >
             <Col s={12} >
-              <Input s={6} type="email" className="form-control" placeholder="Email" autocomplete='off'value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
+              <Input s={6} type="email" className="form-control" placeholder="Email" autoComplete='off'value={this.state.email} onChange={(e) => this.handleChange('email', e)} />
             </Col>
             <Col s={12} >
-              <Input s={6}type="password" className="form-control" placeholder="Password" autocomplete='off'value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
+              <Input s={6}type="password" className="form-control" placeholder="Password" autoComplete='off'value={this.state.pw} onChange={(e) => this.handleChange('pw', e)} />
             </Col>
             <Col s={12} >
             <br/>

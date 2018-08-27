@@ -1,5 +1,5 @@
-let User = require('../models/user')
-let jwt = require('jsonwebtoken')
+var User = require('../models/user')
+var jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
 
@@ -34,7 +34,7 @@ function login(req, res) {
 }
 
 function populateUser(req, res) {
-  console.log('yaaaaaaaaay')
+  console.log('calling populateUser')
   User.findById(req.user._id, (err, user) => {
     User.populate(user, 'favStocks', (err, user) => {
       res.json(user);

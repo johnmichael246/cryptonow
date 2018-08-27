@@ -15,7 +15,6 @@ import tokenService from '../../utilities/tokenService';
 
 class App extends Component {
   state = {
-    articles: [],
     user: null,
     stock: null,
     stocks: [],
@@ -41,38 +40,41 @@ class App extends Component {
     }, () => this.refreshData())
   }
 
-  refreshData = async () => {
-    // this.populateUser()
-    // let response = await fetch('/api/news')
-    // response = await response.json()
-    // this.setState({ articles:response.articles })
+  refreshData = () => {
+    this.populateUser()
   }
 
   handleLogout = () => {
     userService.logout()
     this.setState({
       user: null,
-      loggeIn:false
+      loggedIn:false
     })
   }
 
   updateFavorites = async () => {
-    if(this.state.user) {
+    const { user } = this.state
+    if(user && user.favStocks.length > 0) {
       let header = this.getAuthRequestOptions('POST')
-      header.append('Content-Type','application/json')
-      let mainBody = JSON.stringify({stocks:this.state.user.favStocks})
+      header.headers.append('Content-Type','application/json')
+      header.body = JSON.stringify({ stocks:user.favStocks })
       let response = await fetch('/api/favStocks', {
-        headers:header,
-        body:mainBody 
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+ tokenService.getToken() 
+        },
+        body: JSON.stringify({ stocks:user.favStocks })
       })
       response = await response.json()
+      console.log(response)
       this.setState({ favStocks:response })
     }
   }
 
   getAuthRequestOptions = (method = 'GET') => {
     return {
-      method: method,
+      method,
       headers: new Headers({ 'Authorization':'Bearer '+ tokenService.getToken() }),
     }
   }
@@ -100,10 +102,9 @@ class App extends Component {
   }
 
   populateUser = async () => {
-    const header = this.getAuthRequestOptions()
+    let header = this.getAuthRequestOptions()
     let response = await fetch('/api/users/populate', header)
     response = await response.json()
-    console.log(response)
     this.setState({ user:response }, () => this.updateFavorites())
   }
 
@@ -141,7 +142,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, articles, stocks, stock, favStocks } = this.state 
+    const { user, stocks, stock, favStocks } = this.state 
     return (
       <div className='reset'>
         <div className="header">
@@ -157,7 +158,6 @@ class App extends Component {
           <Route exact path='/' render={(props) =>
             <MainPage
               {...props}
-              articles={articles}
               user={user}
               addToWatchlist={this.addToWatchlist}
               updateStockLink={this.updateStockLink}

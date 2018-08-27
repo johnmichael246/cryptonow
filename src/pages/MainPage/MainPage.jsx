@@ -12,18 +12,16 @@ class MainPage extends React.Component {
 
     setTimer = () => {
         return setInterval(() =>{
-            console.log('the timer has started')
             this.props.searchStocks()
         }, 120000)
     }
 
     clearTimer = () => {
-        console.log('the timer has been cleared')
         clearInterval(this.setTimer)
     }
 
     render() {
-        const { user, articles, header, stocks } = this.props 
+        const { user, header, stocks } = this.props 
         return (
             <div className='background-main'>
                 <Row>

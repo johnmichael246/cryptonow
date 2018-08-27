@@ -10,8 +10,8 @@ class LoginPage extends React.Component  {
         }
     }
 
-    updateMessage = (msg) => {
-        this.setState({message: msg});
+    updateMessage = (message) => {
+        this.setState({ message })
     }
 
     render() {
