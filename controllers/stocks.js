@@ -110,9 +110,8 @@ function populateGraph(req,res) {
         }
         if (stock) {
             res.status(200)
-            res.json(stock[0].closingStockValues)
+            res.json(stock.closingStockValues)
         } else {
-            console.log('stock is not found')
             res.status(422)
         }
     })
@@ -126,44 +125,48 @@ function addStock(req, res) {
                 return
             }
             if(stock) {
-                console.log('found a stock')
-                if(stock.symbol === undefined) {
-                    stock.symbol = req.body.stockSymbol
-                    stock.save()
-                }
-
-                let idChecker = user.favStocks.findIndex(id => id.equals(stock._id))
-                if(idChecker > -1) {
-                    console.log('remove stock from fav array')
-                        user.favStocks.splice(idChecker, 1);
+                let requestedStockId = user.favStocks.findIndex(id => id.equals(stock._id))
+                if(requestedStockId > -1) {
+                        user.favStocks.splice(requestedStockId, 1);
                         user.save(err => {
-                            if(err)console.log(err)
-                            User.populate(user, 'favStocks', (err, user)=> {
-                                res.json(user)
-                            })
+                            if(err) {
+                                console.log(err)
+                                res.status(422)
+                            } else {
+                                User.populate(user, 'favStocks', (err, user)=> {
+                                    res.json(user).status(200)
+                                })
+                            }
                         })
                 } else {
-                    console.log('add stock to fav array')
-                    user.favStocks.push(stock);
-                    user.save((err) => {
-                        User.populate(user, 'favStocks', (err, user) => {
-                            res.json(user)
-                        })
+                    user.favStocks.push(stock)
+                    user.save(err => {
+                        if (err) {
+                            console.log(err)
+                            res.status(422)
+                        } else {
+                            User.populate(user, 'favStocks', (err, user) => {
+                                res.json(user).status(200)
+                            })
+                        }
                     });
                 }
             } else {
-                console.log('stock not found, adding')
                 let coin = new Stock({
                     name:req.body.name,
                     symbol:req.body.stockSymbol,
                     apiId:req.body.id
                 })
-                coin.save( (err, coin) => {
-                    user.favStocks.push(coin._id);
+                coin.save((err, coin) => {
+                    user.favStocks.concat([coin._id]);
                     user.save(err => {
-                        User.populate(user, 'favStocks', (err, user)=> {
-                            res.json(user)
-                        })
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            User.populate(user, 'favStocks', (err, user)=> {
+                                res.json(user).status(200)
+                            })
+                        }
                     })
                 })
             }

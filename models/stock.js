@@ -12,7 +12,8 @@ var stockSchema = new mongoose.Schema({
   symbol:String,
   closingStockValues:[valueSchema]
 }, {
-  timestamps: true
-});
+  timestamps: true,
+  usePushEach:true
+})
 
 module.exports = mongoose.model('Stock', stockSchema);
