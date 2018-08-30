@@ -8,9 +8,6 @@ import {Link} from 'react-router-dom'
 import Stock from '../../components/Stock/Stock';
 
 class Watchlist extends React.Component {
-    constructor(props) {
-        super(props); 
-    }
 
     getOneStock = () => {
         fetch(`/api/stocks/${this.props.match.params.id}`)

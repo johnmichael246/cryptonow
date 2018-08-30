@@ -11,6 +11,7 @@ import Graph from '../Graph/Graph';
 const regExp = /\B(?=(\d{3})+(?!\d))/g
 
 class Stock extends React.Component {
+
     handleReturn = () => {
       this.props.history.goBack();
     }
@@ -32,6 +33,7 @@ class Stock extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const { user, stock, bitcoin, currency } = this.props
         let button
         let bitcoinValue = 0

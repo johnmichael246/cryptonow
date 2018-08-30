@@ -27,16 +27,17 @@ class App extends Component {
   }
 
   handleSignup = () => {
-    this.setState({ user: userService.getUser() })
-    this.refreshData()
-    this.setState({ loggedIn: true })
+    this.setState({
+      user: userService.getUser(),
+      loggedIn: true
+    })
   }
 
   handleLogin = () => {
     this.setState({
       user: userService.getUser(),
       loggedIn:true
-    }, () => this.refreshData())
+    })
   }
 
   refreshData = () => {
@@ -99,8 +100,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({ user: userService.getUser() })
-    this.refreshData()
+    const user = userService.getUser()
+    this.setState({
+      user,
+      loggedIn: user ? true : false
+    })
   }
 
   addToWatchlist = async (stockId, stockSymbol, name) => {
