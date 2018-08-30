@@ -1,5 +1,5 @@
 import React from 'react';
-import './MainPage.css';
+import './HomePage.css';
 import {
     Row,
     Col
@@ -20,8 +20,12 @@ class MainPage extends React.Component {
         clearInterval(this.setTimer)
     }
 
+    componentWillUnmount() {
+        clearInterval(this.setTimer)
+    }
+
     render() {
-        const { user, header, stocks } = this.props 
+        const { user, stocks } = this.props 
         return (
             <div className='background-main'>
                 <Row>
@@ -37,8 +41,7 @@ class MainPage extends React.Component {
                         stocks={stocks}
                         setTimer={this.setTimer}
                         clearTimer={this.clearTimer}
-                        searchStocks={this.props.searchStocks}
-                        header={header} />
+                        searchStocks={this.props.searchStocks} />
                     </Col>
                 </Row>
             </div> 

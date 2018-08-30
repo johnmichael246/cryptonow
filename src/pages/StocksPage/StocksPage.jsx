@@ -3,7 +3,6 @@ import {
     Row,
     Col
 } from 'react-materialize';
-import { Link } from 'react-router-dom';
 import Watchlist from '../../components/Watchlist/Watchlist';
 import Stock from '../../components/Stock/Stock';
 import './StocksPage.css';
@@ -16,7 +15,7 @@ class StocksPage extends React.Component {
     getBitcoinValue = async () => {
         let response = await fetch('/api/stocks/1')
         response = await response.json()
-        this.props.updateBitcoin()
+        this.props.updateBitcoin(response)
     }
 
     getStockGraphData = async () => {
@@ -26,7 +25,7 @@ class StocksPage extends React.Component {
             headers: {
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({ id:id })
+            body:JSON.stringify({ id })
         })
         response = await response.json()
         this.setState({ stockVisualData: response })
@@ -61,7 +60,8 @@ class StocksPage extends React.Component {
 
     setOneStockTimer = () => {
         setInterval(()=> {
-            this.getOneStockCurrency()
+            this.getOneStockCurrency(this.props.currency)
+            this.getBitcoinValue()
         },120000)
     }
     
@@ -91,8 +91,7 @@ class StocksPage extends React.Component {
 
 
     render() {
-        console.log(this.props.currencyCompare)
-        const { articles, stock, user } = this.props
+        const { articles, stock, user, bitcoin } = this.props
         return (
             <div className='stockpage-font'>
                 <Row>
@@ -107,18 +106,18 @@ class StocksPage extends React.Component {
                 <Row>   
                     <Col s={12}>
                         <Stock
-                            history={this.props.history}
-                            user={user}
-                            stock={stock}
-                            bitcoin={this.props.bitcoin}
-                            currentStocks={this.props.currentStocks}
-                            addToWatchlist={this.props.addToWatchlist}
-                            currency = {this.props.currency}
-                            currencyParams={this.currencyParams}
-                            stockVisualData={this.state.stockVisualData}
-                            getOneStockCurrency={this.props.getOneStockCurrency}
-                            currencyCompare={this.props.currencyCompare}
-                            volume24Compare={this.props.volume24Compare}/> 
+                        history={this.props.history}
+                        user={user}
+                        stock={stock}
+                        bitcoin={bitcoin}
+                        currentStocks={this.props.currentStocks}
+                        addToWatchlist={this.props.addToWatchlist}
+                        currency = {this.props.currency}
+                        currencyParams={this.currencyParams}
+                        stockVisualData={this.state.stockVisualData}
+                        getOneStockCurrency={this.props.getOneStockCurrency}
+                        currencyCompare={this.props.currencyCompare}
+                        volume24Compare={this.props.volume24Compare}/> 
                     </Col>
                 </Row>
             </div>

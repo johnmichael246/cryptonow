@@ -8,7 +8,7 @@ import {
 import Watchlist2 from '../../components/Watchlist2/Watchlist2';
 
 class WatchlistPage extends React.Component {
-    
+
     handleTheReturn = () => {
         this.props.history.goBack();
     }
@@ -19,16 +19,17 @@ class WatchlistPage extends React.Component {
     }
 
     render() {
+        const { history, user, favStocks } = this.props
         let extractedWatchlist = this.props.favStocks ?
             <div className='stockpage-font'>
                 <Row>   
                     <Col s={12}>
                         <Watchlist2
-                            handleTheReturn={this.handleTheReturn}
-                            history={this.props.history}
-                            currentUser={this.props.currentUser}
-                            favStocks={this.props.favStocks}
-                            formatData={this.formatData} />
+                        handleTheReturn={this.handleTheReturn}
+                        history={history}
+                        currentUser={this.props.currentUser}
+                        favStocks={favStocks}
+                        formatData={this.formatData} />
                     </Col>
                 </Row>
             </div>:
@@ -36,9 +37,9 @@ class WatchlistPage extends React.Component {
                 <Preloader size='big'/>
                 <h3>Loading...</h3> 
             </div>    
-        return extractedWatchlist;
+        return extractedWatchlist
     }
 }
 
 
-export default WatchlistPage;
+export default WatchlistPage

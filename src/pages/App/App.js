@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
-import MainPage from '../MainPage/MainPage';
+import HomePage from '../HomePage/HomePage';
 import WatchlistPage from '../WatchlistPage/WatchlistPage';
 import StocksPage from '../StocksPage/StocksPage';
 import SignupPage from '../SignupPage/SignupPage';
@@ -67,7 +67,6 @@ class App extends Component {
         body: JSON.stringify({ stocks:user.favStocks })
       })
       response = await response.json()
-      console.log(response)
       this.setState({ favStocks:response })
     }
   }
@@ -79,16 +78,20 @@ class App extends Component {
     }
   }
 
-  updateStockLink = (stock) => {
-    this.setState({ stock })
-  }
-
   updateCurrency = (currency) => {
     this.setState({ currency })
   }
 
-  updateCurrencyCompare = (currencyProp) => {
-    this.setState({ currencyCompare:currencyProp })
+  updateBitcoin = (bitcoin) => {
+    this.setState( { bitcoin })
+  }
+
+  updateOneStock = (stock) => {
+    this.setState({ stock })
+  }
+
+  updateCurrencyCompare = (currency) => {
+    this.setState({ currencyCompare:currency })
   }
 
   updateVolume24Compare = (volume) => {
@@ -105,7 +108,7 @@ class App extends Component {
     let header = this.getAuthRequestOptions()
     let response = await fetch('/api/users/populate', header)
     response = await response.json()
-    this.setState({ user:response }, () => this.updateFavorites())
+    this.setState({ user:response })
   }
 
   componentDidMount() {
@@ -123,13 +126,7 @@ class App extends Component {
     this.setState({ user:response })
   }
 
-  updateBitcoin = (data) => {
-    this.setState( { bitcoin: data })
-  }
 
-  updateOneStock = (data) => {
-    this.setState({ stock:data })
-  }
 
   searchStocks = async () => {
     try {
@@ -142,7 +139,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, stocks, stock, favStocks } = this.state 
+    const { user, stocks, stock, favStocks, currency, currencyCompare, bitcoin } = this.state 
     return (
       <div className='reset'>
         <div className="header">
@@ -156,7 +153,7 @@ class App extends Component {
         />
         <Switch>
           <Route exact path='/' render={(props) =>
-            <MainPage
+            <HomePage
               {...props}
               user={user}
               addToWatchlist={this.addToWatchlist}
@@ -176,15 +173,14 @@ class App extends Component {
                   favstocks={favStocks}
                   addToWatchlist={this.addToWatchlist}
                   stock={stock}
-                  bitcoin={this.state.bitcoin}
+                  bitcoin={bitcoin}
                   bitcoinValue={this.state.bitcoinValue}
-                  updateLink={this.updateStockLink}
-                  currency={this.state.currency}
+                  currency={currency}
                   updateOneStock={this.updateOneStock} 
                   updateCurrency={this.updateCurrency}  
                   updateBitcoin={this.updateBitcoin}
                   getOneStockCurrency={this.getOneStockCurrency}
-                  currencyCompare={this.state.currencyCompare}
+                  currencyCompare={currencyCompare}
                   updateCurrencyCompare={this.updateCurrencyCompare}
                   updateVolume24Compare={this.updateVolume24Compare}
                   volume24Compare={this.state.volume24Compare}

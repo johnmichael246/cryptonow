@@ -127,6 +127,7 @@ function addStock(req, res) {
             if(stock) {
                 let requestedStockId = user.favStocks.findIndex(id => id.equals(stock._id))
                 if(requestedStockId > -1) {
+                    console.log('stock in favorites array, REMOVE')
                         user.favStocks.splice(requestedStockId, 1);
                         user.save(err => {
                             if(err) {
@@ -139,6 +140,7 @@ function addStock(req, res) {
                             }
                         })
                 } else {
+                    console.log('stock not in favorites array, ADD')
                     user.favStocks.push(stock)
                     user.save(err => {
                         if (err) {

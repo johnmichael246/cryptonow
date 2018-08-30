@@ -3,11 +3,8 @@ import LoginForm from '../../components/LoginForm/LoginForm'
 import './LoginPage.css'
 
 class LoginPage extends React.Component  {
-    constructor() {
-        super();
-        this.state = {
-            message:''
-        }
+    state = {
+        message:''
     }
 
     updateMessage = (message) => {

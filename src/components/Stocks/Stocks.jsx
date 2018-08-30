@@ -5,7 +5,6 @@ import {
     Col,
     Preloader
 } from 'react-materialize';
-import {Link} from 'react-router-dom';
 import Griddle, { plugins, RowDefinition, ColumnDefinition } from 'griddle-react';
 
 

@@ -8,7 +8,7 @@ var valueSchema = new mongoose.Schema({
 
 var stockSchema = new mongoose.Schema({
   name: String,
-  apiId:String,
+  apiId:Number,
   symbol:String,
   closingStockValues:[valueSchema]
 }, {
