@@ -9,25 +9,23 @@ import Griddle, { plugins, RowDefinition, ColumnDefinition } from 'griddle-react
 
 
 class Stocks extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+
     componentWillMount() {
-        this.props.searchStocks();
-        this.props.setTimer();
+        this.props.searchStocks()
+        this.props.setTimer()
     }
     componentWillUnmount() {
-        this.props.clearTimer();
+        this.props.clearTimer()
     }
     formatData = (num) => {
         if (num === null || num === undefined) return
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
     render() {
-        let customLinkComponent = ({value}) => <a href={`stocks/${value}`} style={ { color:'black'} }>{value}</a>;
-        let customDataMC = ({value}) => <span>{this.formatData(value)}</span>;
-        let customColumn = ({value}) => <span style={ value > 0 ? {color:'green'} : {color:'red'} }>{value}%</span>;
-        let customSymbolColumn = ({value}) => <span style={ {fontWeight:'bold'} }>{value}</span>;
+        let customLinkComponent = ({value}) => <a href={`stocks/${value}`} style={ { color:'black'} }>{value}</a>
+        let customDataMC = ({value}) => <span>{this.formatData(value)}</span>
+        let customColumn = ({value}) => <span style={ value > 0 ? {color:'green'} : {color:'red'} }>{value}%</span>
+        let customSymbolColumn = ({value}) => <span style={ {fontWeight:'bold'} }>{value}</span>
         let styleConfig = {
             classNames: {
                 Row: 'row-class',

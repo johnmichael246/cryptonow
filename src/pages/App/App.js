@@ -18,11 +18,10 @@ class App extends Component {
     user: null,
     stock: null,
     stocks: [],
-    bitcoinValue: null,
     bitcoin: null,
     favStocks: [],
-    currency: 'usd',
-    currencyCompare:'usd',
+    currency: 'USD',
+    currencyCompare:'USD',
     loggedIn: false,
     volume24Compare:null
   }
@@ -78,30 +77,18 @@ class App extends Component {
     }
   }
 
-  updateCurrency = (currency) => {
-    this.setState({ currency })
-  }
-
   updateBitcoin = (bitcoin) => {
     this.setState( { bitcoin })
   }
 
   updateOneStock = (stock) => {
-    this.setState({ stock })
-  }
-
-  updateCurrencyCompare = (currency) => {
-    this.setState({ currencyCompare:currency })
-  }
-
-  updateVolume24Compare = (volume) => {
-    this.setState({ volume24Compare:volume })
-  }
-
-  currencyParams = (e) => {
-    let value = e.target.value
-    this.updateCurrency(value)
-    this.getOneStockCurrency(value)
+    let currenctSelectedCurrency = Object.keys(stock[0].quotes)[0].toUpperCase()
+    //updates state with the searched for stock, and that stocks current currency quote
+    this.setState({
+      currency: currenctSelectedCurrency,
+      stock,
+      volume24Compare: stock[0].quotes[currenctSelectedCurrency].volume_24h
+    })
   }
 
   populateUser = async () => {
@@ -159,7 +146,6 @@ class App extends Component {
               addToWatchlist={this.addToWatchlist}
               updateStockLink={this.updateStockLink}
               searchStocks={this.searchStocks}
-              currencyParams={this.currencyParams}
               populateUser={this.populateUser}
               stocks={stocks}
               stock={stock}
@@ -174,15 +160,11 @@ class App extends Component {
                   addToWatchlist={this.addToWatchlist}
                   stock={stock}
                   bitcoin={bitcoin}
-                  bitcoinValue={this.state.bitcoinValue}
                   currency={currency}
                   updateOneStock={this.updateOneStock} 
-                  updateCurrency={this.updateCurrency}  
                   updateBitcoin={this.updateBitcoin}
                   getOneStockCurrency={this.getOneStockCurrency}
                   currencyCompare={currencyCompare}
-                  updateCurrencyCompare={this.updateCurrencyCompare}
-                  updateVolume24Compare={this.updateVolume24Compare}
                   volume24Compare={this.state.volume24Compare}
                   getAuthRequestOptions={this.getAuthRequestOptions}
                   populateUser={this.populateUser}

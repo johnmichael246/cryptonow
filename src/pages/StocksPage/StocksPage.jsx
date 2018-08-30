@@ -48,13 +48,10 @@ class StocksPage extends React.Component {
         response = await response.json() 
         this.props.updateOneStock(response)
         this.getStockGraphData()
-        this.filterCurrency(this.props.stock[0])
-        this.filterCurrencyVolume(this.props.stock[0])
     }
 
     currencyParams = (e) => {
         let value = e.target.value
-        this.props.updateCurrency(value)
         this.getOneStockCurrency(value)
     }
 
@@ -67,16 +64,6 @@ class StocksPage extends React.Component {
     
     clearOneStockTimer = () => {
         clearInterval(this.setOneStockTimer)
-    }
-
-    filterCurrency = (object) => {
-        let quotedCurrency = Object.keys(object.quotes)[0]
-        this.props.updateCurrencyCompare(quotedCurrency)
-    }
-
-    filterCurrencyVolume = (object) => {
-        let quotedCurrencyVolume = Object.keys(object.volume_24h)[0]
-        this.props.updateVolume24Compare(quotedCurrencyVolume)
     }
     
     componentDidMount() {     
@@ -99,7 +86,6 @@ class StocksPage extends React.Component {
                         <Watchlist
                         articles={articles}
                         user={user}
-                        updateStockLink={this.props.updateStockLink}
                         stock={stock} />
                     </Col>
                 </Row>
@@ -110,7 +96,6 @@ class StocksPage extends React.Component {
                         user={user}
                         stock={stock}
                         bitcoin={bitcoin}
-                        currentStocks={this.props.currentStocks}
                         addToWatchlist={this.props.addToWatchlist}
                         currency = {this.props.currency}
                         currencyParams={this.currencyParams}

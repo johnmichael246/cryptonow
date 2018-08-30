@@ -16,47 +16,47 @@ class Stock extends React.Component {
       this.props.history.goBack();
     }
 
-    findfloatParseInt = (int) => {
-        if (!int) return
-        console.log('bbbbbbbbbb',int)
-        if ( int.toString().length > 1  ) {
-            let arr = int.toString().split('.')[1].split('').map(Number);
-            for(let i=0; i<arr.length; i++) {
-                if (arr[i] !== 0){
-                    let num = i + 2;
-                    return num
-                }
+    formatNumber = (int) => {
+        const regExp = /\B(?=(\d{3})+(?!\d))/g
+        if(typeof int === 'string') {
+            return int.replace(regExp, ",")
+        } else if (typeof int === 'number') {
+            let stringifiedNumber = int.toString()
+            if (stringifiedNumber.match(/\./)) {
+                return stringifiedNumber.split('.').map(num => num.replace(regExp, ",")).join('.')
+            } else {
+                return stringifiedNumber.replace(regExp, ",")
             }
-        } else {
-            return int
         }
     }
 
     render() {
         const { user, stock, bitcoin, currency } = this.props
-        let button = ''
+        if (stock) {
+            console.log(stock, '&&', currency, 'stock currency:',stock[0])
+        }
+        let button
+        let bitcoinValue = 0
+        let marketValue = 0
+        let bitcoinMV= 0
+        let bitcoinVol24 = 0
+        let graph=''
         if (stock && user) {
             button = <button className='btn' type='submit' onClick={()=>this.props.addToWatchlist(stock[0].id, stock[0].symbol, stock[0].name)}>{user.favStocks.find( s => Number(s.apiId) === stock[0].id) ? 'Remove From Watchlist': 'Add to Watchlist'}</button>
         }
-        let bitcoinValue = 0
-        let marketValue = ''
-        let bitcoinMV= ''
-        let bitcoinVol24 = ''
         if (bitcoin && stock) {
-            currencyCompareValue = Math.round(stock[0].quotes[currency.toUpperCase()].price * 100) / 100
-            bitcoinValue = stock[0].price_usd / bitcoin[0].price_usd
+            // bitcoinValue = stock[0].quotes[currency].price / bitcoin[0].quotes[currency].price
             marketValue = stock[0].market_cap
             bitcoinMV= (marketValue/bitcoin[0].price)
-            bitcoinVol24 = Math.round(stock[0].quotes[currency.toUpperCase()].volume_24h / bitcoin[0].quotes[currency.toUpperCase()].volume_24h)
+            // bitcoinVol24 = Math.round(stock[0].quotes[currency].volume_24h / bitcoin[0].quotes[currency].volume_24h)
         }
-        let graph=''
         if(this.props.stockVisualData.length > 0) {
             graph = <Graph
             stockVisualData={this.props.stockVisualData}
             stock={stock}
             bitcoin={bitcoin}/>
         } 
-        let oneStock = stock && bitcoin ? 
+        let singleStockInfo = stock && bitcoin ? 
             <div>   
                 <Row >
                     <Col s={12} m={6}>
@@ -68,7 +68,7 @@ class Stock extends React.Component {
                         </div>
                     </Col>
                     <Col s={12} m={6}>
-                        <h2 className='center-text'>{(Math.round(stock[0].quotes[this.props.currencyCompare.toUpperCase()].price * 100)/100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}&nbsp;{this.props.currency.toUpperCase()}&nbsp;&nbsp;</h2>
+                        <h2 className='center-text'>{this.formatNumber(stock[0].quotes[currency].price)}&nbsp;{currency}&nbsp;&nbsp;</h2>
                         <h2 className='center-text' style={stock[0].percent_change_24h > 0 ? {color:'green'} : {color:'red'} }> ({stock[0].percent_change_24h}%)</h2> 
                         <h6 className='center-text'>{bitcoinValue}&nbsp;bitcoin</h6>
                     </Col>
@@ -111,10 +111,10 @@ class Stock extends React.Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td className ='remove-lower-padding'>{marketValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className ='remove-lower-padding'>{stock[0].quotes[currency.toUpperCase()].volume_24h.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td className='centered'>{stock[0].circulating_supply.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                    <td key={0}className='centered'>{stock[0].circulating_supply.toString().split('.')[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                    <td className ='remove-lower-padding'>{this.formatNumber(marketValue)}</td>
+                                    <td className ='remove-lower-padding'>{stock[0].quotes[currency].volume_24h.toString().split('.')[0]}</td>
+                                    <td className='centered'>{stock[0].circulating_supply.toString().split('.')[0]}</td>
+                                    <td key={0}className='centered'>{stock[0].circulating_supply.toString().split('.')[0]}</td>
                                     </tr>
                                 <tr>
                                     <td style ={{color:'grey'}} >{ Math.round(bitcoinMV)} <b>BTC</b></td>
@@ -139,9 +139,8 @@ class Stock extends React.Component {
                 <p>Loading...</p>
             </Col>
             )   
-        return oneStock;    
+        return singleStockInfo    
     }               
 }
 
-
-export default Stock;
+export default Stock
