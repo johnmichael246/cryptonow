@@ -8,11 +8,12 @@ var valueSchema = new mongoose.Schema({
 
 var stockSchema = new mongoose.Schema({
   name: String,
-  apiId:String,
+  apiId:Number,
   symbol:String,
   closingStockValues:[valueSchema]
 }, {
-  timestamps: true
-});
+  timestamps: true,
+  usePushEach:true
+})
 
 module.exports = mongoose.model('Stock', stockSchema);

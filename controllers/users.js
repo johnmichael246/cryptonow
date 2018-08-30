@@ -1,28 +1,26 @@
-var User = require('../models/user');
-var Stock = require('../models/stock');
-var jwt = require('jsonwebtoken');
-var SECRET = process.env.SECRET;
+var User = require('../models/user')
+var jwt = require('jsonwebtoken')
+const SECRET = process.env.SECRET
 
 
 function createJWT(user) {
     return jwt.sign(
-        {user},
+        { user },
         SECRET,
         {expiresIn: '24h'}
     );
 }
 
 function signup(req,res) {
-    var user = new User(req.body);
+    const user = new User(req.body)
     user.save()
     .then(user => {
-        return res.json({token: createJWT(user)});
+        return res.json({token: createJWT(user)})
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => res.status(400).json(err))
 }
 
 function login(req, res) {
-
   User.findOne({email: req.body.email}).exec().then(user => {
     if (!user) return res.status(401).json({err: 'bad credentials'});
     user.comparePassword(req.body.pw, (err, isMatch) => {
@@ -35,7 +33,8 @@ function login(req, res) {
   }).catch(err => res.status(401).json(err));
 }
 
-function populateUser(req,res) {
+function populateUser(req, res) {
+  console.log('calling populateUser')
   User.findById(req.user._id, (err, user) => {
     User.populate(user, 'favStocks', (err, user) => {
       res.json(user);
@@ -49,8 +48,8 @@ function checkAuth(req, res, next) {
 
 
 module.exports = {
-    signup,
-    login,
-    populateUser,
-    checkAuth
+  signup,
+  login,
+  populateUser,
+  checkAuth
 }

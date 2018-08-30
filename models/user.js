@@ -10,8 +10,9 @@ var userSchema = new mongoose.Schema({
   favStocks: [{type:ObjectId, ref:'Stock'}],
   favArticles: [{type:ObjectId, ref:'Article'}]
 }, {
-  timestamps: true
-});
+  timestamps: true,
+  usePushEach:true
+})
 
 
 userSchema.pre('save', function(next) {
