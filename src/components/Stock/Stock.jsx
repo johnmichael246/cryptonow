@@ -8,22 +8,23 @@ import {
     Table
 } from 'react-materialize';
 import Graph from '../Graph/Graph';
-
+const regExp = /\B(?=(\d{3})+(?!\d))/g
 
 class Stock extends React.Component {
-
     handleReturn = () => {
       this.props.history.goBack();
     }
 
     formatNumber = (int) => {
-        const regExp = /\B(?=(\d{3})+(?!\d))/g
         if(typeof int === 'string') {
             return int.replace(regExp, ",")
         } else if (typeof int === 'number') {
             let stringifiedNumber = int.toString()
             if (stringifiedNumber.match(/\./)) {
-                return stringifiedNumber.split('.').map(num => num.replace(regExp, ",")).join('.')
+                stringifiedNumber = stringifiedNumber.split('.')
+                stringifiedNumber[0] = stringifiedNumber[0].replace(regExp, ',')
+                stringifiedNumber[1] = Number(stringifiedNumber[1])
+                return stringifiedNumber.join('.')
             } else {
                 return stringifiedNumber.replace(regExp, ",")
             }
@@ -32,9 +33,6 @@ class Stock extends React.Component {
 
     render() {
         const { user, stock, bitcoin, currency } = this.props
-        if (stock) {
-            console.log(stock, '&&', currency, 'stock currency:',stock[0])
-        }
         let button
         let bitcoinValue = 0
         let marketValue = 0
